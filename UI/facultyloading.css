@@ -1,0 +1,167 @@
+body {
+    background-color: #763435;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+table {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    border-collapse: collapse;
+    background-color: white;
+    width: 100%;
+}
+
+th,
+td {
+    text-align: center;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    border: 1px solid black;
+    padding: 15px;
+
+    background-color: white;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.row {
+    margin-left: -5px;
+    margin-right: -5px;
+
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 5px;
+}
+
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+.border {
+    text-align: left;
+}
+table td.border,
+table th.border {
+    border: none;
+    background-color: white;
+}
+
+.tablink {
+    background-color: none;
+    border: none;
+    float: right;
+}
+
+.tablink01 {
+    border-bottom: gray;
+    float: right;
+}
+
+.tabcontent {
+    display: none;
+
+}
+
+select {
+    width: 200px;
+    display: block;
+}
+
+.btn {
+    width: 200px;
+    background-color: #BFBFBF;
+}
+
+.gen , .btncenter{
+    text-align: center;
+}
+
+.btnaction {
+    background: transparent;
+    border: none;
+    color: black;
+}
+
+.unloadform-popup {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+
+}
+
+.unloadcontainer {
+    max-width: 200px;
+    padding: 10px;
+    background-color: #E0242D;
+}
+
+th.head {
+    width: 20px;
+}
+
+@media(max-width: 1000px) {
+    .table,
+    table tr,
+    .table td {
+        width: 1000px;
+      
+    }
+
+    .column {
+        display: block;
+        min-width: 650px;
+    }
+
+    .row::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    .top {
+        min-width: 640px;
+        width: 640px;
+    }
+
+    select {
+        width: inherit;
+    }
+body {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    transform: translate(-50%);
+    text-align: center;
+}
+}
+.btncontainer {
+    float: right;
+    color: black;
+    padding-top: 30px;
+    padding-right: 50px;
+    padding-bottom: 30px;
+  }
+  h1 {
+    float: left;
+    color: white;
+}
+.navtop{
+    text-decoration: none;
+       color: white;
+   }
+   .navtop:hover {
+    background-color: #671D1E;
+    padding: 5px;
+}

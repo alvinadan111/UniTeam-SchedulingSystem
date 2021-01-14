@@ -1,0 +1,158 @@
+* {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Arial;
+    padding: 10px;
+    background: #f1f1f1;
+  }
+
+  /* Header/Blog Title */
+  .header {
+    padding: 10px;
+    background: #763435;
+  }
+
+  .header h1 {
+    font-size: 50px;
+  }
+
+  .topname {
+    overflow: hidden;
+    background-color: #333;
+  }
+
+  .topname h2 {
+    float: right;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 2px 10px;
+    text-decoration: none;
+    font-size: 25px;
+  }
+
+  .topname h1 {
+    float: left;
+    color: #f2f2f2;
+    text-decoration: none;
+    font-size: 25px;
+    text-align: center;
+    display: block;
+    padding: 5px;
+  }
+
+  /* Create two unequal columns that floats next to each other */
+  /* Left column */
+  .leftcolumn {
+    float: left;
+    width: 25%;
+  }
+
+  /* Right column */
+  .rightcolumn {
+    float: left;
+    width: 75%;
+    background-color: #f1f1f1;
+    padding-left: 20px;
+  }
+
+  /* Fake image */
+  img {
+    width: 100%;
+    height: auto;
+
+  }
+
+  /* Add a card effect for articles */
+  .card {
+    background-color: white;
+    padding: 20px;
+    margin-top: 20px;
+  }
+
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .fa-user-circle {
+    float: left;
+    font-size: 50px;
+    padding: 10px;
+  }
+
+  /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+  @media screen and (max-width: 800px) {
+
+    .leftcolumn,
+    .rightcolumn {
+      width: 100%;
+      padding: 0;
+    }
+  }
+
+  .headname {
+    padding-left: 120px;
+    color: white;
+    font-family: serif;
+  }
+
+  .logocontainer {
+    position: absolute;
+    padding-top: 15px;
+  }
+
+  img.logo {
+    width: 100px;
+  }
+
+  .sidenav a,
+  .dropdown-btn {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #A94442;
+    display: block;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+
+  }
+
+  .sidenav a:hover,
+  .dropdown-btn :hover {
+    color: #671D1E;
+  }
+
+  .active {
+    background-color: #671D1E;
+    color: white;
+  }
+
+  /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+  .dropdown-container {
+    display: none;
+    background-color: none;
+  }
+
+  /* Optional: Style the caret down icon */
+  .fa-caret-down {
+    float: right;
+  }
+
+  @media screen and (max-height: 450px) {
+    .sidenav {
+      padding-top: 15px;
+    }
+
+    .sidenav a {
+      font-size: 18px;
+    }
+  }

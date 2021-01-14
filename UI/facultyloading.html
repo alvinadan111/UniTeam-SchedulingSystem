@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="facultyloading.css">
+</head>
+
+<body>
+    <h1> Faculty Loading </h1> 
+    <div class="btncontainer">
+        <a class="navtop" href="menu.html"> Home <i class="fas fa-chevron-right"></i> </a>
+        <a class="navtop" href="facultyloading.html"> Faculty Loading </a>
+    </div>
+    <table class="top">
+        <tr>
+            <th colspan="4" class="border"> Search Instructor</th>
+        </tr>
+        <tr>
+            <td class="border">
+                <label for="dept"> Department </label>
+                <select id="dept" name="deptlist" form="deptform">
+                    <option value="1"> </option>
+                </select>
+            </td>
+            <td class="border">
+                <label for="level"> Level </label>
+                <select id="level" name="levellist" form="levelform">
+                    <option value="1st year"> 1st Year </option>
+                    <option value="2nd year"> 2nd Year </option>
+                    <option value="3rd year"> 3rd Year </option>
+                    <option value="4th year"> 4th Year </option>
+                </select>
+            </td>
+            <td class="border">
+                <label for="instructor"> Instructor </label>
+                <select id="instructor" name="instructorlist" form="instructorform">
+                    <option value="1"> # </option>
+                    <option value="2"> # </option>
+                    <option value="3"> # </option>
+                    <option value="4"> # </option>
+            </td>
+            <td class="border">
+                <button class="btn"> Search </button></i> </button>
+            </td>
+        </tr>
+    </table>
+    <div class="row">
+        <div class="column">
+            <table>
+                <tr class="border">
+                    <th class="border" colspan="2"> Courses to Load </th>
+                </tr>
+                <td colspan="3" class="border">
+                    <label for="searchcode">Enter The Course Code To Search:</label>
+                    <input type="search" id="searchcode" name="searchcode">
+                </td>
+                <tr>
+                    <th class="head">Course</th>
+                    <th> Schedule </th>
+                    <th> </th>
+                </tr>
+                <tr>
+                    <td> PE 1 BSCS</td>
+                    <td> 302 <br> Mon 2:00pm-4:00pm</td>
+                    <td class="btncenter"> <button> Add to Calendar </button> </td>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td class="btncenter"> <button> Add to Calendar </button> </td>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td class="btncenter"> <button> Add to Calendar </button> </td>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td class="btncenter"> <button> Add to Calendar </button> </td>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td class="btncenter"> <button> Add to Calendar </button> </td>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td class="btncenter"> <button> Add to Calendar </button> </td>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td class="btncenter"> <button> Add to Calendar </button> </td>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td class="btncenter"> <button> Add to Calendar </button> </td>
+                </tr>
+            </table>
+        </div>
+        <div class="column">
+            <div id="Cal" class="tabcontent">
+                <table class="table2">
+                    <tr>
+                        <td colspan="7" class="border">
+                            <button class="tablink" onclick="openPage('Tab', this,)">Tabular View</button>
+                            <button class="tablink01" onclick="openPage('Cal', this,)" id="defaultOpen">Calendar
+                                View</button>
+                            <h3> Faculty Loading </h3>
+
+                            Total No. of Units Loaded:
+                        </td>
+                    </tr>
+                    <tr>
+                        <th> Time </th>
+                        <th> Monday </th>
+                        <th> Tuesday </th>
+                        <th> Wednesday </th>
+                        <th> Thursday </th>
+                        <th> Friday </th>
+                        <th> Saturday </th>
+                    </tr>
+                    <tr>
+                        <td> 7am </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td> 8am </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td> 9am </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td> 10am </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td> 11am </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td> 12nn </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td> 1pm </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td> 2pm </td>
+                        <td rowspan="3"> PE 1 BSCS <br>302
+                            Mon 2:00pm-4:00pm</td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td> 3pm </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td> 4pm </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td> 5pm </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td> 6pm </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td> 7pm </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td> 8pm </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="Tab" class="tabcontent">
+                <table>
+                    <tr>
+                        <td colspan="6" class="border">
+                            <button class="tablink01" onclick="openPage('Tab', this,)" id="defaultOpen">Tabular
+                                View</button>
+                            <button class="tablink" onclick="openPage('Cal', this,)">Calendar View</button>
+                            <h3> Faculty Loading </h3>
+
+                            Total No. of Units Loaded:
+                        </td>
+                    </tr>
+                    <tr>
+                        <th> Action </th>
+                        <th> Code </th>
+                        <th> Description </th>
+                        <th> Units </th>
+                        <th> Section </th>
+                        <th> Schedule </th>
+                    </tr>
+                    <tr>
+                        <td class="btncenter"> <button class="btnaction" onclick="openForm()"><i
+                                    class="fas fa-edit"></i></button>
+                        </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr class="btncenter">
+                        <td class="btncenter"> <button class="btnaction" onclick="openForm()"><i
+                                    class="fas fa-edit"></i></button>
+                        </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td class="btncenter"> <button class="btnaction" onclick="openForm()"><i
+                                    class="fas fa-edit"></i></button>
+                        </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td class="btncenter"> <button class="btnaction" onclick="openForm()"><i
+                                    class="fas fa-edit"></i></button>
+                        </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td class="btncenter"> <button class="btnaction" onclick="openForm()"><i
+                                    class="fas fa-edit"></i></button>
+                        </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td class="btncenter"> <button class="btnaction" onclick="openForm()"><i
+                                    class="fas fa-edit"></i></button>
+                        </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td class="btncenter"> <button class="btnaction" onclick="openForm()"><i
+                                    class="fas fa-edit"></i></button>
+                        </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td class="btncenter"> <button class="btnaction" onclick="openForm()"><i
+                                    class="fas fa-edit"></i></button>
+                        </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td class="btncenter" colspan="6">
+                            <button class="btn"> Generate Schedule </button></i> </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="unloadform-popup" id="myForm">
+        <div class="unloadcontainer">
+            <p style="color: white;"> By clicking OK button will unload the subject from the instructor. Do you wish to
+                continue? </p>
+            <button class="btnunload"> Ok </button>
+            <button class="btnunload" onclick="closeForm()"> Cancel </button>
+        </div>
+    </div>
+    <script>
+        function openPage(pageName, elmnt,) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].style.backgroundColor = "";
+            }
+            document.getElementById(pageName).style.display = "block";
+            elmnt.style.backgroundColor = color;
+        }
+        document.getElementById("defaultOpen").click();
+    </script>
+    <script>
+        function openForm() {
+            document.getElementById("myForm").style.display = "block";
+        }
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+    </script>
+
+</body>
+
+</html>
