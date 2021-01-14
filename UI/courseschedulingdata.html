@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="courseschedulingdata.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="btncontainer">
+            <a class="navtop" href="menu.html"> Home <i class="fas fa-chevron-right"></i> </a>
+            <a class="navtop" href="coursescheduling.html"> Course Scheduling <i class="fas fa-chevron-right"></i> </a>
+            <a class="navtop" href="courseschedulingdata.html"> Schedule </a>
+        </div>
+        <h1 class="textcolor"> Course Scheduling </h1>
+
+        <table class="table1">
+
+            <tr>
+                <th colspan="7"> Schedule </th>
+            </tr>
+            <tr>
+                <td>
+                    <label for="day"> Day </label>
+                    <select id="day" name="daylist" form="dayform">
+                        <option value="Monday"> Monday </option>
+                        <option value="Tuesday"> Tuesday </option>
+                        <option value="Wednesday"> Wednesday </option>
+                        <option value="Thursday"> Thursday </option>
+                        <option value="Friday"> Friday </option>
+                        <option value="Saturday"> Saturday </option>
+                    </select>
+                </td>
+                <td>
+                    <label for="timestart"> Time Start </label>
+                    <select id="timestart" name="timelist" form="timeform">
+                        <option value="start7am"> 7am </option>
+                        <option value="start8am"> 8am </option>
+                        <option value="start9am"> 9am </option>
+                        <option value="start10am"> 10am </option>
+                        <option value="start11am"> 11am </option>
+                        <option value="start12nn"> 12nn </option>
+                        <option value="start1pm"> 1pm </option>
+                        <option value="start2pm"> 2pm </option>
+                        <option value="start3pm"> 3pm </option>
+                        <option value="start4pm"> 4pm </option>
+                        <option value="start5pm"> 5pm </option>
+                        <option value="start6pm"> 6pm </option>
+                        <option value="start7pm"> 7pm </option>
+                        <option value="start8pm"> 8pm </option>
+                    </select>
+                </td>
+                <td>
+                    <label for="timeend"> Time End </label>
+                    <select id="timeend" name="timeendlist" form="timeendform">
+                        <option value="end7am"> 7am </option>
+                        <option value="end8am"> 8am </option>
+                        <option value="end9am"> 9am </option>
+                        <option value="end10am"> 10am </option>
+                        <option value="end11am"> 11am </option>
+                        <option value="end12nn"> 12nn </option>
+                        <option value="end1pm"> 1pm </option>
+                        <option value="end2pm"> 2pm </option>
+                        <option value="end3pm"> 3pm </option>
+                        <option value="end4pm"> 4pm </option>
+                        <option value="end5pm"> 5pm </option>
+                        <option value="end6pm"> 6pm </option>
+                        <option value="end7pm"> 7pm </option>
+                        <option value="end8pm"> 8pm </option>
+                    </select>
+                </td>
+
+                <td style="text-align: center;"> Add <br><button class="btn" onclick="openForm()"><i
+                            class="fas fa-plus-circle"></i> </button>
+                </td>
+
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td> Time </td>
+                <td> Monday </td>
+                <td> Tuesday </td>
+                <td> Wednesday </td>
+                <td> Thursday </td>
+                <td> Friday </td>
+                <td> Saturday </td>
+            </tr>
+            <tr>
+                <td> 7am </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 8am </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 9am </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 10am </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 11am </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 12nn </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 1pm </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 2pm </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 3pm </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 4pm </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 5pm </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 6pm </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 7pm </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 8pm </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="availableroomsform-popup" id="myForm">
+        <div class="availableroomscontainer">
+            <button class="closebtn" onclick="closeForm()"><i class="fas fa-window-close"></i> </button>
+            <br>
+            <h2> Available Rooms </h2>
+            <hr>
+            <label for="rooms"></label>
+            <div class="hs">
+                <select id="rooms" name="roomlist" form="roomform" style="align-items: center;">
+                    <option value="302 IT Building"> 302 IT Building </option>
+                    <option value="303 IT Building"> 303 IT Building </option>
+                </select>
+                <input type="button" value="Save & Submit">
+            </div>
+        </div>
+    </div>
+    <script>
+        function openForm() {
+            document.getElementById("myForm").style.display = "block";
+        }
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+    </script>
+
+</body>
+
+</html>
