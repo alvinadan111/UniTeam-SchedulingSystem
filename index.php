@@ -27,7 +27,7 @@
             <input type="text"  placeholder="Enter ID Number" name="idNum" required>
             <input type="password" placeholder="Enter Password" name="pw" required>
 
-            <?php if (isset($_GET['signIn'])) { if ($_GET['signIn']=="mismatch") { ?>
+            <?php if (isset($_GET['signin'])) { if ($_GET['signin']=="mismatch") { ?>
               <!-- Error Alert -->
               <div class="alert alert-danger alert-dismissible fade show">
                 <strong>Error!</strong> &nbsp Username and password didn't match!
