@@ -29,13 +29,13 @@
 
             <?php if (isset($_GET['signin'])) { if ($_GET['signin']=="mismatch") { ?>
               <!-- Error Alert -->
-              <div class="alert alert-danger alert-dismissible fade show">
+              <div id="myAlert" class="alert alert-danger alert-dismissible fade show">
                 <strong>Error!</strong> &nbsp Username and password didn't match!
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <button type="button"  class="close" data-dismiss="alert">&times;</button>
               </div>       
             <?php } } ?>
 
-            <button type="submit" value="loginSubmit" class="loginbtn" name="login" default>Login</button>
+            <button type="submit" value="loginSubmit"  class="loginbtn" name="login" default>Login</button>
 
            <p> <br>
             <a href="#" style="color:dodgerblue">Create New Account </a>
@@ -46,5 +46,15 @@
     <!-- bootstrap JS
         ============================================ -->
     <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+     $(document).ready(function()
+     {
+        setTimeout(function (){
+            $('#myAlert').hide('fade');
+        }, 3000); 
+
+     });
+        
+    </script>
 </body>
 </html>
