@@ -85,7 +85,7 @@ select {
 }
 
 .btnaction {
-    background: transparent;
+    background: lightgray;
     border: none;
     color: black;
 }
@@ -110,7 +110,25 @@ select {
 th.head {
     width: 20px;
 }
-
+.btncontainer {
+    float: right;
+    color: black;
+    padding-top: 30px;
+    padding-right: 50px;
+    padding-bottom: 30px;
+  }
+  h1 {
+    float: left;
+    color: white;
+}
+.navtop{
+    text-decoration: none;
+       color: white;
+   }
+   .navtop:hover {
+    background-color: #671D1E;
+    padding: 5px;
+}
 @media(max-width: 1000px) {
     .table,
     table tr,
@@ -145,23 +163,4 @@ body {
     transform: translate(-50%);
     text-align: center;
 }
-}
-.btncontainer {
-    float: right;
-    color: black;
-    padding-top: 30px;
-    padding-right: 50px;
-    padding-bottom: 30px;
-  }
-  h1 {
-    float: left;
-    color: white;
-}
-.navtop{
-    text-decoration: none;
-       color: white;
-   }
-   .navtop:hover {
-    background-color: #671D1E;
-    padding: 5px;
 }

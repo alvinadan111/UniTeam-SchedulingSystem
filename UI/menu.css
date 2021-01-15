@@ -80,25 +80,16 @@
   }
 
   .fa-user-circle {
+    color: white;
     float: left;
     font-size: 50px;
     padding: 10px;
   }
-
-  /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
-  @media screen and (max-width: 800px) {
-
-    .leftcolumn,
-    .rightcolumn {
-      width: 100%;
-      padding: 0;
-    }
-  }
-
   .headname {
     padding-left: 120px;
     color: white;
     font-family: serif;
+    text-shadow: 2px 2px 4px #000000;
   }
 
   .logocontainer {
@@ -139,12 +130,22 @@
   /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
   .dropdown-container {
     display: none;
-    background-color: none;
+    background-color: lightgray;
   }
 
   /* Optional: Style the caret down icon */
   .fa-caret-down {
     float: right;
+  }
+  /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+  @media screen and (max-width: 800px) {
+
+    .leftcolumn,
+    .rightcolumn {
+      width: 100%;
+      padding: 0;
+    }
+    
   }
 
   @media screen and (max-height: 450px) {

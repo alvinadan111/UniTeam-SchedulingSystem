@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="room.css">
+</head>
+<body>
+    <h1> Rooms </h1>
+    <div class="btncontainer">
+        <a class="navtop" href="menu.html"> Home <i class="fas fa-chevron-right"></i> </a>
+        <a class="navtop" href="room.html"> Room </a>
+    </div>
+    <div class="container">
+        <div id="add" class="tabcontent">
+            <table>
+                <tr>
+                    <td class="bord" rowspan="3">
+                        <div id="active" class="navbar">
+                            <a class="nav active" onclick="openPage('add', this)" id="defaultOpen"><i
+                                    class="fas fa-plus-square"></i> Add</a> <br>
+                            <br><a class="nav" onclick="openPage('update', this)"><i class="fas fa-edit"></i> Update
+                            </a>
+                        </div>
+                    </td>
+                    <th> 
+                        <label for="dept"> Department </label><br>
+                        <select id="dept" name="deptlist" form="deptform">
+                            <option value=""> </option>
+                            <option value=""> </option>
+                            <option value=""> </option>
+                            <option value=""> </option>
+                        </select>
+                    </th>
+                    <th> 
+                        <label for="room"> Room No. </label><br>
+                        <input type="text" id="room">
+                    </th>
+                    <th>
+                        <label for="bldg"> Building Code</label><br>
+                        <select id="bldg" name="bldglist" form="bldgform">
+                            <option value=" "> sample </option>
+                            <option value=" "> sample </option>
+                            <option value=" "> </option>
+                            <option value=" "> </option>
+                        </select>
+                    </th>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button> Add Room </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div id="update" class="tabcontent">
+
+        <table>
+            <tr>
+                <td class="bord" rowspan="3">
+                    <div id="active" class="navbar">
+                        <a class="nav" onclick="openPage('add', this)" id="defaultOpen"><i
+                                class="fas fa-plus-square"></i> Add</a> <br>
+                        <br><a class="nav active" onclick="openPage('update', this)"><i class="fas fa-edit"></i> Update
+                        </a>
+                    </div>
+                </td>
+                <th>
+                <label for="department"> Department </label><br>
+                        <select id="department" name="departmentlist" form="departmentform">
+                            <option value=""> </option>
+                            <option value=""> </option>
+                            <option value=""> </option>
+                            <option value=""> </option>
+                        </select>
+                    </th>
+                    <th> 
+                        <label for="roomno"> Room No. Old </label><br>
+                        <select id="roomno" name="roomlist" form="roomform">
+                            <option value=""> </option>
+                            <option value=""> </option>
+                            <option value=""> </option>
+                            <option value=""> </option>
+                        </select>
+                    </th>
+                    <th> 
+                        <label for="roomnew"> Room No. New </label><br>
+                        <input type="text" id="roomnew">
+                    </th>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <button> Delete Room </button>
+                    <button>  Save Changes </button>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</body>
+<script>
+    function openPage(pageName, elmnt,) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        document.getElementById(pageName).style.display = "block";
+        elmnt.style.backgroundColor = color;
+    }
+    document.getElementById("defaultOpen").click();
+</script>
+
+</html>

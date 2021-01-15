@@ -1,14 +1,14 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
-    background-color: #763435;
+    background-color:  #763435;
 
 }
 
 .container {
     background-color: #fefefe;
     border: 1px solid #888;
-    width: 25%;
+    width: 50%;
     box-shadow: 0 10px 10px #222;
     position: absolute;
     top: 50%;
@@ -20,10 +20,7 @@ body {
     padding: 16px;
 }
 
-input[type=text],
-input[type=password],
-input[type=number],
-input[type=tel] {
+input[type=text], input[type=password], input[type=number],input[type=tel], input[type=email] {
     width: 100%;
     height: 30px;
     border: none;
@@ -41,7 +38,7 @@ button {
     opacity: 0.9;
 }
 
-.signupbtn {
+.addbtn {
 
     width: 50%;
     text-align: center;
@@ -50,19 +47,36 @@ button {
 button:hover {
     opacity: 1;
 }
-
-table,
-td,
-tr {
+table,td,tr {
     border-collapse: collapse;
     padding: 10px;
-
+   
 }
-
 table {
     width: 100%;
 }
-
 caption {
     float: left;
 }
+select {
+    width: 35%;
+}
+.h1 {
+    float: left;
+    color: white;
+}
+.navtop{
+    text-decoration: none;
+       color: white;
+   }
+   .navtop:hover {
+    background-color: #671D1E;
+    padding: 5px;
+}
+.btncontainer {
+    float: right;
+    color: black;
+    padding-top: 30px;
+    padding-right: 50px;
+    padding-bottom: 30px;
+  }

@@ -1,0 +1,44 @@
+body {
+    background-color: #763435;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.btncontainer {
+    float: right;
+    color: black;
+    padding-top: 30px;
+    padding-right: 50px;
+    padding-bottom: 30px;
+}
+
+h1 {
+    float: left;
+    color: white;
+}
+
+.navtop {
+    text-decoration: none;
+    color: white;
+}
+
+.navtop:hover {
+    background-color: #671D1E;
+    padding: 5px;
+}
+
+table,
+td,
+th {
+    border: 1px solid black;
+    border-collapse: collapse;
+    background-color: white;
+    padding: 5px;
+}
+
+table {
+    width: 100%;
+}
+
+td.total {
+    text-align: right;
+}

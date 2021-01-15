@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="section.css">
+</head>
+<body>
+    <h1> Section </h1>
+    <div class="btncontainer">
+        <a class="navtop" href="menu.html"> Home <i class="fas fa-chevron-right"></i> </a>
+        <a class="navtop" href="section.html"> Section </a>
+    </div>
+    <div class="container">
+        <div id="add" class="tabcontent">
+            <table>
+                <tr>
+                    <td class="bord" rowspan="3">
+                        <div id="active" class="navbar">
+                            <a class="nav active" onclick="openPage('add', this)" id="defaultOpen"><i
+                                    class="fas fa-plus-square"></i> Add </a> <br>
+                            <br><a class="nav" onclick="openPage('update', this)"><i class="fas fa-edit"></i> Update </a>
+                        </div>
+                    </td>
+                    <th> 
+                        <label for="acadcode"> Academic Program </label><br>
+                        <select id="acadcode" name="acadcodelist" form="acadcodeform">
+                            <option value=""> </option>
+                            <option value=""> </option>
+                            <option value=""> </option>
+                            <option value=""> </option>
+                        </select>
+                    </th>
+                    <th> 
+                        <label for="level"> Level </label><br>
+                        <select id="level" name="levellist" form="levelform">
+                            <option value=""> </option>
+                            <option value=""> </option>
+                            <option value=""> </option>
+                            <option value=""> </option>
+                        </select>
+                    </th>
+                    <th>
+                        <label for="section"> Section </label><br>
+                        <input type="text" id="sections">
+                    </th>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <button> Add Section </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div id="update" class="tabcontent">
+
+        <table>
+            <tr>
+                <td class="bord" rowspan="3">
+                    <div id="active" class="navbar">
+                        <a class="nav" onclick="openPage('add', this)" id="defaultOpen"><i
+                                class="fas fa-plus-square"></i> Add</a> <br>
+                        <br><a class="nav active" onclick="openPage('update', this)"><i class="fas fa-edit"></i> Update
+                        </a>
+                    </div>
+                </td>
+                <th>
+                    <label for="acadcode"> Academic Program </label><br>
+                    <select id="acadcode" name="acadcodelist" form="acadcodeform">
+                        <option value=""> </option>
+                        <option value=""> </option>
+                        <option value=""> </option>
+                        <option value=""> </option>
+                    </select>
+                    </th>
+                    <th> 
+                        <label for="level"> Level </label><br>
+                        <select id="level" name="levellist" form="levelform">
+                            <option value=""> </option>
+                            <option value=""> </option>
+                            <option value=""> </option>
+                            <option value=""> </option>
+                        </select>
+                    </th>
+                    <th> 
+                        <label for="sect"> Section Old </label><br>
+                        <select id="sect" name="sectlist" form="sectform">
+                            <option value=""> </option>
+                            <option value=""> </option>
+                            <option value=""> </option>
+                            <option value=""> </option>
+                        </select>
+                    </th>
+                    <th>
+                        <label for="sectionnew"> Section New </label><br>
+                        <input type="text" id="sectionsnew">
+                    </th>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <button> Delete Section </button>
+                    <button> Update Section </button>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</body>
+<script>
+    function openPage(pageName, elmnt,) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        document.getElementById(pageName).style.display = "block";
+        elmnt.style.backgroundColor = color;
+    }
+    document.getElementById("defaultOpen").click();
+</script>
+
+</html>

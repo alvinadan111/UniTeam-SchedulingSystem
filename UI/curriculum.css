@@ -27,19 +27,14 @@ th {
     text-align: center;
 }
 
-a,
 h1 {
     color: white;
     text-decoration: none;
 }
 
-a:hover {
+a.navtop:hover {
     background-color: #671D1E;
     padding: 5px;
-}
-
-.button {
-    border: none;
 }
 
 .addform-popup {
@@ -57,12 +52,6 @@ a:hover {
     width: auto;
     padding: 10px;
     background-color: #E0242D;
-}
-
-.btnaction {
-    background: transparent;
-    border: none;
-    color: black;
 }
 
 .btnchange {
@@ -85,4 +74,43 @@ table.addcurriculum {
 
 h1 {
     float: left;
+}
+.search {
+    float: right;
+    margin-top: 20px;
+}
+.navtop{
+        text-decoration: none;
+       color: white;
+   }
+   .btnview {
+       border: none;
+       color: black;
+       background-color: transparent;
+   }
+   @media screen and (max-width: 1000px) {
+    .addform-popup {
+        display: none;
+        position: absolute;
+        z-index: 1;
+        width: inherit;
+        text-align: center;
+        left: 0%;
+        top: 50%;
+        transform: translate(-0%, -50%);
+
+    }
+    .addcontainer {
+       
+        padding: 10px;
+        background-color: #E0242D;
+      
+    }
+    table.addcurriculum {
+        width: 100%;
+        text-align: center;
+    }
+    table{
+        width: 100%;
+    }
 }

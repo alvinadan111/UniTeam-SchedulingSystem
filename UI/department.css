@@ -1,0 +1,108 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    background-color: #763435;
+}
+
+table {
+    border: 1px solid black;
+    width: 50%;
+    background-color: #fefefe;
+    border: 1px solid #888;
+    box-shadow: 0 10px 10px #222;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+.navbar {
+    width: auto;
+    text-align: center;
+    padding-block: 30px;
+    background-color: lightgrey;
+}
+
+.nav {
+    padding: 10px;
+    cursor: pointer;
+    color: #A94442;
+
+}
+
+.nav:hover {
+    color: white;
+    padding: 10px;
+    background-color: #A94442;
+}
+
+.active {
+    color: white;
+    background-color: #671D1E;
+}
+
+.bord {
+    border-right: 1px solid black;
+}
+
+.tabcontent {
+    display: none;
+}
+
+button {
+
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    cursor: pointer;
+    width: 35%;
+    opacity: 0.9;
+}
+
+button:hover {
+    opacity: 1;
+}
+
+.btncontainer {
+    float: right;
+    color: black;
+    padding-top: 30px;
+    padding-right: 50px;
+    padding-bottom: 30px;
+}
+
+.navtop {
+    text-decoration: none;
+    color: white;
+
+}
+
+.navtop:hover {
+    background-color: #671D1E;
+    padding: 5px;
+}
+
+h1 {
+    color: white;
+    float: left;
+}
+select, input[type=text] {
+    width: 150px;
+}
+
+@media screen and (max-width: 800px) {
+    table {
+        width: 100%;
+        overflow: scroll;
+        position: absolute;
+        top: 50%;
+        left: 0%;
+        transform: translate(-0%, -50%);
+    }
+}
