@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="UI/login.css">
+   
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap CSS
         ============================================ -->
@@ -15,6 +15,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  
+    <link rel="stylesheet" href="UI/login.css">
 </head>
 <body>            
     <div class="container" >
@@ -37,9 +38,9 @@
 
             <button type="submit" value="loginSubmit"  class="loginbtn" name="login" default>Login</button>
 
-           <p> <br>
+           <p> <hr>
             <a href="#" style="color:dodgerblue">Create New Account </a>
-            <br><br>
+            <br>
            </p>
         </form>
     </div>
