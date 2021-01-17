@@ -29,14 +29,14 @@
             <td> </td>
             <td class="center"> <a href="viewcurriculum.html" class="btnview"> <i class="fas fa-eye"></i></a> </td>
         </tr>
-       
+
     </table>
     <div class="addform-popup" id="myForm">
         <div class="addcontainer">
-            <table class="addcurriculum">
+  
+            <table id="myTable" class="addcurriculum">
                 <tr>
                     <h1> Add Curriculum </h1>
-    
                 </tr>
                 <tr>
                     <th> Action </th>
@@ -53,7 +53,8 @@
                     <th> Complab </th>
                 </tr>
                 <tr>
-                    <td> <button class="btnaction" onclick="openForm()"><i class="fas fa-edit"></i></button>
+                    <td> <button onclick="f1()">add</button>
+                        <button onclick="f2()">delete</button>
                     </td>
                     <td>
                         <select id="year" name="yearlist" form="yearform">
@@ -84,13 +85,14 @@
                             <option value=""> </option>
                         </select>
                     </td>
-                    <td>        
+                    <td>
                         <select id="coursecode" name="codelist" form="codeform">
-                        <option value=" "> </option>
-                        <option value=" "> </option>
-                        <option value=" "> </option>
-                        <option value=" "> </option>
-                    </select></td>
+                            <option value=" "> </option>
+                            <option value=" "> </option>
+                            <option value=" "> </option>
+                            <option value=" "> </option>
+                        </select>
+                    </td>
                     <td> </td>
                     <td>
                         <select id="deptcode" name="deptcodelist" form="deptcodeform">
@@ -121,6 +123,18 @@
         }
         function closeForm() {
             document.getElementById("myForm").style.display = "none";
+        }
+    </script>
+    <script type="text/javascript">
+        function f1() {
+            var el = document.getElementById("myTable");
+            // alert(row.nodeName);  // TBODY
+            var cln = el.lastChild.cloneNode(true);
+            el.appendChild(cln);
+        }
+        function f2() {
+            var tablo = document.getElementById("myTable");
+            tablo.removeChild(tablo.lastChild);
         }
     </script>
 </body>
