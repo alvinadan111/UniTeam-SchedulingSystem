@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 14, 2021 at 12:01 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 8.0.0
+-- Generation Time: Jan 17, 2021 at 10:32 AM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -20,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `class_scheduler`
 --
-CREATE DATABASE IF NOT EXISTS `class_scheduler` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `class_scheduler`;
 
 -- --------------------------------------------------------
 
@@ -31,15 +30,10 @@ USE `class_scheduler`;
 
 CREATE TABLE `academicprog` (
   `acadProgID` int(5) UNSIGNED NOT NULL,
-  `progCode` varchar(10) DEFAULT NULL,
-  `progName` varchar(50) DEFAULT NULL
+  `progCode` varchar(10) NOT NULL,
+  `progName` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Truncate table before insert `academicprog`
---
-
-TRUNCATE TABLE `academicprog`;
 --
 -- Dumping data for table `academicprog`
 --
@@ -56,22 +50,17 @@ INSERT INTO `academicprog` (`acadProgID`, `progCode`, `progName`) VALUES
 
 CREATE TABLE `account` (
   `accountID` int(5) UNSIGNED NOT NULL,
-  `FName` varchar(15) DEFAULT NULL,
+  `FName` varchar(15) NOT NULL,
   `MName` varchar(15) DEFAULT NULL,
-  `LName` varchar(15) DEFAULT NULL,
-  `idNum` varchar(10) DEFAULT NULL,
-  `dept` int(5) UNSIGNED DEFAULT NULL,
-  `email` varchar(20) DEFAULT NULL,
-  `rankID` int(5) UNSIGNED DEFAULT NULL,
-  `specializationID` int(5) UNSIGNED DEFAULT NULL,
-  `pw` varchar(20) DEFAULT NULL
+  `LName` varchar(15) NOT NULL,
+  `idNum` varchar(10) NOT NULL,
+  `dept` int(5) UNSIGNED NOT NULL,
+  `email` varchar(20) NOT NULL,
+  `rankID` int(5) UNSIGNED NOT NULL,
+  `specializationID` int(5) UNSIGNED NOT NULL,
+  `pw` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Truncate table before insert `account`
---
-
-TRUNCATE TABLE `account`;
 --
 -- Dumping data for table `account`
 --
@@ -87,15 +76,10 @@ INSERT INTO `account` (`accountID`, `FName`, `MName`, `LName`, `idNum`, `dept`, 
 
 CREATE TABLE `classroom` (
   `classroomID` int(5) UNSIGNED NOT NULL,
-  `roomNum` int(3) UNSIGNED DEFAULT NULL,
-  `buildingCode` varchar(15) DEFAULT NULL
+  `roomNum` int(3) UNSIGNED NOT NULL,
+  `buildingCode` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Truncate table before insert `classroom`
---
-
-TRUNCATE TABLE `classroom`;
 --
 -- Dumping data for table `classroom`
 --
@@ -112,14 +96,9 @@ INSERT INTO `classroom` (`classroomID`, `roomNum`, `buildingCode`) VALUES
 
 CREATE TABLE `complab` (
   `compLabID` int(5) UNSIGNED NOT NULL,
-  `isCompLab` varchar(3) DEFAULT NULL
+  `isCompLab` varchar(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Truncate table before insert `complab`
---
-
-TRUNCATE TABLE `complab`;
 --
 -- Dumping data for table `complab`
 --
@@ -131,26 +110,36 @@ INSERT INTO `complab` (`compLabID`, `isCompLab`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `course`
+--
+
+CREATE TABLE `course` (
+  `courseID` int(5) UNSIGNED NOT NULL,
+  `courseCode` varchar(10) NOT NULL,
+  `courseName` varchar(50) NOT NULL,
+  `lec` float(3,2) UNSIGNED NOT NULL,
+  `lab` float(3,2) UNSIGNED NOT NULL,
+  `totalUnits` float(3,2) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `coursescheduling`
 --
 
 CREATE TABLE `coursescheduling` (
   `crsSchedID` int(5) UNSIGNED NOT NULL,
-  `acadProgID` int(5) UNSIGNED DEFAULT NULL,
-  `levelID` int(5) UNSIGNED DEFAULT NULL,
-  `periodID` int(5) UNSIGNED DEFAULT NULL,
-  `curID` int(5) UNSIGNED DEFAULT NULL,
-  `dayID` int(5) UNSIGNED DEFAULT NULL,
-  `timeStartID` int(5) UNSIGNED DEFAULT NULL,
-  `timeEndID` int(5) UNSIGNED DEFAULT NULL,
-  `classroomID` int(5) UNSIGNED DEFAULT NULL
+  `acadProgID` int(5) UNSIGNED NOT NULL,
+  `levelID` int(5) UNSIGNED NOT NULL,
+  `periodID` int(5) UNSIGNED NOT NULL,
+  `curID` int(5) UNSIGNED NOT NULL,
+  `dayID` int(5) UNSIGNED NOT NULL,
+  `timeStartID` int(5) UNSIGNED NOT NULL,
+  `timeEndID` int(5) UNSIGNED NOT NULL,
+  `classroomID` int(5) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Truncate table before insert `coursescheduling`
---
-
-TRUNCATE TABLE `coursescheduling`;
 -- --------------------------------------------------------
 
 --
@@ -159,24 +148,20 @@ TRUNCATE TABLE `coursescheduling`;
 
 CREATE TABLE `curriculum` (
   `curID` int(5) UNSIGNED NOT NULL,
-  `syID` int(5) UNSIGNED DEFAULT NULL,
-  `periodID` int(5) UNSIGNED DEFAULT NULL,
-  `levelID` int(5) UNSIGNED DEFAULT NULL,
-  `acadProgID` int(5) UNSIGNED DEFAULT NULL,
-  `crsCode` int(10) UNSIGNED DEFAULT NULL,
-  `crsName` varchar(25) DEFAULT NULL,
-  `deptID` int(5) UNSIGNED DEFAULT NULL,
-  `lec` int(1) UNSIGNED DEFAULT NULL,
-  `lab` int(1) UNSIGNED DEFAULT NULL,
-  `units` int(1) UNSIGNED DEFAULT NULL,
-  `compLabID` int(5) UNSIGNED DEFAULT NULL
+  `syID` int(5) UNSIGNED NOT NULL,
+  `periodID` int(5) UNSIGNED NOT NULL,
+  `levelID` int(5) UNSIGNED NOT NULL,
+  `acadProgID` int(5) UNSIGNED NOT NULL,
+  `crsCode` int(10) UNSIGNED NOT NULL,
+  `crsName` varchar(25) NOT NULL,
+  `deptID` int(5) UNSIGNED NOT NULL,
+  `lec` float(3,2) UNSIGNED NOT NULL,
+  `lab` float(3,2) UNSIGNED NOT NULL,
+  `units` float(3,2) UNSIGNED NOT NULL,
+  `compLabID` int(5) UNSIGNED NOT NULL,
+  `totalUnits` float(3,2) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Truncate table before insert `curriculum`
---
-
-TRUNCATE TABLE `curriculum`;
 -- --------------------------------------------------------
 
 --
@@ -185,14 +170,9 @@ TRUNCATE TABLE `curriculum`;
 
 CREATE TABLE `day` (
   `dayID` int(5) UNSIGNED NOT NULL,
-  `dayName` varchar(10) DEFAULT NULL
+  `dayName` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Truncate table before insert `day`
---
-
-TRUNCATE TABLE `day`;
 --
 -- Dumping data for table `day`
 --
@@ -213,15 +193,10 @@ INSERT INTO `day` (`dayID`, `dayName`) VALUES
 
 CREATE TABLE `department` (
   `deptID` int(5) UNSIGNED NOT NULL,
-  `deptCode` varchar(10) DEFAULT NULL,
-  `deptName` varchar(50) DEFAULT NULL
+  `deptCode` varchar(10) NOT NULL,
+  `deptName` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Truncate table before insert `department`
---
-
-TRUNCATE TABLE `department`;
 --
 -- Dumping data for table `department`
 --
@@ -238,17 +213,12 @@ INSERT INTO `department` (`deptID`, `deptCode`, `deptName`) VALUES
 
 CREATE TABLE `facultyloading` (
   `facLoadID` int(5) UNSIGNED NOT NULL,
-  `deptID` int(5) UNSIGNED DEFAULT NULL,
-  `levelID` int(5) UNSIGNED DEFAULT NULL,
-  `accountID` int(5) UNSIGNED DEFAULT NULL,
-  `crsSched` int(5) UNSIGNED DEFAULT NULL
+  `deptID` int(5) UNSIGNED NOT NULL,
+  `levelID` int(5) UNSIGNED NOT NULL,
+  `accountID` int(5) UNSIGNED NOT NULL,
+  `crsSched` int(5) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Truncate table before insert `facultyloading`
---
-
-TRUNCATE TABLE `facultyloading`;
 -- --------------------------------------------------------
 
 --
@@ -257,14 +227,9 @@ TRUNCATE TABLE `facultyloading`;
 
 CREATE TABLE `lvl` (
   `levelID` int(5) UNSIGNED NOT NULL,
-  `levelDesc` varchar(30) DEFAULT NULL
+  `levelDesc` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Truncate table before insert `lvl`
---
-
-TRUNCATE TABLE `lvl`;
 --
 -- Dumping data for table `lvl`
 --
@@ -283,14 +248,9 @@ INSERT INTO `lvl` (`levelID`, `levelDesc`) VALUES
 
 CREATE TABLE `period` (
   `periodID` int(5) UNSIGNED NOT NULL,
-  `periodDesc` varchar(30) DEFAULT NULL
+  `periodDesc` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Truncate table before insert `period`
---
-
-TRUNCATE TABLE `period`;
 --
 -- Dumping data for table `period`
 --
@@ -307,14 +267,9 @@ INSERT INTO `period` (`periodID`, `periodDesc`) VALUES
 
 CREATE TABLE `rnk` (
   `rankID` int(5) UNSIGNED NOT NULL,
-  `rankName` varchar(25) DEFAULT NULL
+  `rankName` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Truncate table before insert `rnk`
---
-
-TRUNCATE TABLE `rnk`;
 --
 -- Dumping data for table `rnk`
 --
@@ -340,14 +295,9 @@ INSERT INTO `rnk` (`rankID`, `rankName`) VALUES
 
 CREATE TABLE `schoolyear` (
   `syID` int(5) UNSIGNED NOT NULL,
-  `schoolYR` varchar(10) DEFAULT NULL
+  `schoolYR` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Truncate table before insert `schoolyear`
---
-
-TRUNCATE TABLE `schoolyear`;
 --
 -- Dumping data for table `schoolyear`
 --
@@ -363,16 +313,11 @@ INSERT INTO `schoolyear` (`syID`, `schoolYR`) VALUES
 
 CREATE TABLE `section` (
   `secID` int(5) UNSIGNED NOT NULL,
-  `acadProgID` int(5) UNSIGNED DEFAULT NULL,
-  `levelID` int(5) UNSIGNED DEFAULT NULL,
-  `section` varchar(10) DEFAULT NULL
+  `acadProgID` int(5) UNSIGNED NOT NULL,
+  `levelID` int(5) UNSIGNED NOT NULL,
+  `section` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Truncate table before insert `section`
---
-
-TRUNCATE TABLE `section`;
 --
 -- Dumping data for table `section`
 --
@@ -390,14 +335,9 @@ INSERT INTO `section` (`secID`, `acadProgID`, `levelID`, `section`) VALUES
 
 CREATE TABLE `specialization` (
   `specializationID` int(5) UNSIGNED NOT NULL,
-  `specName` varchar(50) DEFAULT NULL
+  `specName` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Truncate table before insert `specialization`
---
-
-TRUNCATE TABLE `specialization`;
 --
 -- Dumping data for table `specialization`
 --
@@ -417,14 +357,9 @@ INSERT INTO `specialization` (`specializationID`, `specName`) VALUES
 
 CREATE TABLE `timeend` (
   `timeEndID` int(5) UNSIGNED NOT NULL,
-  `timeEnd` varchar(10) DEFAULT NULL
+  `timeEnd` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Truncate table before insert `timeend`
---
-
-TRUNCATE TABLE `timeend`;
 --
 -- Dumping data for table `timeend`
 --
@@ -454,14 +389,9 @@ INSERT INTO `timeend` (`timeEndID`, `timeEnd`) VALUES
 
 CREATE TABLE `timestart` (
   `timeStartID` int(5) UNSIGNED NOT NULL,
-  `timeStart` varchar(10) DEFAULT NULL
+  `timeStart` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Truncate table before insert `timestart`
---
-
-TRUNCATE TABLE `timestart`;
 --
 -- Dumping data for table `timestart`
 --
@@ -496,7 +426,8 @@ ALTER TABLE `academicprog`
 -- Indexes for table `account`
 --
 ALTER TABLE `account`
-  ADD PRIMARY KEY (`accountID`);
+  ADD PRIMARY KEY (`accountID`),
+  ADD UNIQUE KEY `idNum` (`idNum`);
 
 --
 -- Indexes for table `classroom`
@@ -509,6 +440,12 @@ ALTER TABLE `classroom`
 --
 ALTER TABLE `complab`
   ADD PRIMARY KEY (`compLabID`);
+
+--
+-- Indexes for table `course`
+--
+ALTER TABLE `course`
+  ADD PRIMARY KEY (`courseID`);
 
 --
 -- Indexes for table `coursescheduling`
