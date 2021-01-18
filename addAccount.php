@@ -52,14 +52,14 @@ if(isset($_POST['add'])){
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="UI/add Account.css">
+    <link rel="stylesheet" href="UI/addAccount.css">
     <title>Registration</title>
   </head>
   <body>
   <h1 class="h1"> Add Account </h1> 
     <div class="btncontainer">
-        <a class="navtop" href="menu.html" style="color: white; text-decoration: none;"> Home <i class="fas fa-chevron-right"></i> </a>
-        <a class="navtop" href="add Account.html" style="color: white; text-decoration: none;"> Add Account </a>
+        <a class="navtop" href="menu.html" > Home <i class="fas fa-chevron-right"></i> </a>
+        <a class="navtop" href="add Account.html" > Add Account </a>
     </div>
     <div class="container">
         <form class="container2" method = "POST">
