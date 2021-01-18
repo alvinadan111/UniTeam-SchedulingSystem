@@ -39,7 +39,7 @@
             <button type="submit" value="loginSubmit"  class="loginbtn" name="login" default>Login</button>
 
            <p> <hr>
-            <a href="register.php" style="color:dodgerblue">Create New Account </a>
+            <a href="addAccount.php" style="color:dodgerblue">Create New Account </a>
             <br>
            </p>
         </form>
