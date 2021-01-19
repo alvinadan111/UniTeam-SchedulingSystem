@@ -7,8 +7,7 @@
     <title>Login</title>
    
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap CSS
-        ============================================ -->
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -44,15 +43,14 @@
            </p>
         </form>
     </div>
-    <!-- bootstrap JS
-        ============================================ -->
+    <!-- bootstrap JS-->
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript">
      $(document).ready(function()
      {
         setTimeout(function (){
             $('#myAlert').hide('fade');
-        }, 3000); 
+        }, 5000); 
 
      });
         

@@ -27,7 +27,7 @@ require 'database.php';
         } else
         {
             header("Location: index.php?signin=mismatch");  
-        }  
-    }
-    Database::disconnect();	       
+        } 
+         Database::disconnect();   
+    }        
 ?>
