@@ -10,7 +10,7 @@ $pdo=Database::connect();
 <head>
      <title>Course Scheduling</title>
       <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-     <link rel="stylesheet" href="coursescheduling.css">
+     
      <script src="https://kit.fontawesome.com/a076d05399.js"></script>
      <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
@@ -19,18 +19,22 @@ $pdo=Database::connect();
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  
+
+    <link rel="stylesheet" href="coursescheduling.css">
 </head>
 <body>
-    <div class="container">
          <form method="post" >
-        <table class="table"> 
-            <h1 class="textcolor" colspan="3"> Course Scheduling </h1>
+         <h1 class="textcolor"> Course Scheduling </h1>
             <div class="btncontainer">
                 <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
-                <a class="navtop" href="coursescheduling.html"> Course Scheduling </a>
+                <a class="navtop" href="coursescheduling.php"> Course Scheduling </a>
             </div>
+        <table> 
+
             <tr>
-                <th colspan="3"> Academic Programs </th>
+                <td colspan="3">
+                    <p> Academic Programs </p>
+                    <input type="submit" name="btnSearch" value="Search"> </td>
             </tr>
             <tr>
                 <td>
@@ -75,7 +79,7 @@ $pdo=Database::connect();
                                     
                             <?php }?> 
                     </select>
-                    <input type="submit" name="btnSearch" value="Search">
+                    
                 </td>
             </tr>
         </table>
@@ -135,7 +139,6 @@ $pdo=Database::connect();
                 </tr>
  <?php } } } Database::disconnect(); ?>                       
 </table> 
-</div>
 
 
 <!-- bootstrap JS-->
