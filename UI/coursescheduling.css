@@ -1,8 +1,8 @@
 
     body {
         background-color: #fbf0f0;
-        
         font-family: Arial, Helvetica, sans-serif;
+        padding: 15px;
     }
     table{
         width: 100%;
@@ -26,7 +26,7 @@
         color: black;
     }
     .textcolor{
-        color: white;
+        color: #A94442;
     }
     .btncontainer {
         float: right;
@@ -36,13 +36,33 @@
 
     }
     h1 {
+        padding-top: 15px;
         float: left;
     }
     .navtop{
-     text-decoration: none;
-        color: white;
+        text-decoration: none;
+        color: #A94442;
     }
     .navtop:hover {
+        color: white;
+        text-decoration: none;
         background-color: #671D1E;
         padding: 5px;
     }
+    input[type=submit] {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        float: right;  
+        width: 10%;
+        opacity: 0.9;
+    }
+    input[type=submit]:hover {
+        opacity: 1;
+    }
+    p {
+        margin-bottom: 0px;
+        float: left;
+    }
+    
