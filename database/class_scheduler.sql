@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 18, 2021 at 01:29 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.3
+-- Generation Time: Jan 19, 2021 at 01:24 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 8.0.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -63,18 +62,28 @@ CREATE TABLE IF NOT EXISTS `account` (
   `LName` varchar(15) NOT NULL,
   `idNum` varchar(10) NOT NULL,
   `dept` int(5) UNSIGNED NOT NULL,
+  `email` varchar(50) NOT NULL,
   `rankID` int(5) UNSIGNED NOT NULL,
   `specializationID` int(5) UNSIGNED NOT NULL,
   `pw` varchar(20) NOT NULL,
   PRIMARY KEY (`accountID`),
-  UNIQUE KEY `idNum` (`idNum`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  UNIQUE KEY `idNum` (`idNum`),
+  UNIQUE KEY `idNum_2` (`idNum`),
+  UNIQUE KEY `idNum_3` (`idNum`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Truncate table before insert `account`
 --
 
 TRUNCATE TABLE `account`;
+--
+-- Dumping data for table `account`
+--
+
+INSERT INTO `account` (`accountID`, `FName`, `MName`, `LName`, `idNum`, `dept`, `email`, `rankID`, `specializationID`, `pw`) VALUES
+(1, 'admin', 'admin', 'admin', 'admin', 1, 'alvin.adan.12@gmail.', 1, 1, 'admin');
+
 -- --------------------------------------------------------
 
 --
@@ -147,6 +156,13 @@ CREATE TABLE IF NOT EXISTS `course` (
 --
 
 TRUNCATE TABLE `course`;
+--
+-- Dumping data for table `course`
+--
+
+INSERT INTO `course` (`courseID`, `courseCode`, `courseName`, `lec`, `lab`, `totalUnits`) VALUES
+(1, 'Prog 1', 'Programming 1', 3.00, 3.00, 3.00);
+
 -- --------------------------------------------------------
 
 --
@@ -192,13 +208,20 @@ CREATE TABLE IF NOT EXISTS `curriculum` (
   `compLabID` int(5) UNSIGNED NOT NULL,
   `totalUnits` float(3,2) UNSIGNED NOT NULL,
   PRIMARY KEY (`curID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Truncate table before insert `curriculum`
 --
 
 TRUNCATE TABLE `curriculum`;
+--
+-- Dumping data for table `curriculum`
+--
+
+INSERT INTO `curriculum` (`curID`, `syID`, `periodID`, `levelID`, `acadProgID`, `courseID`, `crsName`, `deptID`, `lec`, `lab`, `units`, `compLabID`, `totalUnits`) VALUES
+(1, 1, 1, 1, 1, 1, 'Programming 1', 1, 3.00, 3.00, 3.00, 1, 3.00);
+
 -- --------------------------------------------------------
 
 --
