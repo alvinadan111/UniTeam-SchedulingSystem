@@ -40,10 +40,6 @@ if(isset($_POST['add'])){
             header("refresh:3; url = index.php");
         }
     }
-<<<<<<< HEAD:register.php
-
-=======
->>>>>>> 64388cd1ebdd027407f4b3be035dc42166cbfb6b:addAccount.php
 }
 ?>
 
