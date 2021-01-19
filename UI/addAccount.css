@@ -1,8 +1,8 @@
+
 body {
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
-    background-color:  #763435;
-
+    background-color:  #fbf0f0;
 }
 
 .container {
@@ -62,17 +62,21 @@ select {
     width: 35%;
 }
 .h1 {
+    padding: 15px;
     float: left;
-    color: white;
+    color: #A94442;
 }
 .navtop{
     text-decoration: none;
-       color: white;
+    color:  #A94442;
    }
-   .navtop:hover {
+.navtop:hover {
+    text-decoration: none;
+    color: white;
     background-color: #671D1E;
     padding: 5px;
 }
+
 .btncontainer {
     float: right;
     color: black;
@@ -80,3 +84,4 @@ select {
     padding-right: 50px;
     padding-bottom: 30px;
   }
+  

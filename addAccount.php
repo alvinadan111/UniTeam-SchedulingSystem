@@ -5,7 +5,7 @@ $isRegistered = false;
 $isDuplicated = false;
 $isIncomplete = false;
 
-if(isset($_POST['sign'])){
+if(isset($_POST['add'])){
 
     $pdo=Database::connect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -14,17 +14,16 @@ if(isset($_POST['sign'])){
     $MN = $_POST['Middle_Name'];
     $LN = $_POST['Last_Name'];
     $ID = $_POST['ID_Number'];
-    $pass = $_POST['password']; 
-    $mail = $_POST['emailaddress'];
+    $pw = $_POST['pas'];
     
-    if(empty($_POST['spec']) || empty($_POST['ranks']) || empty($_POST['departments'])){
+    if(empty($_POST['specializationlist']) || empty($_POST['ranklist']) || empty($_POST['departmentlist'])){
  
         $isIncomplete = true;
  
     }else{
-        $SP = $_POST['spec'];
-        $r = $_POST['ranks'];
-        $dept = $_POST['departments'];
+        $SP = $_POST['specializationlist'];
+        $r = $_POST['ranklist'];
+        $dept = $_POST['departmentlist'];
 
         $q = $pdo->prepare("SELECT * FROM account where idNum = ? ");
         $q->execute(array($ID));
@@ -34,16 +33,18 @@ if(isset($_POST['sign'])){
            $isDuplicated = true;
         }else{
 
-            $stmt = $pdo->prepare("INSERT INTO account (FName,MName, LName, idNum, dept, email, rankID, specializationID, pw)
-            VALUES (?,?,?,?,?,?,?,?,?)");
-            $stmt->execute(array($FN,$MN,$LN,$ID,$dept,$mail,$r,$SP,$pass));
+            $stmt = $pdo->prepare("INSERT INTO account (FName, MName, LName, idNum, dept, rankID, specializationID, pw)
+            VALUES (?,?,?,?,?,?,?,?)");
+            $stmt->execute(array($FN,$MN,$LN,$ID,$dept,$r,$SP,$pw));
             $isRegistered = true;
             header("refresh:3; url = index.php");
         }
     }
+<<<<<<< HEAD:register.php
 
+=======
+>>>>>>> 64388cd1ebdd027407f4b3be035dc42166cbfb6b:addAccount.php
 }
-
 ?>
 
 <!doctype html>
@@ -52,38 +53,40 @@ if(isset($_POST['sign'])){
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="UI/signup.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-    <title>Hello, world!</title>
+    <link rel="stylesheet" href="UI/addAccount.css">
+    <title>Registration</title>
   </head>
   <body>
-  
-  <div class="container">
+  <h1 class="h1"> Add Account </h1> 
+    <div class="btncontainer">
+        <a class="navtop" href="menu.html" > Home <i class="fas fa-chevron-right"></i> </a>
+        <a class="navtop" href="add Account.html" > Add Account </a>
+    </div>
+    <div class="container">
         <form class="container2" method = "POST">
 
             <table>
-                <h1> Sign Up </h1>
+                <h1> Add Account </h1>
+
                 <tr>
                     <td><input type="text" placeholder="First Name" name="First_Name" required></td>
                     <td><input type="text" placeholder="Middle Name" name="Middle_Name"></td>
-                    <td><input type="text" placeholder="Last Name" name="Last_Name" required></td>
+                    <td><input type="text" placeholder="Last Name" name="Last Name" required></td>
                 </tr>
                 <tr>
                     <td colspan="3"><input type="text" placeholder="ID Number" name="ID_Number" required></td>
                 </tr>
                 <tr>
-                    <td colspan="3"><input type="password" placeholder="New Password" name="password" required></td>
+                    <td colspan="3"><input type="password" placeholder="Password" name="pas" required></td>
                 </tr>
-                <tr>
-                    <td colspan="3"> <input type="email" placeholder="EmailAddress" name="emailaddress" required> </td>
-                   
-                </tr>
+            
                 <tr>
                     <td colspan="3">
                         <label for="specialization"> Specialization </label>
-                        <select name="spec" id="specialization" required>
+                        <select id="specialization" name="specializationlist">
                             <option value=" " selected disabled></option>
                             <?php
                                 $pdo=Database::connect();
@@ -95,8 +98,8 @@ if(isset($_POST['sign'])){
                                     
                             <?php }?>
                         </select>
-                        <label for="rank"> Rank </label>
-                        <select name="ranks" id="rank" required>
+                        <label for="Rank"> Rank </label>
+                        <select id="rank" name="ranklist">
                             <option value=" " selected disabled></option>
                             <?php
                                 $pdo=Database::connect();
@@ -113,7 +116,8 @@ if(isset($_POST['sign'])){
                 <tr>
                     <td colspan="3"> 
                         <label for="department"> Department </label>
-                        <select name="departments" id="department" required>
+                        <select id="department" name="departmentlist">
+
                             <option value=" " selected disabled></option>
                                 <?php
                                 $pdo=Database::connect();
@@ -121,30 +125,27 @@ if(isset($_POST['sign'])){
                                 $stmt = $pdo->query("SELECT deptID, deptName FROM department");
                                 while ($row = $stmt->fetch()) { ?>
 
-                                <option value="<?php echo $row['deptID']; ?>"> <?php echo $row['deptName'];  ?> </option>
+                            <option value="<?php echo $row['deptID']; ?>"> <?php echo $row['deptName'];  ?> </option>
                                     
                             <?php }?>
-                            
                         </select>
                     </td>
 
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <input type="submit" class="signupbtn" name = "sign" value = "Sign Up"></input>
+                        <button type="submit" name = "add" class="addbtn">Add Account</button>
                     </td>
                 </tr>
             </table>
         </form>
     </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="bootstrap/js/sweetalert.min.js"></script>
-
+      
     <?php if($isDuplicated == true){ ?>
         <script>
             swal({
