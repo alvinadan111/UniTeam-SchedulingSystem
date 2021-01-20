@@ -39,6 +39,7 @@
             <a href="section.html"> Section </a>
             <a href="room.html"> Rooms </a>
             <a href="schoolyr.html"> School Year </a>
+            <a href="addcourse.html"> Course </a>
           </div>
           <button class="dropdown-btn"><i class="fa fa-caret-down"></i> Curriculum Management </button>
           <div class="dropdown-container">
