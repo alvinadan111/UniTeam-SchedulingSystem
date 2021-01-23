@@ -134,7 +134,7 @@ $pdo=Database::connect();
                 <td><?php echo $courseName;?></td>
                 <td></td>
             
-                <td style="text-align: center;"> <a href="courseschedulingdata.html" class="btn"><i
+                <td style="text-align: center;"> <a href="courseschedulingdata.php" class="btn"><i
                             class="fas fa-edit"></i></a> </td> 
                 </tr>
  <?php } } } Database::disconnect(); ?>                       

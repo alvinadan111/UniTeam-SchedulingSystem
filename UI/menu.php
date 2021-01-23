@@ -1,4 +1,9 @@
 <?php session_start();
+
+  if(empty($_SESSION['accountID'])):
+header('Location:../index.php');
+endif;
+
 ?>
 
 <!DOCTYPE html>
