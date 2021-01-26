@@ -10,11 +10,12 @@ body {
 
 table {
     border: 1px solid black;
-    width: 50%;
+   padding-block: 5px;
     background-color: #fefefe;
     border: 1px solid #888;
     box-shadow: 0 10px 10px #222;
     position: absolute;
+    width: 50%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -105,7 +106,7 @@ select, input[type=text] {
         width: 100%;
         overflow: scroll;
         position: absolute;
-        top: 80%;
+        top: 50%;
         left: 0%;
         transform: translate(-0%, -100%);
     }
