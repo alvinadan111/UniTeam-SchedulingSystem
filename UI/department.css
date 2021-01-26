@@ -5,11 +5,12 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
-    background-color: #763435;
+    background-color: #fbf0f0;
 }
 
 table {
     border: 1px solid black;
+    padding-block: 5px;
     width: 50%;
     background-color: #fefefe;
     border: 1px solid #888;
@@ -20,11 +21,10 @@ table {
     transform: translate(-50%, -50%);
 }
 
-
 .navbar {
     width: auto;
-    text-align: center;
-    padding-block: 30px;
+    text-align: left;
+    padding-block:9px;
     background-color: lightgrey;
 }
 
@@ -44,10 +44,6 @@ table {
 .active {
     color: white;
     background-color: #671D1E;
-}
-
-.bord {
-    border-right: 1px solid black;
 }
 
 .tabcontent {
@@ -79,17 +75,18 @@ button:hover {
 
 .navtop {
     text-decoration: none;
-    color: white;
+    color: #A94442;
 
 }
 
 .navtop:hover {
+    color: white;
     background-color: #671D1E;
     padding: 5px;
 }
 
 h1 {
-    color: white;
+    color: #A94442;
     float: left;
 }
 select, input[type=text] {
