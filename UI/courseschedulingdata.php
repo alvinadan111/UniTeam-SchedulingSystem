@@ -12,7 +12,7 @@ require '../database.php';
 
 <head>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <link rel="stylesheet" href="courseschedulingdata.css">
+    <link rel="stylesheet" href="courseSchedulingdata.css">
 </head>
 
 <body>
@@ -28,6 +28,7 @@ require '../database.php';
         <table class="table1">
             <tr>
                 <th colspan="7"> Schedule </th>
+               
             </tr>
             <tr>
                 <td class="noborder">
@@ -88,10 +89,16 @@ require '../database.php';
                             <?php }?> 
                     </select>
                 </td>
-
-                <td class="noborder" style="text-align: center;"> Add <br><button class="btn" onclick="openForm()"><i
-                            class="fas fa-plus-circle"></i> </button>
-                </td>
+                <td class="noborder">
+                <label for="rooms">Available Rooms</label>
+            <div class="hs">
+                <select id="rooms" name="roomlist"  style="align-items: center;">
+                    <option value="302 IT Building"> 302 IT Building </option>
+                    <option value="303 IT Building"> 303 IT Building </option>
+                </select>
+                                </td>
+                <td class="noborder" style="border-right: 1px solid black">
+                <input type="button" value="Save & Submit"> </td>
 
             </tr>
         </table>
@@ -234,36 +241,8 @@ require '../database.php';
         </table>
     </div>
 
-    <div class="availableroomsform-popup" id="myForm">
-        <div class="availableroomscontainer">
-            <button class="closebtn" onclick="closeForm()"><i class="fas fa-window-close"></i> </button>
-            <br>
-            <h2> Available Rooms </h2>
-            <hr>
-            <label for="rooms"></label>
-            <div class="hs">
-                <select id="rooms" name="roomlist"  style="align-items: center;">
-                    <option value="302 IT Building"> 302 IT Building </option>
-                    <option value="303 IT Building"> 303 IT Building </option>
-                </select>
-                <input type="button" value="Save & Submit">
-            </div>
-        </div>
-    </div>
 
     <?php  Database::disconnect(); ?>   
-  
-
-
-    <script>
-        function openForm() {
-            document.getElementById("myForm").style.display = "block";
-        }
-        function closeForm() {
-            document.getElementById("myForm").style.display = "none";
-        }
-    </script>
-
 </body>
 
 </html>
