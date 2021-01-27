@@ -52,22 +52,22 @@ if(isset($_POST['saveSubmitBtn']))
 </head>
 
 <body>
-    <div class="container">
+  
         <div class="btncontainer">
             <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
-            <a class="navtop" href="coursescheduling.php"> Course Scheduling <i class="fas fa-chevron-right"></i> </a>
-            <a class="navtop" href="courseschedulingdata.php"> Schedule </a>
+            <a class="navtop" href="coursescheduling.html"> Course Scheduling <i class="fas fa-chevron-right"></i> </a>
+            <a class="navtop" href="coursechedulingdata.php"> Schedule </a>
         </div>
         <h1 class="textcolor"> Course Scheduling </h1>
 
-<form method="post" > <!--action="#courseSchedulingdata.php-->
+<form method="post">
         <table class="table1">
             <tr>
                 <th colspan="7"> Schedule </th>
                
             </tr>
             <tr>
-                <td class="noborder">
+                <td  class="noborder">
                     <label for="day"> Day </label>
                     <select id="day" name="dayID" required>
                         <option value=" " selected disabled></option>
@@ -127,18 +127,18 @@ if(isset($_POST['saveSubmitBtn']))
                 </td>
                 <td class="noborder">
                 <label for="rooms">Available Rooms</label>
-            <div class="hs">
+                <div class="hs">
                 <select id="rooms" name="classroomID"  style="align-items: center;" required>
                      <option value=" " selected disabled></option>
                          <?php
                                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                 $stmt = $pdo->query("SELECT * FROM coursescheduling c
                                     left outer join classroom ON c.classroomID=classroom.classroomID");
-                               // $row2 = $stmt->fetch();
+                                $row2 = $stmt->fetch();
                             while ($row = $stmt->fetch()) { 
                                     $count=0; $count2=0;
 
-                                if ((row['timeStartID']>= $_POST['timeStartID'] &&  row['timeEndID']<= $_POST['timeEndID'])&&
+                                if (!(row['timeStartID']>= $_POST['timeStartID'] &&  row['timeEndID']<= $_POST['timeEndID'])&&
                                     (($_POST['timeStartID']&&$_POST['timeEndID']<=row['timeStartID']) ||
                                     ($_POST['timeStartID']&&$_POST['timeEndID']<=row['timeEndID']))) {
                                     $conflictTime=false;
@@ -151,22 +151,36 @@ if(isset($_POST['saveSubmitBtn']))
                                    /* $roomConflict[$count]=row['classroomID'];
                                     $count++ */
                                 }else{
-                                  /*  $roomAvailable[$count2]=row['classroomID'];
-                                    $count2++; */
-                        ?>
-                                <option value="<?php echo $row['classroomID']; ?>"> <?php echo $row['roomNum']." - ".$row['buildingCode'];  ?> </option>
-                                                         
-                        <?php  } }?>   
+                                    $roomAvailable[$count2]=row['classroomID'];
+                                    $count2++;
+                                }
+                            }
+
+                            $a=0;
+                            while($a<$count2) {
+                                $id=$roomAvailable[$a];
+
+                            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                $stmt = $pdo->query("SELECT * FROM coursescheduling c
+                                    left outer join classroom ON c.classroomID=classroom.classroomID where classroom.classroomID=?");
+                                $q = $pdo->prepare($stmt);
+                                $q->execute(array($id));
+                                $row2 = $q->fetch(PDO::FETCH_ASSOC);
+                            
+                            ?>
+                                <option value="<?php echo $row2['secID']; ?>"> <?php echo $row2['roomNum']." - ".$row2['buildingCode'];  ?> </option>
+                                    
+                            <?php $a++; }?>   
                     
                 </select>
-                </td>
+                                </td>
                 <td class="noborder" style="border-right: 1px solid black">
-                <input type="submit" name="saveSubmitBtn"  value="Save & Submit"> </td>
-
+                <input type="Submit" value="Save & Submit"> </td>
             </tr>
-        </table>
-        <table>
-            <tr>
+                            </table>
+                            <table>
+      
+                <tr>
                 <td> Time </td>
                 <td> Monday </td>
                 <td> Tuesday </td>
@@ -174,8 +188,8 @@ if(isset($_POST['saveSubmitBtn']))
                 <td> Thursday </td>
                 <td> Friday </td>
                 <td> Saturday </td>
-            </tr>
-            <tr>
+                </tr>
+                <tr>
                 <td> 7am </td>
                 <td> </td>
                 <td> </td>
@@ -183,8 +197,8 @@ if(isset($_POST['saveSubmitBtn']))
                 <td> </td>
                 <td> </td>
                 <td> </td>
-            </tr>
-            <tr>
+             </tr>
+                <tr>
                 <td> 8am </td>
                 <td> </td>
                 <td> </td>
@@ -192,8 +206,8 @@ if(isset($_POST['saveSubmitBtn']))
                 <td> </td>
                 <td> </td>
                 <td> </td>
-            </tr>
-            <tr>
+             </tr>
+                <tr>
                 <td> 9am </td>
                 <td> </td>
                 <td> </td>
@@ -201,8 +215,8 @@ if(isset($_POST['saveSubmitBtn']))
                 <td> </td>
                 <td> </td>
                 <td> </td>
-            </tr>
-            <tr>
+                </tr>
+                <tr>
                 <td> 10am </td>
                 <td> </td>
                 <td> </td>
@@ -210,8 +224,8 @@ if(isset($_POST['saveSubmitBtn']))
                 <td> </td>
                 <td> </td>
                 <td> </td>
-            </tr>
-            <tr>
+                </tr>
+                <tr>
                 <td> 11am </td>
                 <td> </td>
                 <td> </td>
@@ -219,8 +233,8 @@ if(isset($_POST['saveSubmitBtn']))
                 <td> </td>
                 <td> </td>
                 <td> </td>
-            </tr>
-            <tr>
+                </tr>
+                <tr>
                 <td> 12nn </td>
                 <td> </td>
                 <td> </td>
@@ -228,8 +242,8 @@ if(isset($_POST['saveSubmitBtn']))
                 <td> </td>
                 <td> </td>
                 <td> </td>
-            </tr>
-            <tr>
+                    </tr>
+                <tr>
                 <td> 1pm </td>
                 <td> </td>
                 <td> </td>
@@ -302,17 +316,11 @@ if(isset($_POST['saveSubmitBtn']))
                 <td> </td>
             </tr>
         </table>
-    </div>
      </form>
 
 
 
     <?php  Database::disconnect(); ?>   
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="bootstrap/js/sweetalert.min.js"></script>
 
 
     <?php if($isSubmitted == true){ ?>
@@ -345,7 +353,10 @@ if(isset($_POST['saveSubmitBtn']))
     </script>
     <?php }  ?>
 
-     
+     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="bootstrap/js/sweetalert.min.js"></script>
 </body>
 
 </html>
