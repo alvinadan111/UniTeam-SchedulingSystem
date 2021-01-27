@@ -25,7 +25,7 @@ $pdo=Database::connect();
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  
 
-    <link rel="stylesheet" href="coursescheduling.css">
+    <link rel="stylesheet" href="courseScheduling.css">
 </head>
 <body>
          <form method="post" >
@@ -39,7 +39,7 @@ $pdo=Database::connect();
             <tr>
                 <td colspan="3">
                     <p> Academic Programs </p>
-                    <input type="submit" name="btnSearch" value="Search"> </td>
+                    
             </tr>
             <tr>
                 <td>
@@ -71,7 +71,7 @@ $pdo=Database::connect();
                             <?php }?>   
                     </select>
                 </td>
-                <td>
+                <td class="line">
                     <label for="period"> Period </label>
                     <select id="period" name="periodlist"  required>
                         <option value=" " selected disabled></option>
@@ -84,7 +84,7 @@ $pdo=Database::connect();
                                     
                             <?php }?> 
                     </select>
-                    
+                    <input type="submit" name="btnSearch" value="Search"> </td>
                 </td>
             </tr>
         </table>
