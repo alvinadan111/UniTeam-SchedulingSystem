@@ -55,7 +55,7 @@ if(isset($_POST['saveSubmitBtn']))
   
         <div class="btncontainer">
             <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
-            <a class="navtop" href="coursescheduling.html"> Course Scheduling <i class="fas fa-chevron-right"></i> </a>
+            <a class="navtop" href="coursescheduling.php"> Course Scheduling <i class="fas fa-chevron-right"></i> </a>
             <a class="navtop" href="coursechedulingdata.php"> Schedule </a>
         </div>
         <h1 class="textcolor"> Course Scheduling </h1>
@@ -134,11 +134,11 @@ if(isset($_POST['saveSubmitBtn']))
                                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                 $stmt = $pdo->query("SELECT * FROM coursescheduling c
                                     left outer join classroom ON c.classroomID=classroom.classroomID");
-                                $row2 = $stmt->fetch();
+                               // $row2 = $stmt->fetch();
                             while ($row = $stmt->fetch()) { 
                                     $count=0; $count2=0;
 
-                                if (!(row['timeStartID']>= $_POST['timeStartID'] &&  row['timeEndID']<= $_POST['timeEndID'])&&
+                                if ((row['timeStartID']>= $_POST['timeStartID'] &&  row['timeEndID']<= $_POST['timeEndID'])&&
                                     (($_POST['timeStartID']&&$_POST['timeEndID']<=row['timeStartID']) ||
                                     ($_POST['timeStartID']&&$_POST['timeEndID']<=row['timeEndID']))) {
                                     $conflictTime=false;
@@ -151,34 +151,20 @@ if(isset($_POST['saveSubmitBtn']))
                                    /* $roomConflict[$count]=row['classroomID'];
                                     $count++ */
                                 }else{
-                                    $roomAvailable[$count2]=row['classroomID'];
-                                    $count2++;
-                                }
-                            }
-
-                            $a=0;
-                            while($a<$count2) {
-                                $id=$roomAvailable[$a];
-
-                            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                                $stmt = $pdo->query("SELECT * FROM coursescheduling c
-                                    left outer join classroom ON c.classroomID=classroom.classroomID where classroom.classroomID=?");
-                                $q = $pdo->prepare($stmt);
-                                $q->execute(array($id));
-                                $row2 = $q->fetch(PDO::FETCH_ASSOC);
-                            
-                            ?>
-                                <option value="<?php echo $row2['secID']; ?>"> <?php echo $row2['roomNum']." - ".$row2['buildingCode'];  ?> </option>
-                                    
-                            <?php $a++; }?>   
+                                  /*  $roomAvailable[$count2]=row['classroomID'];
+                                    $count2++; */
+                        ?>
+                                <option value="<?php echo $row['classroomID']; ?>"> <?php echo $row['roomNum']." - ".$row['buildingCode'];  ?> </option>
+                                                         
+                        <?php  } }?>   
                     
                 </select>
                                 </td>
                 <td class="noborder" style="border-right: 1px solid black">
-                <input type="Submit" value="Save & Submit"> </td>
+                <input type="Submit" name="saveSubmitBtn" value="Save & Submit"> </td>
             </tr>
-                            </table>
-                            <table>
+            </table>
+            <table>
       
                 <tr>
                 <td> Time </td>
@@ -322,6 +308,11 @@ if(isset($_POST['saveSubmitBtn']))
 
     <?php  Database::disconnect(); ?>   
 
+     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="bootstrap/js/sweetalert.min.js"></script>
+
 
     <?php if($isSubmitted == true){ ?>
         <script>
@@ -353,10 +344,7 @@ if(isset($_POST['saveSubmitBtn']))
     </script>
     <?php }  ?>
 
-     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="bootstrap/js/sweetalert.min.js"></script>
+    
 </body>
 
 </html>
