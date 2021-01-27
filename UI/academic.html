@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="academic.css">
 </head>
+
 <body>
     <h1> Academic Program </h1>
     <div class="btncontainer">
@@ -13,24 +15,30 @@
     </div>
     <div class="container">
         <div id="add" class="tabcontent">
+
+
+
             <table>
+                <caption >
+                    <div id="active" class="navbar">
+                        <a class="nav active" onclick="openPage('add', this)" id="defaultOpen"><i
+                                class="fas fa-plus-square"></i> Add</a>
+                        <a class="nav" onclick="openPage('update', this)"><i class="fas fa-edit"></i> Update
+                        </a>
+                        <a class="nav" onclick="openPage('view', this)"><i class="fas fa-eye"></i> View
+                        </a>
+                    </div>
+                </caption>
                 <tr>
-                    <td class="bord" rowspan="3">
-                        <div id="active" class="navbar">
-                            <a class="nav active" onclick="openPage('add', this)" id="defaultOpen"><i
-                                    class="fas fa-plus-square"></i> Add</a> <br>
-                            <br><a class="nav" onclick="openPage('update', this)"><i class="fas fa-edit"></i> Update
-                            </a>
-                        </div>
-                    </td>
-                    <th> 
+
+                    <td>
                         <label for="progcode"> Program Code </label><br>
                         <input type="text" id="programcode">
-                    </th>
-                    <th> 
+                    </td>
+                    <td>
                         <label for="progname"> Program Name </label><br>
                         <input type="text" id="programname">
-                    </th>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -43,34 +51,57 @@
     <div id="update" class="tabcontent">
 
         <table>
-            <tr>
-                <td class="bord" rowspan="3">
-                    <div id="active" class="navbar">
-                        <a class="nav" onclick="openPage('add', this)" id="defaultOpen"><i
-                                class="fas fa-plus-square"></i> Add</a> <br>
-                        <br><a class="nav active" onclick="openPage('update', this)"><i class="fas fa-edit"></i> Update
-                        </a>
-                    </div>
+            <caption >
+                <div id="active" class="navbar">
+                    <a class="nav" onclick="openPage('add', this)" id="defaultOpen"><i
+                            class="fas fa-plus-square"></i> Add </a>
+                    <a class="nav active" onclick="openPage('update', this)"><i class="fas fa-edit"></i> Update
+                    </a>
+                    <a class="nav" onclick="openPage('view', this)"><i class="fas fa-eye"></i> View
+                    </a>
+                </div>
+            </caption>
+                <td>
+                    <label for="progcode"> Program Code </label><br>
+                    <select id="progcode" name="progcodelist" form="progcodeform">
+                        <option value=""> </option>
+                        <option value=""> </option>
+                        <option value=""> </option>
+                        <option value=""> </option>
+                    </select>
                 </td>
-                <th>
-                <label for="progcode"> Program Code </label><br>
-                        <select id="progcode" name="progcodelist" form="progcodeform">
-                            <option value=""> </option>
-                            <option value=""> </option>
-                            <option value=""> </option>
-                            <option value=""> </option>
-                        </select>
-                    </th>
-                    <th> 
-                        <label for="progname"> Program Name </label><br>
-                        <input type="text">
-                    </th>
+                <td>
+                    <label for="progname"> Program Name </label><br>
+                    <input type="text">
+                </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <button> Delete Program </button>
-                    <button>  Save Changes </button>
+                    <button> Save Changes </button>
                 </td>
+            </tr>
+
+        </table>
+    </div>
+    <div id="view" class="tabcontent">
+
+        <table>
+            <caption >
+                <div id="active" class="navbar">
+                    <a class="nav" onclick="openPage('add', this)" id="defaultOpen"><i
+                            class="fas fa-plus-square"></i> Add </a>
+                    <a class="nav" onclick="openPage('update', this)"><i class="fas fa-edit"></i> Update
+                    </a>
+                    <a class="nav active" onclick="openPage('view', this)"><i class="fas fa-eye"></i> View
+                    </a>
+                </div>
+            </caption>
+                <th> Program Code </th>
+                <th> Program Name </th>
+            <tr>
+                <td> </td>
+                <td> </td>
             </tr>
 
         </table>
