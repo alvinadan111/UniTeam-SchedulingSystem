@@ -5,6 +5,40 @@ endif;
 
 
 require '../database.php';
+$isSubmitted = false;
+$isCreated = false;
+$isIncomplete = false;
+
+if(!empty($_POST['dayID'])&& !empty($_POST['timeStartID']) && !empty($_POST['timeEndID']) && !empty($_POST['secID'])){
+        $isSubmitted = true;
+    }
+
+if(isset($_POST['saveSubmitBtn']))
+{
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $curID = $_POST['curID'];
+    $dayID = $_POST['dayID'];
+    $timeStartID = $_POST['timeStartID'];
+    $timeEndID = $_POST['timeEndID'];
+    $secID = $_POST['secID'];
+    $classroomID = $_POST['classroomID'];
+
+
+    if(empty($_POST['dayID']) || empty($_POST['timeStartID']) || empty($_POST['timeEndID'])|| empty($_POST['secID'])|| empty($_POST['classroomID'])){
+ 
+        $isIncomplete = true;
+    }else{
+
+            $stmt = $pdo->prepare("INSERT INTO coursescheduling (curID, dayID, timeStartID, timeEndID, secID, classroomID)
+            VALUES (?,?,?,?,?,?,?,?)");
+            $stmt->execute(array($curID,$dayID,$timeStartID,$timeEndID,$secID,$classroomID));
+            $isCreated = true;
+            // header("refresh:3; url = index.php");
+    }
+
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -12,6 +46,8 @@ require '../database.php';
 
 <head>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="courseSchedulingdata.css">
 </head>
 
@@ -33,7 +69,7 @@ require '../database.php';
             <tr>
                 <td class="noborder">
                     <label for="day"> Day </label>
-                    <select id="day" name="daylist" >
+                    <select id="day" name="dayID" required>
                         <option value=" " selected disabled></option>
                             <?php
                                 $pdo=Database::connect();
@@ -45,11 +81,11 @@ require '../database.php';
                                     
                             <?php }?>    
                     </select>
-                    </form>
+                   
                 </td>
                 <td class="noborder">
                     <label for="timestart"> Time Start </label>
-                    <select id="timestart" name="timelist" >
+                    <select id="timestart" name="timeStartID" required>
                         <option value=" " selected disabled></option>
                             <?php
                                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -63,7 +99,7 @@ require '../database.php';
                 </td>
                 <td class="noborder">
                     <label for="timeend"> Time End </label>
-                    <select id="timeend" name="timeendlist" >
+                    <select id="timeend" name="timeEndID" required>
                         <option value=" " selected disabled></option>
                          <?php
                                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -77,7 +113,7 @@ require '../database.php';
                 </td>
                 <td class="noborder">
                     <label for="section"> Section </label>
-                    <select id="section" name="sectionlist">
+                    <select id="section" name="secID" onchange='this.form.submit()'>
                         <option value="" selected disabled ></option>
                             <?php
                                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -92,13 +128,54 @@ require '../database.php';
                 <td class="noborder">
                 <label for="rooms">Available Rooms</label>
             <div class="hs">
-                <select id="rooms" name="roomlist"  style="align-items: center;">
-                    <option value="302 IT Building"> 302 IT Building </option>
-                    <option value="303 IT Building"> 303 IT Building </option>
+                <select id="rooms" name="classroomID"  style="align-items: center;" required>
+                     <option value=" " selected disabled></option>
+                         <?php
+                                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                $stmt = $pdo->query("SELECT * FROM coursescheduling c
+                                    left outer join classroom ON c.classroomID=classroom.classroomID");
+                                $row2 = $stmt->fetch();
+                            while ($row = $stmt->fetch()) { 
+                                    $count=0; $count2=0;
+
+                                if (!(row['timeStartID']>= $_POST['timeStartID'] &&  row['timeEndID']<= $_POST['timeEndID'])&&
+                                    (($_POST['timeStartID']&&$_POST['timeEndID']<=row['timeStartID']) ||
+                                    ($_POST['timeStartID']&&$_POST['timeEndID']<=row['timeEndID']))) {
+                                    $conflictTime=false;
+                                } else {
+                                   $conflictTime=true; 
+                                }
+
+                                if (row['dayID']== $_POST['dayID'] && $conflictTime==true) {
+                                    $conflictTime=true; 
+                                   /* $roomConflict[$count]=row['classroomID'];
+                                    $count++ */
+                                }else{
+                                    $roomAvailable[$count2]=row['classroomID'];
+                                    $count2++;
+                                }
+                            }
+
+                            $a=0;
+                            while($a<$count2) {
+                                $id=$roomAvailable[$a];
+
+                            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                $stmt = $pdo->query("SELECT * FROM coursescheduling c
+                                    left outer join classroom ON c.classroomID=classroom.classroomID where classroom.classroomID=?");
+                                $q = $pdo->prepare($stmt);
+                                $q->execute(array($id));
+                                $row2 = $q->fetch(PDO::FETCH_ASSOC);
+                            
+                            ?>
+                                <option value="<?php echo $row2['secID']; ?>"> <?php echo $row2['roomNum']." - ".$row2['buildingCode'];  ?> </option>
+                                    
+                            <?php $a++; }?>   
+                    
                 </select>
                                 </td>
                 <td class="noborder" style="border-right: 1px solid black">
-                <input type="button" value="Save & Submit"> </td>
+                <input type="saveSubmitBtn" value="Save & Submit"> </td>
 
             </tr>
         </table>
@@ -240,9 +317,47 @@ require '../database.php';
             </tr>
         </table>
     </div>
+     </form>
+
 
 
     <?php  Database::disconnect(); ?>   
+
+
+    <?php if($isSubmitted == true){ ?>
+        <script>
+            swal({
+            title: "Successfully Submitted",
+            text: "Proceed to adding a room available",
+            icon: "success",
+            });
+    </script>
+    <?php }  ?>
+
+
+     <?php if($isCreated == true){ ?>
+        <script>
+            swal({
+            title: "Successfully Created a Schedule",
+            text: "",
+            icon: "success",
+            });
+    </script>
+    <?php }  ?>
+    <?php if($isIncomplete == true){ ?>
+        <script>
+            swal({
+            title: "Incomplete input",
+            text: "Please fill out all required fields",
+            icon: "warning",
+            });
+    </script>
+    <?php }  ?>
+
+     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="bootstrap/js/sweetalert.min.js"></script>
 </body>
 
 </html>
