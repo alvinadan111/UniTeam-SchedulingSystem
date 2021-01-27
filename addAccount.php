@@ -1,5 +1,7 @@
 <?php
 session_start();
+
+
 require 'database.php';
 $isRegistered = false;
 $isDuplicated = false;

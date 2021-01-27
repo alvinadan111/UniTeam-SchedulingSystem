@@ -1,4 +1,9 @@
 <?php session_start();
+ if(empty($_SESSION['accountID'])):
+header('Location:../index.php');
+endif;
+
+
 require '../database.php';
 ?>
 
@@ -19,9 +24,8 @@ require '../database.php';
         </div>
         <h1 class="textcolor"> Course Scheduling </h1>
 
-        <form method="post">
+<form method="post">
         <table class="table1">
-
             <tr>
                 <th colspan="7"> Schedule </th>
             </tr>
@@ -40,6 +44,7 @@ require '../database.php';
                                     
                             <?php }?>    
                     </select>
+                    </form>
                 </td>
                 <td class="noborder">
                     <label for="timestart"> Time Start </label>
@@ -245,8 +250,9 @@ require '../database.php';
             </div>
         </div>
     </div>
+
     <?php  Database::disconnect(); ?>   
-    </form>
+  
 
 
     <script>

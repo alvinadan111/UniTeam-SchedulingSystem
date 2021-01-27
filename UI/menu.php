@@ -13,6 +13,7 @@ endif;
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
   <link rel="stylesheet" href="menu.css">
+  <title>Menu | Scheduling System</title>
 </head>
 
 <body>
