@@ -52,11 +52,11 @@ if(isset($_POST['saveSubmitBtn']))
 </head>
 
 <body>
-    <div class="container">
+  
         <div class="btncontainer">
             <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
             <a class="navtop" href="coursescheduling.html"> Course Scheduling <i class="fas fa-chevron-right"></i> </a>
-            <a class="navtop" href="courseschedulingdata.php"> Schedule </a>
+            <a class="navtop" href="coursechedulingdata.php"> Schedule </a>
         </div>
         <h1 class="textcolor"> Course Scheduling </h1>
 
@@ -67,7 +67,7 @@ if(isset($_POST['saveSubmitBtn']))
                
             </tr>
             <tr>
-                <td class="noborder">
+                <td  class="noborder">
                     <label for="day"> Day </label>
                     <select id="day" name="dayID" required>
                         <option value=" " selected disabled></option>
@@ -127,7 +127,7 @@ if(isset($_POST['saveSubmitBtn']))
                 </td>
                 <td class="noborder">
                 <label for="rooms">Available Rooms</label>
-            <div class="hs">
+                <div class="hs">
                 <select id="rooms" name="classroomID"  style="align-items: center;" required>
                      <option value=" " selected disabled></option>
                          <?php
@@ -175,12 +175,12 @@ if(isset($_POST['saveSubmitBtn']))
                 </select>
                                 </td>
                 <td class="noborder" style="border-right: 1px solid black">
-                <input type="saveSubmitBtn" value="Save & Submit"> </td>
-
+                <input type="Submit" value="Save & Submit"> </td>
             </tr>
-        </table>
-        <table>
-            <tr>
+                            </table>
+                            <table>
+      
+                <tr>
                 <td> Time </td>
                 <td> Monday </td>
                 <td> Tuesday </td>
@@ -188,8 +188,8 @@ if(isset($_POST['saveSubmitBtn']))
                 <td> Thursday </td>
                 <td> Friday </td>
                 <td> Saturday </td>
-            </tr>
-            <tr>
+                </tr>
+                <tr>
                 <td> 7am </td>
                 <td> </td>
                 <td> </td>
@@ -197,8 +197,8 @@ if(isset($_POST['saveSubmitBtn']))
                 <td> </td>
                 <td> </td>
                 <td> </td>
-            </tr>
-            <tr>
+             </tr>
+                <tr>
                 <td> 8am </td>
                 <td> </td>
                 <td> </td>
@@ -206,8 +206,8 @@ if(isset($_POST['saveSubmitBtn']))
                 <td> </td>
                 <td> </td>
                 <td> </td>
-            </tr>
-            <tr>
+             </tr>
+                <tr>
                 <td> 9am </td>
                 <td> </td>
                 <td> </td>
@@ -215,8 +215,8 @@ if(isset($_POST['saveSubmitBtn']))
                 <td> </td>
                 <td> </td>
                 <td> </td>
-            </tr>
-            <tr>
+                </tr>
+                <tr>
                 <td> 10am </td>
                 <td> </td>
                 <td> </td>
@@ -224,8 +224,8 @@ if(isset($_POST['saveSubmitBtn']))
                 <td> </td>
                 <td> </td>
                 <td> </td>
-            </tr>
-            <tr>
+                </tr>
+                <tr>
                 <td> 11am </td>
                 <td> </td>
                 <td> </td>
@@ -233,8 +233,8 @@ if(isset($_POST['saveSubmitBtn']))
                 <td> </td>
                 <td> </td>
                 <td> </td>
-            </tr>
-            <tr>
+                </tr>
+                <tr>
                 <td> 12nn </td>
                 <td> </td>
                 <td> </td>
@@ -242,8 +242,8 @@ if(isset($_POST['saveSubmitBtn']))
                 <td> </td>
                 <td> </td>
                 <td> </td>
-            </tr>
-            <tr>
+                    </tr>
+                <tr>
                 <td> 1pm </td>
                 <td> </td>
                 <td> </td>
@@ -316,7 +316,6 @@ if(isset($_POST['saveSubmitBtn']))
                 <td> </td>
             </tr>
         </table>
-    </div>
      </form>
 
 
