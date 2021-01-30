@@ -22,7 +22,7 @@ $pdo=Database::connect();
 <body>
     <h1> Faculty Loading </h1> 
     <div class="btncontainer">
-        <a class="navtop" href="menu.html"> Home <i class="fas fa-chevron-right"></i> </a>
+        <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
         <a class="navtop" href="facultyloading.html"> Faculty Loading </a>
     </div>
   <form method="get">
