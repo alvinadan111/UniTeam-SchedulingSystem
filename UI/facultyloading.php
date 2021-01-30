@@ -122,7 +122,7 @@ $pdo=Database::connect();
                             </td> -->
                          <thead>
                             <tr class="border">
-                                <th class="border" colspan="2"> Courses to Load </th>
+                                <th class="border" colspan="3"> Courses to Load </th>
                             </tr>
                             <tr>
                                 <th class="head">Course</th>
