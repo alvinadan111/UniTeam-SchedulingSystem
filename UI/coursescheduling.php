@@ -5,13 +5,14 @@ endif;
 
 //error_reporting(E_ERROR | E_PARSE);
 require '../database.php';
+$pdo=Database::connect();
 /*$isSubmitted = false;
 $isCreated = false;
 $isIncomplete = false;*/
 
 
 
-$pdo=Database::connect();
+
 
 ?>
 
@@ -158,7 +159,7 @@ $pdo=Database::connect();
             $_SESSION['periodID']." curid: ".$_SESSION['curID'];
 }
 
-    ?>
+    ?>       <tbody>
                 <tr>
                 <td><?php echo $courseCode;?></td>
                 <td><?php echo $courseName;?></td>
@@ -170,6 +171,7 @@ $pdo=Database::connect();
                <!--  <td style="text-align: center;"> <a href="<?php //echo 'courseschedulingdata.php?curID='.$_SESSION['curID']; ?>"  class="btn"><i
                             class="fas fa-edit"></i></a> </td> --> 
                 </tr>
+            </tbody>
            
 
        
