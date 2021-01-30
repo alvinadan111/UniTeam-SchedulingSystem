@@ -16,7 +16,7 @@ $pdo=Database::connect();
 <head>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="facultyloading.css">
+    <link rel="stylesheet" href="Facultyloading.css">
 </head>
 
 <body>
@@ -115,24 +115,21 @@ $pdo=Database::connect();
                 <div class="row">
                       <div class="column">
                         <table>
-                            <tr class="border">
-                                <th class="border" colspan="2"> Courses to Load </th>
-                            </tr>
+                            
                             <!-- <td colspan="3" class="border">
                                 <label for="searchcode">Enter The Course Code To Search:</label>
                                 <input type="search" id="searchcode" name="searchcode">
                             </td> -->
                          <thead>
+                            <tr class="border">
+                                <th class="border" colspan="2"> Courses to Load </th>
+                            </tr>
                             <tr>
                                 <th class="head">Course</th>
                                 <th> Schedule </th>
                                 <th> </th>
                             </tr>
-                            <tr>
-                                <td> </td>
-                                <td> </td>
-                                <td class="btncenter"> <button> Add to Calendar </button> </td>
-                            </tr>
+                       
                         </thead>
         <?php    while ($row = $stmt->fetch()) 
               {
@@ -148,7 +145,7 @@ $pdo=Database::connect();
                                 <tr>
                                     <td><?php echo $crsName;?></td>
                                 <td><?php echo $timeStart." - ".$timeEnd;?></td>
-                                <td></td>
+                                <td class="btncenter"> <button> Add to Calendar </button> </td>
                                 </tr>
                             </tbody>
                         </table>
