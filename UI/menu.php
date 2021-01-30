@@ -62,6 +62,7 @@ endif;
             <a href="add Account.html"> Add Instructor </a>
             <a href="listofinstructor.html"> View Instructor </a>
           </div>
+          <a href="Schedules.html"> Schedules </a>
           <a href="roomoccupied.html"> Rooms </a>
           <a href="changepassword.html"> Change Password </a>
           <a href="../logout.php"> Logout </a>
