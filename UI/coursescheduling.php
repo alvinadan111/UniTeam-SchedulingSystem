@@ -3,8 +3,13 @@
 header('Location:../index.php');
 endif;
 
-
+//error_reporting(E_ERROR | E_PARSE);
 require '../database.php';
+/*$isSubmitted = false;
+$isCreated = false;
+$isIncomplete = false;*/
+
+
 
 $pdo=Database::connect();
 
@@ -91,7 +96,7 @@ $pdo=Database::connect();
          </form>
         <br>
 <?php if(isset($_POST['btnSearch']))
-    { 
+{ 
        if(empty($_POST['periodlist']) || empty($_POST['levellist']) || empty($_POST['acadlist'])){ ?>
  
             </div>
@@ -103,15 +108,6 @@ $pdo=Database::connect();
 
 <?php  }else{ ?>
 
-        <table class="table">
-              <thead>
-                <tr>
-                <th>Course Code</th>
-                <th>Description</th>
-                <th>Schedule</th>
-                <th>Action </th>                      
-                </tr>
-              </thead>
    <?php
     $pdo=Database::connect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -120,7 +116,7 @@ $pdo=Database::connect();
     $periodlists = $_POST['periodlist'];
 
      
-        $stmt=$pdo->prepare("select course.courseCode, course.courseName from curriculum c 
+        $stmt=$pdo->prepare("select c.curID, c.syID, c.periodID, course.courseCode, course.courseName from curriculum c 
             left outer join course ON c.courseID=course.courseID 
             left outer join academicprog ON c.acadProgID=academicprog.acadProgID  
             left outer join lvl ON c.levelID=lvl.levelID
@@ -128,10 +124,39 @@ $pdo=Database::connect();
             where (c.periodID = ?) and (c.levelID = ?) and (c.acadProgID = ?)
             order by curID ");
         $stmt->execute(array($acadlists, $levellists,  $periodlists));
-        while ($row = $stmt->fetch()) 
-        {
+        $result= $stmt->rowCount();
+         if($result==0){ ?>
+ 
+            </div>
+            <!-- Warning Alert -->
+            <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
+            <strong>Warning!</strong> &nbsp No result from the chosen academic program.
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+    <?php } ?>
+                <table class="table">
+              <thead>
+                <tr>
+                <th>Course Code</th>
+                <th>Description</th>
+                <th>Schedule</th>
+                <th>Action </th>                      
+                </tr>
+              </thead>
+
+    <?php 
+    while ($row = $stmt->fetch()) 
+          {
+            $_SESSION['curID']=$row['curID'];
+            $_SESSION['syID']=$row['syID'];
+            $_SESSION['periodID']=$row['periodID'];
             $courseCode=$row['courseCode'];
             $courseName=$row['courseName'];
+
+            if ($result>0) {
+    echo "laman session: syId:".$_SESSION['syID']." periodid ".
+            $_SESSION['periodID']." curid: ".$_SESSION['curID'];
+}
 
     ?>
                 <tr>
@@ -139,9 +164,15 @@ $pdo=Database::connect();
                 <td><?php echo $courseName;?></td>
                 <td></td>
             
-                <td style="text-align: center;"> <a href="courseschedulingdata.php" class="btn"><i
+
+                <td style="text-align: center;"> <a href="<?php echo 'courseschedulingdata.php'; ?>"  class="btn"><i
                             class="fas fa-edit"></i></a> </td> 
+               <!--  <td style="text-align: center;"> <a href="<?php //echo 'courseschedulingdata.php?curID='.$_SESSION['curID']; ?>"  class="btn"><i
+                            class="fas fa-edit"></i></a> </td> --> 
                 </tr>
+           
+
+       
  <?php } } } Database::disconnect(); ?>                       
 </table> 
 
@@ -153,7 +184,7 @@ $pdo=Database::connect();
      {
         setTimeout(function (){
             $('#myAlert').hide('fade');
-        }, 5000); 
+        }, 3500); 
 
      });
         

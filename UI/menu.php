@@ -36,7 +36,7 @@ endif;
       <div class="card">
         <div class="sidenav">
           <h1> MENU </h1>
-          <a href="menu.html">Home</a>
+          <a href="menu.php">Home</a>
           <a href="facultyloading.html">Faculty Loading </a>
           <button class="dropdown-btn"><i class="fa fa-caret-down"></i> Entry </button>
           <div class="dropdown-container">

@@ -60,8 +60,8 @@ if(isset($_POST['add'])){
   <body>
   <h1 class="h1"> Add Account </h1> 
     <div class="btncontainer">
-        <a class="navtop" href="menu.html" > Home <i class="fas fa-chevron-right"></i> </a>
-        <a class="navtop" href="add Account.html" > Add Account </a>
+        <a class="navtop" href="index.php" > Home <i class="fas fa-chevron-right"></i> </a>
+        <a class="navtop" href="addAccount.php" > Add Account </a>
     </div>
     <div class="container">
         <form class="container2" method = "POST">

@@ -3,51 +3,204 @@
 header('Location:../index.php');
 endif;
 
-
+// error_reporting(E_ERROR | E_PARSE);
 require '../database.php';
 $isSubmitted = false;
 $isCreated = false;
 $isIncomplete = false;
 
-if(!empty($_POST['dayID'])&& !empty($_POST['timeStartID']) && !empty($_POST['timeEndID']) && !empty($_POST['secID'])){
-        $isSubmitted = true;
-    }
-
-if(isset($_POST['saveSubmitBtn']))
-{
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $curID = $_POST['curID'];
-    $dayID = $_POST['dayID'];
-    $timeStartID = $_POST['timeStartID'];
-    $timeEndID = $_POST['timeEndID'];
-    $secID = $_POST['secID'];
-    $classroomID = $_POST['classroomID'];
+$pdo=Database::connect(); 
 
 
-    if(empty($_POST['dayID']) || empty($_POST['timeStartID']) || empty($_POST['timeEndID'])|| empty($_POST['secID'])|| empty($_POST['classroomID'])){
- 
+if(isset($_GET['secID'])){
+    if(empty($_GET['dayID']) || empty($_GET['timeStartID']) || empty($_GET['timeEndID']) || empty($_GET['secID'])){ 
         $isIncomplete = true;
+            echo "Some fields are left out unfilled. <br>";
+    /*    ?>   <!-- Warning Alert -->
+            <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
+            <strong>Warning!</strong> &nbsp Some fields are left unfilled.
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        <?php */
     }else{
 
-            $stmt = $pdo->prepare("INSERT INTO coursescheduling (curID, dayID, timeStartID, timeEndID, secID, classroomID)
-            VALUES (?,?,?,?,?,?,?,?)");
-            $stmt->execute(array($curID,$dayID,$timeStartID,$timeEndID,$secID,$classroomID));
-            $isCreated = true;
-            // header("refresh:3; url = index.php");
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql = $pdo->query("SELECT * from classroom order by roomNum");
+    $i=0;
+    while ($row = $sql->fetch()) {
+        
+        $room[] = $row['classroomID'];
+        echo "all rooms: ".$room[$i]."<br>";
+        $i++;
     }
 
+
+  $conflictBW=false; $conflictOut=false; 
+  //$roomConflict[0]-0; $roomAvailable[0]=0;
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $stmt = $pdo->query("SELECT * from coursescheduling natural join curriculum order by classroomID");
+            $dayID=$_SESSION['dayID']  = $_GET['dayID'];
+            $timeStartID=$_SESSION['timeStartID'] = $_GET['timeStartID'];
+            $timeEndID=$_SESSION['timeEndID'] = $_GET['timeEndID'];
+            $secID=$_SESSION['secID'] = $_GET['secID'];
+            
+
+            //check room conflicts
+            $count=0; $j=0;
+            while ($row = $stmt->fetch()) { 
+                
+
+                    if ($timeStartID >=  $row['timeStartID'] &&  $timeEndID <= $row['timeEndID'] ){
+                            $conflictBW=true;
+                            echo "conflictBW true  ";
+                   }else{
+                    $conflictBW=false;
+                            echo "conflictBW false  ";
+                   }
+
+                   if (($timeStartID < $row['timeStartID'] && $timeEndID <=$row['timeStartID']) ||
+                      ($timeStartID >= $row['timeEndID'] && $timeEndID  > $row['timeEndID'])) {
+                       $conflictOut=false;
+                     echo "conflictOut false ";
+                   } else {
+                      $conflictOut=true; 
+                       echo "conflictOut true ";
+                   }
+
+                   if ($_SESSION['periodID']==$row['periodID'] && $_SESSION['syID']==$row['syID'] && $row['dayID']== $dayID && ($conflictOut==true || $conflictBW==true)) {
+                       echo "same day true  ";
+                       $roomConflict[]=$row['classroomID'];
+                       echo "conflicted room: ".$roomConflict[$count]."  "; $count++ ;
+                   }else{
+                        $roomAvailable[]=$row['classroomID'];
+                         echo "Available room: ".$roomAvailable[$j]."  ";
+                         $j++; 
+                                
+                    }
+                    echo "<br>";
+                     echo "laman session csdata: syId:".$_SESSION['syID']." periodid ".
+            $_SESSION['periodID']." curid: ".$_SESSION['curID'];
+        }
+
+echo "<br><br>";
+
+//available rooms in an array
+ $i=0; $j=0; 
+if ($count>0) {
+  while ($i < $count) {
+    $j=0;
+   while ($j < count($room)) {
+     if ($roomConflict[$i] == $room[$j]) {
+       unset($room[$j]); 
+       $roomTrue=array_values($room);
+        $j++;  break;  
+     } else {
+      $roomTrue=array_values($room);
+      // $room[$j]=$room[$j];
+       echo "<br> set room the same: ".$room[$j]." at index ".$j;
+     }
+     
+     $j++;  
+   }
+   $i++;
+ }
+}else{
+  $roomTrue=array_values($room);
 }
+ 
+echo "<br>";
+
+echo "all rooms: ".count($room);
+
+  echo "<br><br>";
+
+$i=0;
+  while ($i < count($roomTrue)) {
+        echo "all true rooms as in: ".$roomTrue[$i]."<br>";
+        $i++;
+  }
+
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $stmt = $pdo->query("SELECT * from classroom   order by classroomID");
+            
+        $i=0;
+        while ($row = $stmt->fetch()) { 
+          if ($roomTrue[$i]==$row['classroomID']) {
+            $classroomIDT[$i] = $row['classroomID'];
+            $roomNumT[$i] = $row['roomNum'];
+            $buildingCodeT[$i] = $row['buildingCode'];
+            $i++;
+          }
+          
+        }
+
+  $i=0;
+  while ($i < count($classroomIDT)) {
+        echo "classroomID: ".$classroomIDT[$i]."<br>";
+        echo "roomNumT: ".$roomNumT[$i]."<br>";
+        echo "buildingCodeT: ".$buildingCodeT[$i]."<br>";
+        $i++;
+        echo "<br>";
+  }
+  $isSubmitted = true;
+            echo "Successfully submitted. Proceed to adding a room <br>";
+   /* ?>    <!-- Success Alert -->
+    <div id="myAlert" class="alert alert-success alert-dismissible fade show">
+        <strong>Success!</strong> Your preferences have been submitted. Please proceed to adding a room.
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <?php  */
+ } //end of else statement
+} // end of if(isset($_GET['secID']))
+
+
+if(isset($_GET['saveSubmitBtn']))
+{
+    echo "save&submit button clicked <br>";
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    /*$curID = $_GET['curID'];
+    $dayID = $_GET['dayID'];
+    $timeStartID = $_GET['timeStartID'];
+    $timeEndID = $_GET['timeEndID'];
+    $secID = $_GET['secID'];*/
+    $classroomID = $_GET['classroomID'];
+
+
+   /* if(empty($_GET['dayID']) || empty($_GET['timeStartID']) || empty($_GET['timeEndID'])|| empty($_GET['secID'])|| empty($_GET['classroomID'])){
+         echo "empty any from gET: <br>";
+        $isIncomplete = true;*/
+    // }else{
+
+            $stmt = $pdo->prepare("INSERT INTO coursescheduling (classroomID, dayID, timeStartID, timeEndID, secID, curID)
+            VALUES (?,?,?,?,?,?)");
+            $stmt->execute(array($classroomID,$_SESSION['dayID'],$_SESSION['timeStartID'],$_SESSION['timeEndID'],$_SESSION['secID'],$_SESSION['curID']));
+            // header("refresh:3; url = index.php");
+
+            /*$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "UPDATE coursescheduling SET curID = ?, dayID=?, timeStartID=?, timeEndID=?, secID=?, classroomID=? WHERE accountnum = ?";
+            $q = $pdo->prepare($sql);
+            $q->execute(array($fname,$lname,$bday,$accountnum));*/
+
+            $isCreated = true;
+            echo "successfully inserted: <br>";
+
+    }
 
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
     <link rel="stylesheet" href="courseSchedulingdata.css">
 </head>
 
@@ -60,10 +213,31 @@ if(isset($_POST['saveSubmitBtn']))
         </div>
         <h1 class="textcolor"> Course Scheduling </h1>
 
-<form method="post">
+<form method="get">
         <table class="table1">
             <tr>
-                <th colspan="7"> Schedule </th>
+                <th colspan="7"> Schedule</th>
+                <?php if ($isSubmitted==true) { ?>
+                    <!-- Success Alert -->
+                    <div id="myAlert" class="alert alert-success alert-dismissible fade show">
+                        <strong>Success!</strong> Your preferences have been submitted. Please proceed to adding a room.
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
+            <?php   } 
+                if ($isIncomplete==true) { ?>
+                    <!-- Warning Alert -->
+                    <div id="myAlertUF" class="alert alert-warning alert-dismissible fade show">
+                    <strong>Warning!</strong> &nbsp Some fields are left unfilled.
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
+            <?php   } 
+             if ($isCreated==true) { ?>
+                     <!-- Success Alert -->
+                    <div id="myAlertC" class="alert alert-success alert-dismissible fade show">
+                        <strong>Success!</strong> Your schedule has been created.
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
+             <?php } ?>
                
             </tr>
             <tr>
@@ -113,7 +287,7 @@ if(isset($_POST['saveSubmitBtn']))
                 </td>
                 <td class="noborder">
                     <label for="section"> Section </label>
-                    <select id="section" name="secID" onchange='this.form.submit()'>
+                    <select id="section" name="secID" onchange='this.form.submit()'> 
                         <option value="" selected disabled ></option>
                             <?php
                                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -129,37 +303,26 @@ if(isset($_POST['saveSubmitBtn']))
                 <label for="rooms">Available Rooms</label>
                 <div class="hs">
                 <select id="rooms" name="classroomID"  style="align-items: center;" required>
-                     <option value=" " selected disabled></option>
+                    <option value=" " selected disabled></option>
                          <?php
-                                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                                $stmt = $pdo->query("SELECT * FROM coursescheduling c
-                                    left outer join classroom ON c.classroomID=classroom.classroomID");
-                               // $row2 = $stmt->fetch();
-                            while ($row = $stmt->fetch()) { 
-                                    $count=0; $count2=0;
+                            //display available rooms in <select> tag
+                                // $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                $i=0;
+                                while ($i < count($classroomIDT)) {
+                                  
+                            //     $stmt = $pdo->prepare("SELECT * from classroom where classroomID=? ");
+                            // $stmt->execute(array($roomTrue[$i]));
+                            // $rowR= $stmt->fetch();
+                            // while ($rowR = $stmt->fetch()){
+                            // echo "test".$rowR['roomNum']." - ".$rowR['buildingCode']."<br>";
 
-                                if ((row['timeStartID']>= $_POST['timeStartID'] &&  row['timeEndID']<= $_POST['timeEndID'])&&
-                                    (($_POST['timeStartID']&&$_POST['timeEndID']<=row['timeStartID']) ||
-                                    ($_POST['timeStartID']&&$_POST['timeEndID']<=row['timeEndID']))) {
-                                    $conflictTime=false;
-                                } else {
-                                   $conflictTime=true; 
-                                }
-
-                                if (row['dayID']== $_POST['dayID'] && $conflictTime==true) {
-                                    $conflictTime=true; 
-                                   /* $roomConflict[$count]=row['classroomID'];
-                                    $count++ */
-                                }else{
-                                  /*  $roomAvailable[$count2]=row['classroomID'];
-                                    $count2++; */
                         ?>
-                                <option value="<?php echo $row['classroomID']; ?>"> <?php echo $row['roomNum']." - ".$row['buildingCode'];  ?> </option>
+                                 <option value="<?php echo $classroomIDT[$i]; ?>"> <?php echo  $roomNumT[$i]." - ". $buildingCodeT[$i];  ?> </option>
                                                          
-                        <?php  } }?>   
+                        <?php  $i++; }?>   
                     
                 </select>
-                                </td>
+                </td>
                 <td class="noborder" style="border-right: 1px solid black">
                 <input type="Submit" name="saveSubmitBtn" value="Save & Submit"> </td>
             </tr>
@@ -308,41 +471,32 @@ if(isset($_POST['saveSubmitBtn']))
 
     <?php  Database::disconnect(); ?>   
 
-     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="bootstrap/js/sweetalert.min.js"></script>
+    <!-- bootstrap JS-->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+     $(document).ready(function()
+     {
+        setTimeout(function (){
+            $('#myAlert').hide('fade');
+        }, 4000); 
+     });
 
+    $(document).ready(function()
+     {
+        setTimeout(function (){
+            $('#myAlertUF').hide('fade');
+        }, 3500); 
 
-    <?php if($isSubmitted == true){ ?>
-        <script>
-            swal({
-            title: "Successfully Submitted",
-            text: "Proceed to adding a room available",
-            icon: "success",
-            });
+     });
+    $(document).ready(function()
+     {
+        setTimeout(function (){
+            $('#myAlertC').hide('fade');
+        }, 3500); 
+
+     });
+        
     </script>
-    <?php }  ?>
-
-
-     <?php if($isCreated == true){ ?>
-        <script>
-            swal({
-            title: "Successfully Created a Schedule",
-            text: "",
-            icon: "success",
-            });
-    </script>
-    <?php }  ?>
-    <?php if($isIncomplete == true){ ?>
-        <script>
-            swal({
-            title: "Incomplete input",
-            text: "Please fill out all required fields",
-            icon: "warning",
-            });
-    </script>
-    <?php }  ?>
 
     
 </body>
