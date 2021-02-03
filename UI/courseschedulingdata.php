@@ -195,13 +195,14 @@ if(isset($_GET['saveSubmitBtn']))
 <head>
      <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap CSS -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
-    <link rel="stylesheet" href="courseSchedulingdata.css">
+    <link rel="stylesheet" href="CourseSchedulingdata.css">
 </head>
 
 <body>
@@ -241,8 +242,8 @@ if(isset($_GET['saveSubmitBtn']))
                
             </tr>
             <tr>
-                <td  class="noborder">
-                    <label for="day"> Day </label>
+                <td class="noborder">
+                    <label  for="day"> Day </label>
                     <select id="day" name="dayID" required>
                         <option value=" " selected disabled></option>
                             <?php
@@ -299,7 +300,7 @@ if(isset($_GET['saveSubmitBtn']))
                             <?php }?> 
                     </select>
                 </td>
-                <td class="noborder">
+                <td style="border-left:none">
                 <label for="rooms">Available Rooms</label>
                 <div class="hs">
                 <select id="rooms" name="classroomID"  style="align-items: center;" required>
