@@ -31,7 +31,7 @@ $isIncomplete = false;*/
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  
 
-    <link rel="stylesheet" href="courseScheduling.css">
+    <link rel="stylesheet" href="CourseScheduling.css">
 </head>
 <body>
          <form method="post" >
@@ -154,10 +154,10 @@ $isIncomplete = false;*/
             $courseCode=$row['courseCode'];
             $courseName=$row['courseName'];
 
-            if ($result>0) {
+            /*if ($result>0) {
     echo "laman session: syId:".$_SESSION['syID']." periodid ".
             $_SESSION['periodID']." curid: ".$_SESSION['curID'];
-}
+}*/
 
     ?>       <tbody>
                 <tr>
