@@ -109,17 +109,17 @@
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="viewcurriculum.css">
+    <link rel="stylesheet" href="Curriculumdetails.css">
     <title>Curriculum</title>
   </head>
   <body>
 
   <h1> Curriculum Details </h1>
     <div class="btncontainer">
-        <a class="navtop" href="menu.html"> Home <i class="fas fa-chevron-right"></i> </a>
-        <a class="navtop" href="curriculum.html"> Curriculum Management <i class="fas fa-chevron-right"></i></a>
-        <a class="navtop" href="viewcurriculum.html"> View Curriculum <i class="fas fa-chevron-right"></i></a>
-        <a class="navtop" href="curriculumdetails.html"> Curriculum Details </a>
+        <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
+        <a class="navtop" href="curriculum.php"> Curriculum Management <i class="fas fa-chevron-right"></i></a>
+        <a class="navtop" href="viewcurriculum.php"> View Curriculum <i class="fas fa-chevron-right"></i></a>
+        <a class="navtop" href="curriculumdetails.php"> Curriculum Details </a>
     </div>
     <!-- TABLE FOR 1ST YEAR 1ST SEM -->
     <table>
@@ -130,7 +130,7 @@
             </tr>
             <tr>
                 <td colspan="2"> 1st Year </td>
-                <td colspan="2"> 1st Semester </td>
+                <td colspan="4"> 1st Semester </td>
             </tr>
             <tr>
                 <th> Course Code </th>
@@ -164,7 +164,7 @@
     <table>
             <tr>
                 <td colspan="2"> 1st Year </td>
-                <td colspan="2"> 2nd Semester </td>
+                <td colspan="4"> 2nd Semester </td>
             </tr>
             <tr>
                 <th> Course Code </th>
@@ -195,10 +195,11 @@
         </table>
 
         <!-- TABLE FOR 2ND YEAR 1ST SEM -->
+        <br>
     <table>
             <tr>
                 <td colspan="2"> 2nd Year </td>
-                <td colspan="2"> 1st Semester </td>
+                <td colspan="4"> 1st Semester </td>
             </tr>
             <tr>
                 <th> Course Code </th>
@@ -232,7 +233,7 @@
     <table>
             <tr>
                 <td colspan="2"> 2nd Year </td>
-                <td colspan="2"> 2ND Semester </td>
+                <td colspan="4"> 2ND Semester </td>
             </tr>
             <tr>
                 <th> Course Code </th>
@@ -261,12 +262,12 @@
                 <td> </td>
             </tr>
         </table>
-
+        <br>
          <!-- TABLE FOR 3RD YEAR 1ST SEM -->
     <table>
             <tr>
                 <td colspan="2"> 3rd Year </td>
-                <td colspan="2"> 1st Semester </td>
+                <td colspan="4"> 1st Semester </td>
             </tr>
             <tr>
                 <th> Course Code </th>
@@ -300,7 +301,7 @@
     <table>
             <tr>
                 <td colspan="2"> 3rd Year </td>
-                <td colspan="2"> 2nd Semester </td>
+                <td colspan="4"> 2nd Semester </td>
             </tr>
             <tr>
                 <th> Course Code </th>
@@ -329,12 +330,12 @@
                 <td> </td>
             </tr>
         </table>
-
+        <br>
          <!-- TABLE FOR 4TH YEAR 1ST SEM -->
     <table>
             <tr>
                 <td colspan="2"> 4th Year </td>
-                <td colspan="2"> 1st Semester </td>
+                <td colspan="4"> 1st Semester </td>
             </tr>
             <tr>
                 <th> Course Code </th>
@@ -368,7 +369,7 @@
     <table>
             <tr>
                 <td colspan="2"> 4th Year </td>
-                <td colspan="2"> 2nd Semester </td>
+                <td colspan="4"> 2nd Semester </td>
             </tr>
             <tr>
                 <th> Course Code </th>

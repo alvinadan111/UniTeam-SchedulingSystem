@@ -1,6 +1,7 @@
 body {
-    background-color: #763435;
     font-family: Arial, Helvetica, sans-serif;
+    padding: 10px;
+    background-color: #fbf0f0;
 }
 
 .none {
@@ -20,6 +21,7 @@ th {
     text-align: left;
     padding: 15px;
     border: 1px solid black;
+    f
 }
 
 .center {
@@ -28,12 +30,15 @@ th {
 }
 
 h1 {
-    color: white;
-    text-decoration: none;
+    color:#A94442;
+    float: left;
+
 }
 
 a.navtop:hover {
     background-color: #671D1E;
+    text-decoration: none;
+    color: white;
     padding: 5px;
 }
 
@@ -56,7 +61,7 @@ a.navtop:hover {
 
 .btnchange {
     margin-top: 10px;
-    width: 100px;
+    width: 150px;
 }
 
 table.addcurriculum {
@@ -72,16 +77,13 @@ table.addcurriculum {
     padding-bottom: 30px;
 }
 
-h1 {
-    float: left;
-}
 .search {
     float: right;
     margin-top: 20px;
 }
 .navtop{
         text-decoration: none;
-       color: white;
+       color: #A94442;
    }
    .btnview {
        border: none;

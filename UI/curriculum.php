@@ -83,7 +83,7 @@ if(isset($_POST['saveBTN'])){
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="curriculum.css">
+    <link rel="stylesheet" href="Curriculum.css">
 
     <title>Curriculum</title>
     <style>
@@ -132,7 +132,7 @@ if(isset($_POST['saveBTN'])){
 
             <table id="myTable" class="addcurriculum">
                 <tr>
-                    <h1> Add Curriculum </h1>
+                    <h1 style="color: white"> Add Curriculum </h1>
                 </tr>
                 <tr>
 
