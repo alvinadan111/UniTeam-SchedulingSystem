@@ -3,16 +3,9 @@
 header('Location:../index.php');
 endif;
 
-//error_reporting(E_ERROR | E_PARSE);
+error_reporting(E_ERROR | E_PARSE);
 require '../database.php';
 $pdo=Database::connect();
-/*$isSubmitted = false;
-$isCreated = false;
-$isIncomplete = false;*/
-
-
-
-
 
 ?>
 
@@ -148,16 +141,12 @@ $isIncomplete = false;*/
     <?php 
     while ($row = $stmt->fetch()) 
           {
-            $_SESSION['curID']=$row['curID'];
+            $_SESSION['curID']=$curID=$row['curID'];
             $_SESSION['syID']=$row['syID'];
             $_SESSION['periodID']=$row['periodID'];
             $courseCode=$row['courseCode'];
             $courseName=$row['courseName'];
 
-            if ($result>0) {
-    echo "laman session: syId:".$_SESSION['syID']." periodid ".
-            $_SESSION['periodID']." curid: ".$_SESSION['curID'];
-}
 
     ?>       <tbody>
                 <tr>
@@ -166,16 +155,16 @@ $isIncomplete = false;*/
                 <td></td>
             
 
-                <td style="text-align: center;"> <a href="<?php echo 'courseschedulingdata.php'; ?>"  class="btn"><i
-                            class="fas fa-edit"></i></a> </td> 
-               <!--  <td style="text-align: center;"> <a href="<?php //echo 'courseschedulingdata.php?curID='.$_SESSION['curID']; ?>"  class="btn"><i
-                            class="fas fa-edit"></i></a> </td> --> 
+                <td style="text-align: center;"> <a href=<?php echo "courseschedulingdata.php?crsSchedulingActionCurID=".$curID;?>  class="btn"><i class="fas fa-edit"></i></a> </td> 
                 </tr>
             </tbody>
            
 
        
- <?php } } } Database::disconnect(); ?>                       
+ <?php } 
+  }  //end of else 
+} /*if(isset($_POST['btnSearch']))*/
+ Database::disconnect(); ?>                       
 </table> 
 
 

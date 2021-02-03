@@ -3,11 +3,12 @@
 header('Location:../index.php');
 endif;
 
-// error_reporting(E_ERROR | E_PARSE);
+ error_reporting(E_ERROR | E_PARSE);
 require '../database.php';
 $isSubmitted = false;
 $isCreated = false;
 $isIncomplete = false;
+$isNoAvailRoom = false;
 
 $pdo=Database::connect(); 
 
@@ -15,13 +16,8 @@ $pdo=Database::connect();
 if(isset($_GET['secID'])){
     if(empty($_GET['dayID']) || empty($_GET['timeStartID']) || empty($_GET['timeEndID']) || empty($_GET['secID'])){ 
         $isIncomplete = true;
-            echo "Some fields are left out unfilled. <br>";
-    /*    ?>   <!-- Warning Alert -->
-            <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
-            <strong>Warning!</strong> &nbsp Some fields are left unfilled.
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            </div>
-        <?php */
+            echo "Some fields are left unfilled. <br>";
+
     }else{
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -30,13 +26,10 @@ if(isset($_GET['secID'])){
     while ($row = $sql->fetch()) {
         
         $room[] = $row['classroomID'];
-        echo "all rooms: ".$room[$i]."<br>";
-        $i++;
     }
 
 
   $conflictBW=false; $conflictOut=false; 
-  //$roomConflict[0]-0; $roomAvailable[0]=0;
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $stmt = $pdo->query("SELECT * from coursescheduling natural join curriculum order by classroomID");
             $dayID=$_SESSION['dayID']  = $_GET['dayID'];
@@ -52,37 +45,25 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                     if ($timeStartID >=  $row['timeStartID'] &&  $timeEndID <= $row['timeEndID'] ){
                             $conflictBW=true;
-                            echo "conflictBW true  ";
                    }else{
                     $conflictBW=false;
-                            echo "conflictBW false  ";
                    }
 
                    if (($timeStartID < $row['timeStartID'] && $timeEndID <=$row['timeStartID']) ||
                       ($timeStartID >= $row['timeEndID'] && $timeEndID  > $row['timeEndID'])) {
                        $conflictOut=false;
-                     echo "conflictOut false ";
                    } else {
                       $conflictOut=true; 
-                       echo "conflictOut true ";
                    }
 
                    if ($_SESSION['periodID']==$row['periodID'] && $_SESSION['syID']==$row['syID'] && $row['dayID']== $dayID && ($conflictOut==true || $conflictBW==true)) {
-                       echo "same day true  ";
                        $roomConflict[]=$row['classroomID'];
-                       echo "conflicted room: ".$roomConflict[$count]."  "; $count++ ;
+                        $count++ ;
                    }else{
                         $roomAvailable[]=$row['classroomID'];
-                         echo "Available room: ".$roomAvailable[$j]."  ";
-                         $j++; 
                                 
                     }
-                    echo "<br>";
-                     echo "laman session csdata: syId:".$_SESSION['syID']." periodid ".
-            $_SESSION['periodID']." curid: ".$_SESSION['curID'];
         }
-
-echo "<br><br>";
 
 //available rooms in an array
  $i=0; $j=0; 
@@ -96,8 +77,6 @@ if ($count>0) {
         $j++;  break;  
      } else {
       $roomTrue=array_values($room);
-      // $room[$j]=$room[$j];
-       echo "<br> set room the same: ".$room[$j]." at index ".$j;
      }
      
      $j++;  
@@ -108,17 +87,12 @@ if ($count>0) {
   $roomTrue=array_values($room);
 }
  
-echo "<br>";
+ if(count($roomTrue)==0)
+ {
+    $isNoAvailRoom = true;
+ }
 
-echo "all rooms: ".count($room);
 
-  echo "<br><br>";
-
-$i=0;
-  while ($i < count($roomTrue)) {
-        echo "all true rooms as in: ".$roomTrue[$i]."<br>";
-        $i++;
-  }
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $stmt = $pdo->query("SELECT * from classroom   order by classroomID");
@@ -134,56 +108,22 @@ $i=0;
           
         }
 
-  $i=0;
-  while ($i < count($classroomIDT)) {
-        echo "classroomID: ".$classroomIDT[$i]."<br>";
-        echo "roomNumT: ".$roomNumT[$i]."<br>";
-        echo "buildingCodeT: ".$buildingCodeT[$i]."<br>";
-        $i++;
-        echo "<br>";
-  }
   $isSubmitted = true;
-            echo "Successfully submitted. Proceed to adding a room <br>";
-   /* ?>    <!-- Success Alert -->
-    <div id="myAlert" class="alert alert-success alert-dismissible fade show">
-        <strong>Success!</strong> Your preferences have been submitted. Please proceed to adding a room.
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
-    <?php  */
+ 
  } //end of else statement
 } // end of if(isset($_GET['secID']))
 
 
 if(isset($_GET['saveSubmitBtn']))
 {
-    echo "save&submit button clicked <br>";
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    /*$curID = $_GET['curID'];
-    $dayID = $_GET['dayID'];
-    $timeStartID = $_GET['timeStartID'];
-    $timeEndID = $_GET['timeEndID'];
-    $secID = $_GET['secID'];*/
     $classroomID = $_GET['classroomID'];
-
-
-   /* if(empty($_GET['dayID']) || empty($_GET['timeStartID']) || empty($_GET['timeEndID'])|| empty($_GET['secID'])|| empty($_GET['classroomID'])){
-         echo "empty any from gET: <br>";
-        $isIncomplete = true;*/
-    // }else{
 
             $stmt = $pdo->prepare("INSERT INTO coursescheduling (classroomID, dayID, timeStartID, timeEndID, secID, curID)
             VALUES (?,?,?,?,?,?)");
-            $stmt->execute(array($classroomID,$_SESSION['dayID'],$_SESSION['timeStartID'],$_SESSION['timeEndID'],$_SESSION['secID'],$_SESSION['curID']));
-            // header("refresh:3; url = index.php");
-
-            /*$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "UPDATE coursescheduling SET curID = ?, dayID=?, timeStartID=?, timeEndID=?, secID=?, classroomID=? WHERE accountnum = ?";
-            $q = $pdo->prepare($sql);
-            $q->execute(array($fname,$lname,$bday,$accountnum));*/
-
             $isCreated = true;
-            echo "successfully inserted: <br>";
+            $stmt->execute(array($classroomID,$_SESSION['dayID'],$_SESSION['timeStartID'],$_SESSION['timeEndID'],$_SESSION['secID'],$_SESSION['curID']));
 
     }
 
@@ -237,7 +177,14 @@ if(isset($_GET['saveSubmitBtn']))
                         <strong>Success!</strong> Your schedule has been created.
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
                     </div>
-             <?php } ?>
+             <?php } 
+                if ($isNoAvailRoom ==true) { ?>
+                    <!-- Warning Alert -->
+                    <div id="myAlertUF" class="alert alert-warning alert-dismissible fade show">
+                    <strong>Warning!</strong> &nbsp No available room for your preferences.
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
+            <?php   } ?>
                
             </tr>
             <tr>
@@ -306,15 +253,8 @@ if(isset($_GET['saveSubmitBtn']))
                     <option value=" " selected disabled></option>
                          <?php
                             //display available rooms in <select> tag
-                                // $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                 $i=0;
                                 while ($i < count($classroomIDT)) {
-                                  
-                            //     $stmt = $pdo->prepare("SELECT * from classroom where classroomID=? ");
-                            // $stmt->execute(array($roomTrue[$i]));
-                            // $rowR= $stmt->fetch();
-                            // while ($rowR = $stmt->fetch()){
-                            // echo "test".$rowR['roomNum']." - ".$rowR['buildingCode']."<br>";
 
                         ?>
                                  <option value="<?php echo $classroomIDT[$i]; ?>"> <?php echo  $roomNumT[$i]." - ". $buildingCodeT[$i];  ?> </option>
