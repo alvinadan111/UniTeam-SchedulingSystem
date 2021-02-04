@@ -16,7 +16,7 @@ $pdo=Database::connect();
 if(isset($_GET['secID'])){
     if(empty($_GET['dayID']) || empty($_GET['timeStartID']) || empty($_GET['timeEndID']) || empty($_GET['secID'])){ 
         $isIncomplete = true;
-            echo "Some fields are left unfilled. <br>";
+            // echo "Some fields are left unfilled. <br>";
 
     }else{
 
@@ -29,8 +29,8 @@ if(isset($_GET['secID'])){
     }
 
 
-  $conflictBW=false; $conflictOut=false; 
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $conflictBW=false; $conflictOut=false; 
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $stmt = $pdo->query("SELECT * from coursescheduling natural join curriculum order by classroomID");
             $dayID=$_SESSION['dayID']  = $_GET['dayID'];
             $timeStartID=$_SESSION['timeStartID'] = $_GET['timeStartID'];
@@ -63,69 +63,55 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                         $roomAvailable[]=$row['classroomID'];
                                 
                     }
-        }
+            }
 
-//available rooms in an array
- $i=0; $j=0; 
-if ($count>0) {
-  while ($i < $count) {
-    $j=0;
-   while ($j < count($room)) {
-     if ($roomConflict[$i] == $room[$j]) {
-       unset($room[$j]); 
-       $roomTrue=array_values($room);
-        $j++;  break;  
-     } else {
-      $roomTrue=array_values($room);
-     }
-     
-     $j++;  
-   }
-   $i++;
- }
-}else{
-  $roomTrue=array_values($room);
-}
- 
- if(count($roomTrue)==0)
- {
-    $isNoAvailRoom = true;
- }
+                //available rooms in an array
+                 $i=0; $j=0; 
+                if ($count>0) {
+                  while ($i < $count) {
+                    $j=0;
+                   while ($j < count($room)) {
+                     if ($roomConflict[$i] == $room[$j]) {
+                       unset($room[$j]); 
+                       $roomTrue=array_values($room);
+                       $room=array_values($roomTrue); break;  
+                     } else {
+                        $j++; 
+                     } 
+                   } /*eo else*/  $i++;
+                  } // outer while
+                }/*else{
+                  $roomTrue=array_values($room);
+                }*/    
+                 if(count($room)==0)
+                 {
+                    $isNoAvailRoom = true;
+                 }
 
-
-
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $stmt = $pdo->query("SELECT * from classroom   order by classroomID");
-            
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $stmt = $pdo->query("SELECT * from classroom   order by classroomID");      
         $i=0;
         while ($row = $stmt->fetch()) { 
-          if ($roomTrue[$i]==$row['classroomID']) {
+          if ($room[$i]==$row['classroomID']) {
             $classroomIDT[$i] = $row['classroomID'];
             $roomNumT[$i] = $row['roomNum'];
             $buildingCodeT[$i] = $row['buildingCode'];
             $i++;
           }
-          
         }
-
   $isSubmitted = true;
- 
  } //end of else statement
 } // end of if(isset($_GET['secID']))
 
 
-if(isset($_GET['saveSubmitBtn']))
-{
+if(isset($_GET['saveSubmitBtn'])){
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
     $classroomID = $_GET['classroomID'];
-
             $stmt = $pdo->prepare("INSERT INTO coursescheduling (classroomID, dayID, timeStartID, timeEndID, secID, curID)
             VALUES (?,?,?,?,?,?)");
             $isCreated = true;
             $stmt->execute(array($classroomID,$_SESSION['dayID'],$_SESSION['timeStartID'],$_SESSION['timeEndID'],$_SESSION['secID'],$_SESSION['curID']));
-
-    }
+}
 
 ?>
 
@@ -271,10 +257,7 @@ if(isset($_GET['saveSubmitBtn']))
 
      </form>
 
-
-
     <?php  Database::disconnect(); ?>   
-
     <!-- bootstrap JS-->
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript">
@@ -298,11 +281,8 @@ if(isset($_GET['saveSubmitBtn']))
             $('#myAlertC').hide('fade');
         }, 3500); 
 
-     });
-        
+     });       
     </script>
-
-    
 </body>
 
 </html>
