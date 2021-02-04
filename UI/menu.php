@@ -49,7 +49,7 @@ endif;
           </div>
           <button class="dropdown-btn"><i class="fa fa-caret-down"></i> Curriculum Management </button>
           <div class="dropdown-container">
-            <a href="curriculum.html"> Curriculum </a>
+            <a href="curriculum.php"> Curriculum </a>
             <a href="coursescheduling.php"> Course Scheduling</a>
           </div>
           <button class="dropdown-btn"><i class="fa fa-caret-down"></i> Department Head </button>
