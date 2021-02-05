@@ -3,26 +3,27 @@
 <head>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="room.css">
+    <link rel="stylesheet" href="Room.css">
 </head>
 <body>
     <h1> Rooms </h1>
     <div class="btncontainer">
-        <a class="navtop" href="menu.html"> Home <i class="fas fa-chevron-right"></i> </a>
+        <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
         <a class="navtop" href="room.html"> Room </a>
     </div>
     <div class="container">
         <div id="add" class="tabcontent">
             <table>
+                <caption>
+                    <div id="active" class="navbar">
+                        <a class="nav active" onclick="openPage('add', this)" id="defaultOpen"><i
+                                class="fas fa-plus-square"></i> Add </a>
+                        <a class="nav" onclick="openPage('update', this)"><i class="fas fa-edit"></i> Update </a>
+                        <a class="nav " onclick="openPage('view', this)"><i class="fas fa-eye"></i> View
+                        </a>
+                    </div>
+                </caption>
                 <tr>
-                    <td class="bord" rowspan="3">
-                        <div id="active" class="navbar">
-                            <a class="nav active" onclick="openPage('add', this)" id="defaultOpen"><i
-                                    class="fas fa-plus-square"></i> Add</a> <br>
-                            <br><a class="nav" onclick="openPage('update', this)"><i class="fas fa-edit"></i> Update
-                            </a>
-                        </div>
-                    </td>
                     <th> 
                         <label for="dept"> Department </label><br>
                         <select id="dept" name="deptlist" form="deptform">
@@ -47,7 +48,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <td colspan="2">
+                    <td colspan="3">
                         <button> Add Room </button>
                     </td>
                 </tr>
@@ -57,15 +58,16 @@
     <div id="update" class="tabcontent">
 
         <table>
+            <caption>
+                <div id="active" class="navbar">
+                    <a class="nav " onclick="openPage('add', this)" id="defaultOpen"><i
+                            class="fas fa-plus-square"></i> Add </a>
+                    <a class="nav active" onclick="openPage('update', this)"><i class="fas fa-edit"></i> Update </a>
+                    <a class="nav " onclick="openPage('view', this)"><i class="fas fa-eye"></i> View
+                    </a>
+                </div>
+            </caption>
             <tr>
-                <td class="bord" rowspan="3">
-                    <div id="active" class="navbar">
-                        <a class="nav" onclick="openPage('add', this)" id="defaultOpen"><i
-                                class="fas fa-plus-square"></i> Add</a> <br>
-                        <br><a class="nav active" onclick="openPage('update', this)"><i class="fas fa-edit"></i> Update
-                        </a>
-                    </div>
-                </td>
                 <th>
                 <label for="department"> Department </label><br>
                         <select id="department" name="departmentlist" form="departmentform">
@@ -95,6 +97,23 @@
                     <button>  Save Changes </button>
                 </td>
             </tr>
+
+        </table>
+    </div>
+    <div id="view" class="tabcontent">
+
+        <table>
+            <caption>
+                <div id="active" class="navbar">
+                    <a class="nav " onclick="openPage('add', this)" id="defaultOpen"><i
+                            class="fas fa-plus-square"></i> Add </a>
+                    <a class="nav " onclick="openPage('update', this)"><i class="fas fa-edit"></i> Update </a>
+                    <a class="nav active" onclick="openPage('view', this)"><i class="fas fa-eye"></i> View
+                    </a>
+                </div>
+            </caption>
+            <th> </th>
+        
 
         </table>
     </div>

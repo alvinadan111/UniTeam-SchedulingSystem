@@ -4,17 +4,25 @@
 <head>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="schoolyr.css">
+    <link rel="stylesheet" href="Schoolyr.css">
 </head>
 
 <body>
     <h1> School Year </h1>
     <div class="btncontainer">
-        <a class="navtop" href="menu.html"> Home <i class="fas fa-chevron-right"></i> </a>
+        <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
         <a class="navtop" href="schoolyr.html"> School Year </a>
     </div>
-   
+    <div id="add" class="tabcontent">
         <table>
+            <caption>
+                <div id="active" class="navbar">
+                    <a class="nav active" onclick="openPage('add', this)" id="defaultOpen"><i
+                            class="fas fa-plus-square"></i> Add </a>
+                    <a class="nav " onclick="openPage('view', this)"><i class="fas fa-eye"></i> View
+                    </a>
+                </div>
+            </caption>
             <tr>
                 <th>
                     <label for="schlyr"> School Year </label><br>
@@ -27,7 +35,36 @@
                 </td>
             </tr>
         </table>
+    </div>
+    <div id="view" class="tabcontent">
+
+        <table>
+            <caption>
+                <div id="active" class="navbar">
+                    <a class="nav " onclick="openPage('add', this)" id="defaultOpen"><i
+                            class="fas fa-plus-square"></i> Add </a>
+                    <a class="nav active" onclick="openPage('view', this)"><i class="fas fa-eye"></i> View
+                    </a>
+                </div>
+            </caption>
+            <th> School Year </th>
+        
+
+        </table>
+    </div>
+        
 </body>
 
-
+<script>
+    function openPage(pageName, elmnt,) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        document.getElementById(pageName).style.display = "block";
+        elmnt.style.backgroundColor = color;
+    }
+    document.getElementById("defaultOpen").click();
+</script>
 </html>

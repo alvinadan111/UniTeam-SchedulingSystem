@@ -5,7 +5,7 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
-    background-color: #763435;
+    background-color: #fbf0f0;
 }
 
 table {
@@ -19,6 +19,40 @@ table {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+
+.navbar {
+    width: auto;
+    text-align: left;
+    padding-block: 9px;
+    background-color: lightgrey;
+}
+
+.nav {
+    padding: 10px;
+    cursor: pointer;
+    color: #A94442;
+
+}
+
+.nav:hover {
+    color: white;
+    padding: 10px;
+    background-color: #A94442;
+}
+
+.active {
+    color: white;
+    background-color: #671D1E;
+}
+
+.bord {
+    border-right: 1px solid black;
+}
+
+.tabcontent {
+    display: none;
 }
 
 button {
@@ -46,17 +80,18 @@ button:hover {
 
 .navtop {
     text-decoration: none;
-    color: white;
+    color: #A94442;
 
 }
 
 .navtop:hover {
+    color: white;
     background-color: #671D1E;
     padding: 5px;
 }
 
 h1 {
-    color: white;
+    color: #A94442;
     float: left;
 }
 select, input[type=text] {
