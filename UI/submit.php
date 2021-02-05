@@ -7,11 +7,13 @@ endif;
 require '../database.php';
 $pdo=Database::connect();
 
-if ($_GET) {
+if (!empty($_GET['addCalendarcrsSchedID'])) {
 	$_SESSION['addCalendarcrsSchedID'] = $_GET['addCalendarcrsSchedID'];
     $accountID =  $_SESSION['instructorID'];
 
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "session_addCalendarcrsSchedID ".$_SESSION['addCalendarcrsSchedID']." - " ;
+
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = ("SELECT * from coursescheduling where crsSchedID=?");
         	$q = $pdo->prepare($sql);
             $q->execute(array($_SESSION['addCalendarcrsSchedID']));
@@ -26,9 +28,9 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $curID = $row['curID'];
 
 
-  $conflictBW=false; $conflictOut=false; 
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = ("SELECT * from facultyloading natural join coursescheduling where accountID=?");
+		$conflictBW=false; $conflictOut=false; 
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql = ("SELECT * from facultyloading where accountID=?");
         	$q = $pdo->prepare($sql);
             $q->execute(array($accountID));
             $result = $q->rowCount();
@@ -57,7 +59,12 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                    if ($row2['dayID']== $dayID && ($conflictOut==true || $conflictBW==true)) {
                        echo "theres a conflicted room " ;
                        $conflictCount++;
-                        header("Location: facultyloading.php?addCalendarConflict=true"); 
+
+                       /*echo "Facultyloadingconflict is true - ";
+                        $_GET['deptlist']=$_SESSION['deptlist'];
+             			$_GET['levellist']=$_SESSION['levellist'] ;
+             			$_GET['instructorlist']=;*/
+                        header("Location: facultyloading.php?addCalendarConflict=true&deptlist=".$_SESSION['deptlist']."&levellist=".$_SESSION['levellist']."&instructorlist=".$_SESSION['instructorID']); 
                    }else{
 
                          echo "No conflict count: ".$count ;
@@ -72,25 +79,23 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             VALUES (?,?,?,?,?,?,?,?)");
             $stmt->execute(array($_SESSION['addCalendarcrsSchedID'],$classroomID,$dayID,$timeStartID,$timeEndID,$secID,$curID,$accountID));
 
-
-            /*$stmt = $pdo->prepare("INSERT INTO facultyloading (crsSchedID, accountID)
-            VALUES (?,?)");
-            $stmt->execute(array($_SESSION['addCalendarcrsSchedID'] ,$accountID));*/
-
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "DELETE FROM coursescheduling WHERE crsSchedID = ?";
+            $sql = "DELETE FROM courseschedulingtemp WHERE crsSchedID = ?";
             $q = $pdo->prepare($sql);
             $q->execute(array($_SESSION['addCalendarcrsSchedID']));
+
+            echo "Facultyloading is loaded true -  session_addCalendarcrsSchedID = ".$_SESSION['addCalendarcrsSchedID']." - " ;
             header("Location:facultyloading.php?facultyLoadingIsLoaded=true");
-             }
+          }
+} /*eo if ($_GET)*/
 
    		
-     }
+     
 
-     if ($_GET['fUnloadCrsSchedID'] ) {
+     if (!empty($_GET['fUnloadCrsSchedID2'])) {
      	echo "deleted fUnloadCrsSchedID";
 
-     	$crsSchedID2=$_GET['fUnloadCrsSchedID'] ;
+     	$crsSchedID2=$_GET['fUnloadCrsSchedID2'] ;
 
      	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = ("SELECT * from facultyloading where crsSchedID=?");
@@ -106,7 +111,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $secID2 = $row['secID'];
         $curID2 = $row['curID'];
 
-     	$stmt = $pdo->prepare("INSERT INTO coursescheduling (crsSchedID,classroomID,dayID,timeStartID,timeEndID,secID,curID)
+     	$stmt = $pdo->prepare("INSERT INTO courseschedulingtemp (crsSchedID,classroomID,dayID,timeStartID,timeEndID,secID,curID)
             VALUES (?,?,?,?,?,?,?)");
             $stmt->execute(array($crsSchedID2,$classroomID2,$dayID2,$timeStartID2,$timeEndID2,$secID2,$curID2));
 
@@ -114,45 +119,18 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $sql = "DELETE FROM facultyloading WHERE crsSchedID = ?";
             $q = $pdo->prepare($sql);
             $q->execute(array($crsSchedID2));
-/*
-     	$fUnloadCrsSchedID=$_GET['fUnloadCrsSchedID'];
-     	$stmt = $pdo->prepare("INSERT INTO coursescheduling (crsSchedID,classroomID,dayID,timeStartID,timeEndID,secID,curID)
-            VALUES (?,?,?,?,?,?,?)");
-            $stmt->execute(array($crsSchedID,$classroomID,$dayID,$timeStartID,$timeEndID,$secID,$curID));*/
 
             header("Location:facultyloading.php?facultyLoadingIsUnloaded=true");
      }
 
 
-     if ($_GET['generateSched']==true ) {
+   /*  if ($_GET['generateSched']==true ) {
      	echo "schedule generated";
-/*
-     	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = ("SELECT * from coursescheduling");
-        	$q = $pdo->prepare($sql);
-            $q->execute();
-            $result3 = $q->fetch(PDO::FETCH_ASSOC);
-            $crsSchedIDGenSched= $result3['crsSchedID'];
-
-
-             while ($row3 = $q->fetch()) {
-             	$stmt = $pdo->prepare("INSERT INTO facultyloading (crsSchedID, accountID)
-            VALUES (?,?)");
-            $stmt->execute(array($crsSchedIDGenSched,$accountID));
-             }
-
-             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "DELETE FROM courseschedulingtemp ";
-            $q = $pdo->prepare($sql);
-            $q->execute();*/
 
               header("Location:facultyloading.php?scheduleGenerated=true");
-     }
+     } */ /*eo if ($_GET['generateSched']==true )*/  
 
- }
 
-    
-    
 
 Database::disconnect();  
 

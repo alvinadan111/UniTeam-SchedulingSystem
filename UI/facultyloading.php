@@ -6,6 +6,10 @@ endif;
 //error_reporting(E_ERROR | E_PARSE);
 require '../database.php';
 $pdo=Database::connect();
+
+
+ 
+
 ?>
 
 
@@ -24,6 +28,7 @@ $pdo=Database::connect();
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
     <link rel="stylesheet" href="Facultyloading.css">
+    <title>Faculty Loading</title>
 </head>
 
 <body>
@@ -32,11 +37,11 @@ $pdo=Database::connect();
         <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
         <a class="navtop" href="facultyloading.php"> Faculty Loading </a>
     </div>
-  <form method="get">
+  <form method="get"  >
     <table class="top">
         <tr>
-            <th colspan="4" class="border"> Search Instructor</th>
-           <?php if ($_GET['scheduleGenerated']==true) { ?>
+            <th colspan="4" class="border"> Load Instructor</th>
+           <?php if ( isset($_GET['genSchedBtn'])) { ?>
                  <!-- Success Alert -->
                     <div id="myAlert" class="alert alert-success alert-dismissible fade show">
                         <strong>Success!</strong> Schedule has been generated.
@@ -54,7 +59,7 @@ $pdo=Database::connect();
         </tr>
         <tr>
             <td class="border">
-                <label for="dept"> Department </label>
+                <label for="dept"> *Department </label>
                 <select id="dept" name="deptlist" required>
                    <option value=" " selected disabled></option>
                             <?php
@@ -82,7 +87,7 @@ $pdo=Database::connect();
                     </select>
             </td>
             <td class="border">
-                <label for="instructor"> Instructor </label>
+                <label for="instructor"> *Instructor </label>
                 <select id="instructor" name="instructorlist" required >
                 <option value=" " selected disabled></option>
                     <?php
@@ -110,119 +115,163 @@ $pdo=Database::connect();
                           <div class="column">
                             <table>
 
-     <?php if(isset($_GET['searchBtn'])) {
-        if(empty($_GET['deptlist']) || empty($_GET['levellist']) || empty($_GET['instructorlist'])){ ?>
+<?php if(isset($_GET['searchBtn']) ||  $_GET['facultyLoadingIsUnloaded']==true  || $_GET['facultyLoadingIsLoaded']==true) 
+{         
+         if ( $_GET['facultyLoadingIsUnloaded']==true  || $_GET['facultyLoadingIsLoaded']==true) {
+             $_GET['deptlist']=$_SESSION['deptlist'];
+             $_GET['levellist']=$_SESSION['levellist'] ;
+             $_GET['instructorlist']=$_SESSION['instructorID'];
+         }
+         else if(empty($_GET['deptlist']) || empty($_GET['levellist']) || empty($_GET['instructorlist'])){ ?>
                          
-                                    </div>
-                                    <!-- Warning Alert -->
-                                    <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
-                                    <strong>Warning!</strong> &nbsp Please make sure all fields are filled.
-                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    </div>
+  
+            <!-- Warning Alert -->
+            <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
+            <strong>Warning!</strong> &nbsp Please make sure all required fields are filled.
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
 
-         <?php  }else{ 
-                                    // $pdo=Database::connect();
-                                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                                    $deptlist = $_GET['deptlist'];
-                                    $levellist = $_GET['levellist'];
-                                    $_SESSION['instructorID'] = $_GET['instructorlist'];
+<?php  }if (!empty($_GET['deptlist']) && !empty($_GET['levellist']) && !empty($_GET['instructorlist'])) { 
+            // $pdo=Database::connect();
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $_SESSION['deptlist'] = $deptlist = $_GET['deptlist'];
+            $_SESSION['levellist'] = $levellist = $_GET['levellist'];
+            $_SESSION['instructorID'] = $_GET['instructorlist'];
 
-                                        $stmt=$pdo->prepare("select * from curriculum c natural join coursescheduling natural join timestart natural join timeend
-                                            where (c.deptID = ?) and (c.levelID = ?) 
-                                            order by curID ");
-                                        $stmt->execute(array($deptlist, $levellist));
-                                        $result= $stmt->rowCount();
-                                         if($result==0){ ?>
-                                            <!-- Warning Alert -->
-                                            <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
-                                            <strong>Warning!</strong> &nbsp No result found.
-                                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                            </div>
-                                <?php   } //end of if result 
-                      else { ?>
-                                
-                                    <!-- <td colspan="3" class="border">
-                                        <label for="searchcode">Enter The Course Code To Search:</label>
-                                        <input type="search" id="searchcode" name="searchcode">
-                                    </td> -->
-                                 <thead>
-                                    <tr class="border">
-                                        <th class="border" colspan="3"> Courses to Load </th>
-                                    </tr>
-                                    <tr>
-                                        <th class="head">Course</th>
-                                        <th> Schedule </th>
-                                        <th> </th>
-                                    </tr>
-                                </thead>
+            echo "deptlist: ".$deptlist." - "."levellist: ".$levellist." - "."session_instructorID: ".$_SESSION['instructorID'] ." - ";
+
+            $stmt=$pdo->prepare("select * from curriculum c natural join courseschedulingtemp natural join timestart natural join timeend  natural join day natural join classroom where (c.deptID = ?) and (c.levelID = ?)  order by curID ");
+            $stmt->execute(array($deptlist, $levellist));
+            $result= $stmt->rowCount();
+                if($result==0){ ?>
+                <!-- Warning Alert -->
+                <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
+                <strong>Warning!</strong> &nbsp No result found.
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+<?php           } //end of if result 
+                else { 
+?>
+                     <thead>
+                        <tr class="border">
+                            <th class="border" colspan="3"> Courses to Load </th>
+                        </tr>
+                        <tr>
+                            <th class="head">Course</th>
+                            <th> Schedule </th>
+                            <th> </th>
+                        </tr>
+                     </thead>
                        
-                        <?php    while ($row = $stmt->fetch()) 
-                                {
-                                    $crsSchedID=$row['crsSchedID'];
-                                     $crsName=$row['crsName'];
-                                     $timeStart=$row['timeStart'];
-                                     $timeEnd=$row['timeEnd'];
+<?php               while ($row = $stmt->fetch()) {
+                      $crsSchedID3=$row['crsSchedID'];
+                      $crsName3=$row['crsName'];
+                      $timeStart3=$row['timeStart'];
+                      $timeEnd3=$row['timeEnd'];
+                      $dayName3=$row['dayName'];
+                      $roomNum3=$row['roomNum'];
 
-                                        $i=0;
-                                         if ($result>0 && $i!=1) {
-                                            echo "laman mga row[]: crsName:".$crsName." timeStart ".
-                                            $timeStart." timeEnd: ".$timeEnd."  instructorlist " .$_SESSION['instructorID']." crsSchedID".$crsSchedID;
-                                         } //end of if result>0 ?> 
-                                      <tbody>
-                                        <tr>
-                                            <td><?php echo $crsName;?></td>
-                                        <td><?php echo $timeStart." - ".$timeEnd;?></td>
-                                        <td class="btncenter"> <a href=<?php echo "submit.php?addCalendarcrsSchedID=".$crsSchedID;?>><button> Add to Calendar </button></a> </td>
-                                        </tr>
-                                      </tbody>
-            <?php /*$i++; */    } //end of while
-                        }  //end of else
-                    } /*<!-- end of else outer -->*/ 
-                } ?> <!-- end of if isset -->
-                                </table>
-                              </div>
+                      $i=0;
+                      if ($result>0 && $i!=1) {
+                              echo "laman mga row[]: crsName:".$crsName3." timeStart ".
+                                            $timeStart3." timeEnd: ".$timeEnd3."  instructorlist " .$_SESSION['instructorID']." crsSchedID".$crsSchedID3;
+                       } //end of if result>0 ?> 
+                       <tbody>
+                        <tr>
+                            <td><?php echo $crsName3;?></td>
+                            <td><?php echo "Room ".$roomNum3." - ".$dayName3."<br>".$timeStart3." - ".$timeEnd3;?></td>
+                            <td class="btncenter"> <a href=<?php echo "submit.php?addCalendarcrsSchedID=".$crsSchedID3;?>><button> Add to Calendar </button></a> </td>
+                        </tr>
+                        </tbody>
+ <?php /*$i++; */  } //end of while
+               }  //end of else
+        } /*<!-- end of else outer -->*/ 
+ } /* if(isset($_GET['searchBtn'])) */ 
+ ?> 
+                    </table>
+                </div>
+
+        
+        <!-- <div class="column"> -->
+           <!-- <div id="Cal" class="tabcontent"> -->
+               
+
+
+<?php  
+
+if(isset($_GET['instructorlist']) || $_GET['facultyLoadingIsUnloaded']==true  || $_GET['facultyLoadingIsLoaded']==true || ($_GET['addCalendarConflict']) ==true)
+{
+  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $instructorID = $_SESSION['instructorID'];
+
+    echo "faculty loading is true MEANS ISSET GET_INSTRUCTOR LIST";
+
+    $stmt=("select *, (select roomNUm from classroom where f.classroomID=classroom.classroomID) as roomNum, (select dayName from day where f.dayID=day.dayID) as dayName, (select timeStart from timestart where f.timeStartID=timestart.timeStartID) as timeStart, (select timeEnd from timeend where f.timeEndID=timeend.timeEndID) as timeEnd, (select section from section where f.secID=section.secID) as section, (select crsName from curriculum where f.curID=curriculum.curID) as crsName,  (select totalUnits from curriculum where f.curID=curriculum.curID)   as totalUnits from facultyloading f where accountID=?");
+
+            //$stmt->execute(array( $addCalendarcrsSchedIDFromSubmit));
+    $q = $pdo->prepare($stmt);
+    $q->execute(array($instructorID));
 
 
 
-    <?php if(($_GET['facultyLoadingIsLoaded']==true)||($_GET['facultyLoadingIsUnloaded']==true)||($_GET['scheduleGenerated']==true)) { 
-        echo "Printing sched to the calendar "; ?>
-        <div class="column">
-            <div id="Cal" class="tabcontent">
-                <table class="table2">
-                    <tr>
-                        <td colspan="7" class="border">
-                            <button class="tablink" onclick="openPage('Tab', this,)">Tabular View</button>
-                            <button class="tablink01" onclick="openPage('Cal', this,)" id="defaultOpen">Calendar
-                                View</button>
-                            <h3> Faculty Loading </h3>
+     $count=0;   $_SESSION['totalUnits']=0; 
+    while ($row = $q->fetch()){
 
-                            Total No. of Units Loaded:
-                        </td>
-<?php
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $addCalendarcrsSchedIDFromSubmit = $_SESSION['addCalendarcrsSchedID'];
+        echo "naglaog sa while para sa calendar view <br>";
+                
+        $sched[]=$row['crsName']."<br>Rm ".$row['roomNum']."<br> ".$row['timeStart']." - ".$row['timeEnd'];
+        $crsName[]=$row['crsName'];
+        $dayName[]=$row['dayName'];
+        $roomNum[]=$row['roomNum'];
+        $timeStart[]=$row['timeStart'];
+        $timeEnd[]=$row['timeEnd'];
+        $rspan[]=$row['timeEndID'] - $row['timeStartID'];
 
-    if (($_GET['facultyLoadingIsLoaded']==true)) {
-        $stmt=$pdo->prepare("select * from facultyloading natural join  classroom natural join day natural join timestart natural join timeend natural join section natural join course where accountID=?");
+        $_SESSION['totalUnits']=$_SESSION['totalUnits']+$row['totalUnits'];
+        
 
-        $stmt->execute(array( $addCalendarcrsSchedIDFromSubmit));
-    
-    } else if (($_GET['facultyLoadingIsUnloaded']==true)||($_GET['scheduleGenerated']==true)) {
-         $stmt=$pdo->prepare("select * from facultyloading  natural join classroom natural join day natural join timestart natural join timeend natural join section natural join course ");
+/*
+        echo "sched[$count ]  ".$sched[$count].PHP_EOL."<br>";
+        echo "crsName[$count]  ".$crsName[$count];
+        echo "dayName[$count ]  ".$dayName[$count];
+        echo "roomNum[ $count]  ".$roomNum[$count];
+        echo "timeStart[$count ]  ".$timeStart[$count];
+        echo "timeEnd[$count ]  ".$timeEnd[$count];
+        echo "rspan[ $count  ]".$rspan[$count];
+        echo "totalUnits".$_SESSION['totalUnits']."<br> ";*/
+
+        $count++;
     }
-        
+     //including variables instantiation
+     include('../includes/varInstantiation.php'); 
 
-        
-        while ($row = $stmt->fetch()){
-            $totalUnits=$row['totalUnits'];
-            $roomNum=$row['roomNum'];
-            $dayName=$row['dayName'];
-            $timeStart=$row['timeStart'];
-            $timeEnd=$row['timeEnd'];
+     $i=0; 
+     while ($i < $count) {
+        echo "naglaog sa whhile kang includes/xyIntercepts ";
+       //including x&y intercept tester
+       include('../includes/xyIntercepts.php');
+       $i++; 
+    }//eo while ($i < $count)
 
-            $totalUnits+=$totalUnits;
-?> 
+
+
+ ?>
+
+
+<?php               echo "Printing sched to the calendar "; 
+
+?>                  <table class="table2">
+                    <tr>
+                    <td colspan="7" class="border">
+                        <button class="tablink" onclick="openPage('Tab', this,)">Tabular View</button>
+                        <button class="tablink01" onclick="openPage('Cal', this,)" id="defaultOpen">Calendar
+                            View</button>
+                        <h3> Faculty Loading </h3>
+
+                        Total No. of Units Loaded: <?php echo $_SESSION['totalUnits']; ?>
+                    </td>
                     </tr>
+
                     <tr>
                         <th> Time </th>
                         <th> Monday </th>
@@ -232,333 +281,140 @@ $pdo=Database::connect();
                         <th> Friday </th>
                         <th> Saturday </th>
                     </tr>
-                    <tr>
-                        <td> 7am </td>
-                        <td> <?php $day="Monday"; $timeS="7 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        
-                        <td> <?php $day="Tuesday"; $timeS="7 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Wednesday"; $timeS="7 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Thursday"; $timeS="7 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Friday"; $timeS="7 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Saturday"; $timeS="7 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                    </tr>
-                    <tr>
-                        <td> 8am </td>
-                        <td><?php $day="Monday"; $timeS="8 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Tuesday"; $timeS="8 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Wednesday"; $timeS="8 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Thursday"; $timeS="8 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Friday"; $timeS="8 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Saturday"; $timeS="8 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                    </tr>
-                    <tr>
-                        <td> 9am </td>
-                        <td> <?php $day="Monday"; $timeS="9 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?></td>
-                        <td> <?php $day="Tuesday"; $timeS="9 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?></td>
-                        <td><?php $day="Wednesday"; $timeS="9 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Thursday"; $timeS="9 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td> <?php $day="Friday"; $timeS="9 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?></td>
-                        <td><?php $day="Saturday"; $timeS="9 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                    </tr>
-                    <tr>
-                        <td> 10am </td>
-                        <td><?php $day="Monday"; $timeS="10 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Tuesday"; $timeS="10 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Wednesday"; $timeS="10 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Thursday"; $timeS="10 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Friday"; $timeS="10 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Saturday"; $timeS="10 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                    </tr>
-                    <tr>
-                        <td> 11am </td>
-                        <td><?php $day="Monday"; $timeS="11 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Tuesday"; $timeS="11 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td> <?php $day="Wednesday"; $timeS="11 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?></td>
-                        <td><?php $day="Thursday"; $timeS="11 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Friday"; $timeS="11 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Saturday"; $timeS="11 am"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                    </tr>
-                    <tr>
-                        <td> 12nn </td>
-                        <td><?php $day="Monday"; $timeS="12 nn"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Tuesday"; $timeS="12 nn"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Wednesday"; $timeS="12 nn"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Thursday"; $timeS="12 nn"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Friday"; $timeS="12 nn"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Saturday"; $timeS="12 nn"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                    </tr>
-                    <tr>
-                        <td> 1pm </td>
-                        <td><?php $day="Monday"; $timeS="1 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Tuesday"; $timeS="1 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Wednesday"; $timeS="1 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Thursday"; $timeS="1 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Friday"; $timeS="1 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Saturday"; $timeS="1 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                    </tr>
-                    <tr>
-                        <td> 2pm </td>
-                        <td><?php $day="Monday"; $timeS="2 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Tuesday"; $timeS="2 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Wednesday"; $timeS="2 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Thursday"; $timeS="2 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Friday"; $timeS="2 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Saturday"; $timeS="2 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                    </tr>
-                    <tr>
-                        <td> 3pm </td>
-                        <td><?php $day="Monday"; $timeS="3 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Tuesday"; $timeS="3 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Wednesday"; $timeS="3 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Thursday"; $timeS="3 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td> <?php $day="Friday"; $timeS="3 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?></td>
-                        <td><?php $day="Saturday"; $timeS="3 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                      
-                    </tr>
-                    <tr>
-                        <td> 4pm </td>
-                        <td><?php $day="Monday"; $timeS="4 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Tuesday"; $timeS="4 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Wednesday"; $timeS="4 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Thursday"; $timeS="4 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Friday"; $timeS="4 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Saturday"; $timeS="4 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                    </tr>
-                    <tr>
-                        <td> 5pm </td>
-                        <td><?php $day="Monday"; $timeS="5 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Tuesday"; $timeS="5 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Wednesday"; $timeS="5 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Thursday"; $timeS="5 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Friday"; $timeS="5 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Saturday"; $timeS="5 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                    </tr>
-                    <tr>
-                        <td> 6pm </td>
-                        <td><?php $day="Monday"; $timeS="6 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Tuesday"; $timeS="6 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Wednesday"; $timeS="6 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Thursday"; $timeS="6 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Friday"; $timeS="6 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Saturday"; $timeS="6 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                    </tr>
-                    <tr>
-                        <td> 7pm </td>
-                        <td><?php $day="Monday"; $timeS="7 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Tuesday"; $timeS="7 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Wednesday"; $timeS="7 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Thursday"; $timeS="7 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Friday"; $timeS="7 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Saturday"; $timeS="7 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                    </tr>
-                    <tr>
-                        <td> 8pm </td>
-                        <td><?php $day="Monday"; $timeS="8 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Tuesday"; $timeS="8 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Wednesday"; $timeS="8 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Thursday"; $timeS="8 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Friday"; $timeS="8 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                        <td><?php $day="Saturday"; $timeS="8 pm"; if ($day==$dayName && $timeS==$timeStart) {
-                            echo $code." ".$dayName." ".$roomNum." ".$timeStart." - ".$timeEnd; } ?> </td>
-                    </tr>
+<?php
+        
+                    //including calendar view rows result
+                    include('../includes/calViewRows.php'); 
+                    echo " code sunod sa includes/calViewRows "; 
+
+}//if(isset($_GET['instructorlist']))
+?> 
                 </table>
-            </div>
-<?php } //end of while row
-
- ?>
+           <!--  </div> -->
 
 
-            <div id="Tab" class="tabcontent">
-            <form method="get">
+
+<?php
+
+if(isset($_GET['instructorlist']) || $_GET['facultyLoadingIsUnloaded']==true || $_GET['facultyLoadingIsLoaded']==true ||($_GET['addCalendarConflict']) ==true )
+{
+
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $instructorID2 =$_SESSION['instructorID'];
+
+    echo "naglaog sa kondisyon sql para sa  calndar view ";
+
+    $stmt=("select *, (select roomNUm from classroom where f.classroomID=classroom.classroomID) as roomNum, 
+        (select dayName from day where f.dayID=day.dayID) as dayName, 
+        (select timeStart from timestart where f.timeStartID=timestart.timeStartID) as timeStart, 
+        (select timeEnd from timeend where f.timeEndID=timeend.timeEndID) as timeEnd, 
+        (select section from section where f.secID=section.secID) as section, 
+        (select crsName from curriculum where f.curID=curriculum.curID) as crsName,  
+        (select totalUnits from curriculum where f.curID=curriculum.curID)   as totalUnits from facultyloading f where accountID=?");
+
+            //$stmt->execute(array( $addCalendarcrsSchedIDFromSubmit));
+    $q = $pdo->prepare($stmt);
+    $q->execute(array($instructorID2));
+    
+       
+?> 
+       
+
+      <!--  <div id="Tab" class="tabcontent"> -->
                 <table>
+<?php               echo "Printing sched to the tabular view "; 
+
+?>
                     <tr>
                         <td colspan="6" class="border">
-                            <button class="tablink01" onclick="openPage('Tab', this,)" id="defaultOpen">Tabular
+                            <button class="tablink01" name="tabularView" onclick="openPage('Tab', this,)" id="defaultOpen">Tabular
                                 View</button>
-                            <button class="tablink" onclick="openPage('Cal', this,)">Calendar View</button>
+                            <button class="tablink" name="calendarView" onclick="openPage('Cal', this,)">Calendar View</button>
                             <h3> Faculty Loading </h3>
-                            Total No. of Units Loaded: <?php echo $totalUnits; ?>
+                            <h5> Total No. of Units Loaded: <?php echo $_SESSION['totalUnits']; ?></h5>
+                            *Clicking edit icon will unload the schedule from this instructor.
+                            
                         </td>
                     </tr>
 
-
-
-
                     <tr>
-                    <thead>
                         <th> Action </th>
-                        <th> Code </th>
-                        <th> Description </th>
+                        <!-- <th> Code </th> -->
+                        <th> Subjects </th>
                         <th> Units </th>
                         <th> Section </th>
                         <th> Schedule </th>
-                    </thead>
                     </tr>
 
-<?php
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $addCalendarcrsSchedIDFromSubmit = $_SESSION['addCalendarcrsSchedID'];
 
-     
-        $stmt=$pdo->prepare("select * from facultyloading  natural join classroom natural join day natural join timestart natural join timeend natural join section natural join course where accountID=?");
 
-        $stmt->execute(array($_SESSION['instructorID']));
-
-        if (($_GET['facultyLoadingIsLoaded']==true)) {
-        $stmt=$pdo->prepare("select * from facultyloading  natural join classroom natural join day natural join timestart natural join timeend natural join section natural join course where accountID=?");
-
-        $stmt->execute(array( $addCalendarcrsSchedIDFromSubmit));
+<?php 
+            while ($row2 = $q->fetch()){
+                            echo "fUnloadCrsSchedID2 ".$row2['crsSchedID'];
+                            $fUnloadCrsSchedID2=$row2['crsSchedID'];
+                            /*$code2=$row2['courseCode'];*/
+                            $desc2=$row2['crsName'];
+                            $totalUnits2=$row2['totalUnits'];
+                            $section2=$row2['section'];
+                            $roomNum2=$row2['roomNum'];
+                            $dayName2=$row2['dayName'];
+                            $timeStart2=$row2['timeStart'];
+                            $timeEnd2=$row2['timeEnd'];
     
-    }
+ ?>    
 
-
-         else if (($_GET['facultyLoadingIsUnloaded']==true)||($_GET['scheduleGenerated']==true)) {
-         $stmt=$pdo->prepare("select * from facultyloading  natural join classroom natural join day natural join timestart natural join timeend natural join section natural join course ");
-    }
-    
-        while ($row = $stmt->fetch()){
-            $fUnloadCrsSchedID=$row['crsSchedID'];
-            $code=$row['courseCode'];
-            $desc=$row['courseName'];
-            $totalUnits=$row['totalUnits'];
-            $section=$row['section'];
-            $roomNum=$row['roomNum'];
-            $dayName=$row['dayName'];
-            $timeStart=$row['timeStart'];
-            $timeEnd=$row['timeEnd'];
-?> 
-   
 
                  <tbody>
                     <tr>
-                        <td class="btncenter"> <a href=<?php echo "submit.php?fUnloadCrsSchedID=". $fUnloadCrsSchedID;?>><button class="btnaction"  onclick="openForm()"><i
-                                    class="fas fa-edit"></i> </button></a>
-
-                                       
+                        <td class="btncenter"> <a href=<?php echo "submit.php?fUnloadCrsSchedID2=".$fUnloadCrsSchedID2;?>><button name="editBtn"  ><i class="fas fa-edit"></i> </button></a>
+                    
+           
                         </td>
-                        <td><?php  echo $code; ?>  </td>
-                        <td><?php  echo $desc; ?> </td>
-                        <td><?php  echo $totalUnits; ?> </td>
-                        <td><?php  echo $section; ?> </td>
-                        <td><?php  echo $roomNum." ".$dayName." ".$timeStart." - ".$timeEnd; ?> </td>
+                        <!-- <td><?php  echo $code2; ?>  </td> -->
+                        <td><?php  echo $desc2; ?> </td>
+                        <td><?php  echo $totalUnits2; ?> </td>
+                        <td><?php  echo $section2; ?> </td>
+                        <td><?php  echo "Rm ".$roomNum2."<br>".$dayName2."<br>".$timeStart2." - ".$timeEnd2; ?> </td>
+
+
                     </tr>
                  </tbody>
-<?php } //end of while row
-?>
+<?php       
+            } //end of while row
+?>                  <form>
                     <tr>
                         <td class="btncenter" colspan="6">
-                           <a href=<?php echo "submit.php?generateSched=true";?>><button class="btn">  Generate Schedule </button></a> 
+                           <button class="btn" name="genSchedBtn">  Generate Schedule </button>
                         </td>
-                    </tr>   
-                </table>  
-              </form>    
-            </div>
-        </div>
-    </div>  
+                    </tr> 
+                    </form>
 
-<?php } /*end of if(isset($_GET['searchBtn']) && isset($_GET['searchBtn']==true))*/
+<?php
+/*}*///if(isset($_GET['instructorlist']))
+?>               </table>     
+          <!--   </div> -->
+       <!--  </div>
+    </div>   -->
 
- ?>
 
-
-<?php Database::disconnect(); ?>
-
-    <div class="unloadform-popup" id="myForm">
+ 
+    <!-- <div class="unloadform-popup" id="myForm">
         <div class="unloadcontainer">
             <p style="color: white;"> By clicking OK button will unload the subject from the instructor. Do you wish to
                 continue? </p>
-            <button class="btnunload"> OK </button>
-
-
-          
+            <a href=<?php echo "submit.php?fUnloadCrsSchedID=".$fUnloadCrsSchedID2;?>><button class="btnunload"> OK </button></a>
 
             <button class="btnunload" onclick="closeForm()"> Cancel </button>
         </div>
-    </div>
-    <script>
+    </div>   -->
+
+<?php
+}//if(isset($_GET['instructorlist']))
+?>  
+
+<?php Database::disconnect(); ?>
+
+ <script>
         function openPage(pageName, elmnt,) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tabcontent");
@@ -581,7 +437,7 @@ $pdo=Database::connect();
         function closeForm() {
             document.getElementById("myForm").style.display = "none";
         }
-    </script>
+    </script> 
 
     
     <!-- bootstrap JS-->

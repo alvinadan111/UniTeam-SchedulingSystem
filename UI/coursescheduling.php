@@ -127,7 +127,7 @@ $pdo=Database::connect();
             <strong>Warning!</strong> &nbsp No result from the chosen academic program.
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             </div>
-    <?php } ?>
+    <?php } else{ ?>
                 <table class="table">
               <thead>
                 <tr>
@@ -139,29 +139,30 @@ $pdo=Database::connect();
               </thead>
 
     <?php 
-    while ($row = $stmt->fetch()) 
-          {
-            $_SESSION['curID']=$curID=$row['curID'];
-            $_SESSION['syID']=$row['syID'];
-            $_SESSION['periodID']=$row['periodID'];
-            $courseCode=$row['courseCode'];
-            $courseName=$row['courseName'];
+                while ($row = $stmt->fetch()) 
+                      {
+                        $_SESSION['curID']=$curID=$row['curID'];
+                        $_SESSION['syID']=$row['syID'];
+                        $_SESSION['periodID']=$row['periodID'];
+                        $courseCode=$row['courseCode'];
+                        $courseName=$row['courseName'];
 
 
-    ?>       <tbody>
-                <tr>
-                <td><?php echo $courseCode;?></td>
-                <td><?php echo $courseName;?></td>
-                <td></td>
-            
+    ?>                  <tbody>
+                            <tr>
+                            <td><?php echo $courseCode;?></td>
+                            <td><?php echo $courseName;?></td>
+                            <td></td>
+                        
 
-                <td style="text-align: center;"> <a href=<?php echo "courseschedulingdata.php?crsSchedulingActionCurID=".$curID;?>  class="btn"><i class="fas fa-edit"></i></a> </td> 
-                </tr>
-            </tbody>
-           
+                            <td style="text-align: center;"> <a href=<?php echo "courseschedulingdata.php?crsSchedulingActionCurID=".$curID;?>  class="btn"><i class="fas fa-edit"></i></a> </td> 
+                            </tr>
+                        </tbody>
+                       
 
-       
- <?php } 
+                   
+    <?php       } /*eo while*/ 
+        } //end of inner else 
   }  //end of else 
 } /*if(isset($_POST['btnSearch']))*/
  Database::disconnect(); ?>                       

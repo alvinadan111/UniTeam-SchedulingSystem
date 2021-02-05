@@ -117,7 +117,7 @@ if(isset($_POST['saveBTN'])){
         <tr>
             <th> Program Code </th>
             <th> Program Name</th>
-            <td class="center"> View </td>
+            <td class="center"> Action </td>
         </tr>
         <tr>
             <?php dropdownlist::showAcadProgs(); ?>

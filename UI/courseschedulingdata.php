@@ -17,7 +17,6 @@ if(isset($_GET['secID'])){
     if(empty($_GET['dayID']) || empty($_GET['timeStartID']) || empty($_GET['timeEndID']) || empty($_GET['secID'])){ 
         $isIncomplete = true;
             // echo "Some fields are left unfilled. <br>";
-
     }else{
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -105,9 +104,24 @@ if(isset($_GET['secID'])){
 
 
 if(isset($_GET['saveSubmitBtn'])){
+    if(empty($_GET['classroomID'])){
+        $isIncomplete = true;
+?>        <!-- Warning Alert -->
+        <div id="myAlertUF" class="alert alert-warning alert-dismissible fade show">
+        <strong>Warning!</strong> &nbsp Some fields are left unfilled.
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+<?php    $isIncomplete = false;  }
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $classroomID = $_GET['classroomID'];
             $stmt = $pdo->prepare("INSERT INTO coursescheduling (classroomID, dayID, timeStartID, timeEndID, secID, curID)
+            VALUES (?,?,?,?,?,?)");
+            $isCreated = true;
+            $stmt->execute(array($classroomID,$_SESSION['dayID'],$_SESSION['timeStartID'],$_SESSION['timeEndID'],$_SESSION['secID'],$_SESSION['curID']));
+
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $classroomID = $_GET['classroomID'];
+            $stmt = $pdo->prepare("INSERT INTO courseschedulingtemp (classroomID, dayID, timeStartID, timeEndID, secID, curID)
             VALUES (?,?,?,?,?,?)");
             $isCreated = true;
             $stmt->execute(array($classroomID,$_SESSION['dayID'],$_SESSION['timeStartID'],$_SESSION['timeEndID'],$_SESSION['secID'],$_SESSION['curID']));
@@ -144,28 +158,28 @@ if(isset($_GET['saveSubmitBtn'])){
         <table class="table1">
             <tr>
                 <th colspan="7"> Schedule</th>
-                <?php if ($isSubmitted==true) { ?>
+                <?php if ($isSubmitted==true) { $isSubmitted=false; ?>
                     <!-- Success Alert -->
                     <div id="myAlert" class="alert alert-success alert-dismissible fade show">
                         <strong>Success!</strong> Your preferences have been submitted. Please proceed to adding a room.
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
                     </div>
             <?php   } 
-                if ($isIncomplete==true) { ?>
+                if ($isIncomplete==true) { $isIncomplete=false; ?>
                     <!-- Warning Alert -->
                     <div id="myAlertUF" class="alert alert-warning alert-dismissible fade show">
                     <strong>Warning!</strong> &nbsp Some fields are left unfilled.
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     </div>
             <?php   } 
-             if ($isCreated==true) { ?>
+             if ($isCreated==true) { $isCreated=false; ?>
                      <!-- Success Alert -->
                     <div id="myAlertC" class="alert alert-success alert-dismissible fade show">
                         <strong>Success!</strong> Your schedule has been created.
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
                     </div>
              <?php } 
-                if ($isNoAvailRoom ==true) { ?>
+                if ($isNoAvailRoom ==true) { $isNoAvailRoom=false;  ?>
                     <!-- Warning Alert -->
                     <div id="myAlertUF" class="alert alert-warning alert-dismissible fade show">
                     <strong>Warning!</strong> &nbsp No available room for your preferences.

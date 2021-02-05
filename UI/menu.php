@@ -37,7 +37,6 @@ endif;
         <div class="sidenav">
           <h1> MENU </h1>
           <a href="menu.php">Home</a>
-          <a href="facultyloading.php">Faculty Loading </a>
           <button class="dropdown-btn"><i class="fa fa-caret-down"></i> Entry </button>
           <div class="dropdown-container">
             <a href="academic.html"> Academic Program </a>
@@ -52,6 +51,7 @@ endif;
             <a href="curriculum.php"> Curriculum </a>
             <a href="coursescheduling.php"> Course Scheduling</a>
           </div>
+          <a href="facultyloading.php">Faculty Loading </a>
           <button class="dropdown-btn"><i class="fa fa-caret-down"></i> Department Head </button>
           <div class="dropdown-container">
             <a href="add Account.html"> Add Department Head </a>
