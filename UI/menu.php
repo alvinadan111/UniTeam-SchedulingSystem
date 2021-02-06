@@ -54,17 +54,17 @@ endif;
           <a href="facultyloading.php">Faculty Loading </a>
           <button class="dropdown-btn"><i class="fa fa-caret-down"></i> Department Head </button>
           <div class="dropdown-container">
-            <a href="add Account.html"> Add Department Head </a>
-            <a href="listofinstructor.html"> View Department Head </a>
+            <a href="addDeptHead.php"> Add Department Head </a>
+            <a href="ListOfDeptHead.php"> View Department Head </a>
           </div>
           <button class="dropdown-btn"><i class="fa fa-caret-down"></i> Instructor </button>
           <div class="dropdown-container">
-            <a href="add Account.html"> Add Instructor </a>
-            <a href="listofinstructor.html"> View Instructor </a>
+            <a href="addInstructor.php"> Add Instructor </a>
+            <a href="ListOfInstructor.php"> View Instructor </a>
           </div>
           <a href="Schedules.html"> Schedules </a>
           <a href="roomoccupied.html"> Rooms </a>
-          <a href="changepassword.html"> Change Password </a>
+          <a href="changepassword.php"> Change Password </a>
           <a href="../logout.php"> Logout </a>
         </div>
       </div>
