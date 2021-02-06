@@ -373,7 +373,7 @@ if(isset($_GET['instructorlist']) || $_GET['facultyLoadingIsUnloaded']==true || 
 
 <?php 
             while ($row2 = $q->fetch()){
-                            echo "fUnloadCrsSchedID2 ".$row2['crsSchedID'];
+                            /*echo "fUnloadCrsSchedID2 ".$row2['crsSchedID'];*/
                             $fUnloadCrsSchedID2=$row2['crsSchedID'];
                             /*$code2=$row2['courseCode'];*/
                             $desc2=$row2['crsName'];
