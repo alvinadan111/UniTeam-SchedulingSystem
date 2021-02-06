@@ -39,3 +39,6 @@ td {
         background-color: #671D1E;
         padding: 5px;
     }
+    select {
+        width: 100px;
+    }
