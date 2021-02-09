@@ -1,111 +1,152 @@
 * {
-    box-sizing: border-box;
-  }
+  box-sizing: border-box;
+}
 
-  body {
-    font-family: Arial, Helvetica, sans-serif;
-    padding: 10px;
-    background: #f1f1f1;
-  }
+body {
+  font-family: Arial;
+  padding: 10px;
+  background: #f1f1f1;
+}
 
-  /* Header/Blog Title */
-  .header {
-    padding: 10px;
-    background: #763435;
-  }
+/* Header/Blog Title */
+.header {
+  padding: 10px;
+  background: #763435;
+}
 
-  .header h1 {
-    font-size: 50px;
-  }
+.header h1 {
+  font-size: 50px;
+}
 
-  .topname {
-    overflow: hidden;
-    background-color: #333;
-  }
-  .headname {
-    padding-left: 120px;
+.topname {
+  overflow: hidden;
+  background-color: #333;
+}
+.tabcontent {
+  display: none;
+
+}
+.topname h1 {
+  float: left;
+  color: #f2f2f2;
+  text-decoration: none;
+  font-size: 25px;
+  text-align: center;
+  display: block;
+  padding: 5px;
+}
+.fa-user-circle {
+  color: white;
+  float: left;
+  font-size: 50px;
+  padding: 10px;
+}
+.headname {
+  padding-left: 120px;
+  color: white;
+  font-family: serif;
+  text-shadow: 2px 2px 4px #000000;
+}
+.logocontainer {
+  position: absolute;
+  padding-top: 15px;
+}
+
+img.logo {
+  width: 100px;
+}
+.fa-chalkboard-teacher {
+  float: left;
+  font-size: 50px;
+  padding: 15px;
+  color: white;
+}
+
+.leftcolumn {
+  float: left;
+  width: 25%;
+}
+
+/* Right column */
+.rightcolumn {
+  float: left;
+  width: 75%;
+  background-color: #f1f1f1;
+  padding-left: 20px;
+}
+.card {
+  background-color: white;
+  padding: 20px;
+  margin-top: 20px;
+}
+img {
+  width: 100%;
+  height: auto;
+
+}
+.menu {
+  font-size: 50px;
+}
+
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+button {
+    border: none;
+    background-color: #A94442;
     color: white;
-    font-family: serif;
-    text-shadow: 2px 2px 4px #000000;
-  }
-  .logocontainer {
-    position: absolute;
-    padding-top: 15px;
-  }
-  
-  img.logo {
-    width: 100px;
-  }
-  .fa-chalkboard-teacher {
-    float: left;
-    font-size: 50px;
-    padding: 15px;
-    color: white;
-  }
-  h1 {
-      color: white;
-  }
-  .leftcolumn {
-    float: left;
-    width: 25%;
-  }
+    padding: 7px;
+    width: 20%;  
+    
+}
 
-  /* Right column */
-  .rightcolumn {
-    float: left;
-    width: 75%;
-    background-color: #f1f1f1;
-    padding-left: 20px;
-  }
-  .card {
-    background-color: white;
-    padding: 20px;
-    margin-top: 20px;
-  }
+table {
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: white;
+  width: 100%;
+}
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #A94442;
+  display: block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
 
-  /* Clear floats after the columns */
-  .row:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-  h2 {
-    color: #A94442;
-  }
-  button {
-      border: none;
-      background-color: #A94442;
-      color: white;
-      padding: 7px;
-      width: 20%;  
-  }
-  input[type=text] {
-        padding-block: 5px;
-        width: 200px;
-  }
-  table {
-    border: 1px solid black;
-    border-collapse: collapse;
-    background-color: white;
-    width: 100%;
+}
+.sidenav a:hover {
+  color: #671D1E;
 }
 th,
 td {
-    text-align: center;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    border: 1px solid black;
-    padding: 15px;
-
-    background-color: white;
+  text-align: center;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  border: 1px solid black;
+  padding: 15px;
+  background-color: white;
+}
+select {
+  width: 200px;
+  padding: 5px;
 }
 @media screen and (max-width: 1000px) {
 
-    .leftcolumn,
-    .rightcolumn {
-      width: 100%;
-      padding: 0;
-    }
+  .leftcolumn,
+  .rightcolumn {
+    width: 100%;
+    padding: 0;
   }
+}
 
 

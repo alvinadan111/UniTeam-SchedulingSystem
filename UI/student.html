@@ -15,175 +15,189 @@
         <h1 class="headname"> Bulacan State University (Sarmiento Campus)</h1>
 
     </div>
-
     <div class="topname">
-        <i class="fas fa-user-graduate"></i>
-        <h1> Student </h1>
-    </div>
+        <i class="fas fa-user-circle"></i>
+        <h1>Student</h1>
+      </div>
     <div class="row">
         <div class="leftcolumn">
             <div class="card">
-                <h2> Search Schedule </h2>
-                <label for="yr&sec"> IDK </label> <br>
-                <select id="" name="list" form="form"> <br>
-                    <option value=""> </option>
-                    <option value=""> </option>
-                    <option value=""> </option>
-                    <option value=""> </option>
-                </select><br>
-                <label for="yr&sec"> Year and Section </label> <br>
-                <select id="yr&sec" name="yr&seclist" form="yr&secform">
-                    <option value=""> </option>
-                    <option value=""> </option>
-                    <option value=""> </option>
-                    <option value=""> </option>
-                </select>
-                <button type="submit"><i class="fa fa-search"></i></button>
+                <div class="sidenav">
+                <a onclick="openPage('menu', this)" id="defaultOpen" > <h2 style="font-size:larger;"> MENU </h2> </a>
+                <a onclick="openPage('view', this)"> View Schedule </a>
+                <a href="changepassword.php"> Change Password </a>
+                <a href="../logout.php"> Logout </a>
+            </div>
             </div>
         </div>
+        <div id="menu" class="tabcontent">
         <div class="rightcolumn">
             <div class="card">
-                <table>
-                    <tr>
-                        <th> Time </th>
-                        <th> Monday </th>
-                        <th> Tuesday </th>
-                        <th> Wednesday </th>
-                        <th> Thursday </th>
-                        <th> Friday </th>
-                        <th> Saturday </th>
-                    </tr>
-                    <tr>
-                        <td> 7am </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                    </tr>
-                    <tr>
-                        <td> 8am </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                    </tr>
-                    <tr>
-                        <td> 9am </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                    </tr>
-                    <tr>
-                        <td> 10am </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                    </tr>
-                    <tr>
-                        <td> 11am </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                    </tr>
-                    <tr>
-                        <td> 12nn </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                    </tr>
-                    <tr>
-                        <td> 1pm </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                    </tr>
-                    <tr>
-                        <td> 2pm </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                    </tr>
-                    <tr>
-                        <td> 3pm </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                      
-                    </tr>
-                    <tr>
-                        <td> 4pm </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                    </tr>
-                    <tr>
-                        <td> 5pm </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                    </tr>
-                    <tr>
-                        <td> 6pm </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                    </tr>
-                    <tr>
-                        <td> 7pm </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                    </tr>
-                    <tr>
-                        <td> 8pm </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                    </tr>
-                </table>
+                <img src="bulsu.jpg" width="460" height="345">
             </div>
+        </div>
+        </div>
+    
+    <div id="view" class="tabcontent" >
+    <div class="rightcolumn">
+        <div class="card">
+   
+      
+        <table>
+            <tr>
+                <th> Time </th>
+                <th> Monday </th>
+                <th> Tuesday </th>
+                <th> Wednesday </th>
+                <th> Thursday </th>
+                <th> Friday </th>
+                <th> Saturday </th>
+            </tr>
+            <tr>
+                <td> 7am </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 8am </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 9am </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 10am </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 11am </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 12nn </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 1pm </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 2pm </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 3pm </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+              
+            </tr>
+            <tr>
+                <td> 4pm </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 5pm </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 6pm </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 7pm </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> 8pm </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
         </div>
     </div>
 </body>
+<script>
+    function openPage(pageName, elmnt,) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        document.getElementById(pageName).style.display = "contents";
+        elmnt.style.backgroundColor = color;
+    }
+    document.getElementById("defaultOpen").click();
+</script>
 
 </html>
