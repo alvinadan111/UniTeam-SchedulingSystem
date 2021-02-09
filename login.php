@@ -18,12 +18,24 @@ require 'database.php';
  
         if($account['idNum']!="")
         {
-          @$_SESSION['accountID']=$account['accountID']; 
+          
           @$_SESSION['FName']=$account['FName'];
           @$_SESSION['pw']=$account['pw'];
           @$_SESSION['idNum']=$account['idNum'];
+          @$_SESSION['accessLevel']=$account['accessLevel'];
+          @$_SESSION['signupDeptID']=$account['dept'];
 
-          header("Location: UI/menu.php");
+          if ($_SESSION['accessLevel']=="admin") {
+            @$_SESSION['accountID']=$account['accountID']; 
+            header("Location: UI/menu.php");
+          } else if ($_SESSION['accessLevel']=="student") {
+            @$_SESSION['accountIDstudent']=$account['accountID']; 
+            header("Location: UI/studentmenu.php");
+          }else if ($_SESSION['accessLevel']=="prof") {
+            @$_SESSION['accountIDprof']=$account['accountID']; 
+            header("Location: UI/profmenu.php");
+          }
+           
         } else
         {
             header("Location: index.php?signin=mismatch");  

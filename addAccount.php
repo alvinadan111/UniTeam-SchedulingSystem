@@ -18,13 +18,12 @@ if(isset($_POST['add'])){
     $ID = $_POST['ID_Number'];
     $pw = $_POST['pas'];
     
-    if(empty($_POST['specializationlist']) || empty($_POST['ranklist']) || empty($_POST['departmentlist'])){
+    if( empty($_POST['departmentlist'])){
  
         $isIncomplete = true;
  
     }else{
-        $SP = $_POST['specializationlist'];
-        $r = $_POST['ranklist'];
+
         $dept = $_POST['departmentlist'];
 
         $q = $pdo->prepare("SELECT * FROM account where idNum = ? ");
@@ -35,9 +34,9 @@ if(isset($_POST['add'])){
            $isDuplicated = true;
         }else{
 
-            $stmt = $pdo->prepare("INSERT INTO account (FName, MName, LName, idNum, dept, rankID, specializationID, pw)
-            VALUES (?,?,?,?,?,?,?,?)");
-            $stmt->execute(array($FN,$MN,$LN,$ID,$dept,$r,$SP,$pw));
+            $stmt = $pdo->prepare("INSERT INTO account (FName, MName, LName, idNum, dept,  pw, accessLevel)
+            VALUES (?,?,?,?,?,?,?)");
+            $stmt->execute(array($FN,$MN,$LN,$ID,$dept,$pw,"student"));
             $isRegistered = true;
             header("refresh:3; url = index.php");
         }
@@ -58,16 +57,15 @@ if(isset($_POST['add'])){
     <title>Registration</title>
   </head>
   <body>
-  <h1 class="h1"> Add Account </h1> 
+  <h1 class="h1"> Add Student Account </h1> 
     <div class="btncontainer">
-        <a class="navtop" href="index.php" > Home <i class="fas fa-chevron-right"></i> </a>
-        <a class="navtop" href="addAccount.php" > Add Account </a>
+        <a class="navtop" href="index.php" > Login <i class="fas fa-chevron-right"></i> </a>
+        <a class="navtop" href="addAccount.php" > Add Student Account </a>
     </div>
     <div class="container">
         <form class="container2" method = "POST">
 
             <table>
-                <h1> Add Account </h1>
 
                 <tr>
                     <td><input type="text" placeholder="First Name" name="First_Name" required></td>
@@ -75,42 +73,12 @@ if(isset($_POST['add'])){
                     <td><input type="text" placeholder="Last Name" name="Last Name" required></td>
                 </tr>
                 <tr>
-                    <td colspan="3"><input type="text" placeholder="ID Number" name="ID_Number" required></td>
+                    <td colspan="3"><input type="text" placeholder="Username" name="ID_Number" required></td>
                 </tr>
                 <tr>
                     <td colspan="3"><input type="password" placeholder="Password" name="pas" required></td>
                 </tr>
-            
-                <tr>
-                    <td colspan="3">
-                        <label for="specialization"> Specialization </label>
-                        <select id="specialization" name="specializationlist">
-                            <option value=" " selected disabled></option>
-                            <?php
-                                $pdo=Database::connect();
-                                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                                $stmt = $pdo->query("SELECT specializationID, specName FROM specialization");
-                                while ($row = $stmt->fetch()) { ?>
 
-                                <option value="<?php echo $row['specializationID']; ?>"> <?php echo $row['specName'];  ?> </option>
-                                    
-                            <?php }?>
-                        </select>
-                        <label for="Rank"> Rank </label>
-                        <select id="rank" name="ranklist">
-                            <option value=" " selected disabled></option>
-                            <?php
-                                $pdo=Database::connect();
-                                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                                $stmt = $pdo->query("SELECT rankID, rankName FROM rnk");
-                                while ($row = $stmt->fetch()) { ?>
-
-                                <option value="<?php echo $row['rankID']; ?>"> <?php echo $row['rankName'];  ?> </option>
-                                    
-                            <?php }?>
-                        </select>
-                    </td>
-                </tr>
                 <tr>
                     <td colspan="3"> 
                         <label for="department"> Department </label>

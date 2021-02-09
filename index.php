@@ -24,7 +24,7 @@
             <div class="logocontainer">
                 <img src="UI/bulsulogo.png" alt="log" class="logo">
             </div>
-            <input type="text"  placeholder="Enter ID Number" name="idNum" required>
+            <input type="text"  placeholder="Enter Username" name="idNum" required>
             <input type="password" placeholder="Enter Password" name="pw" required>
 
             <?php if (isset($_GET['signin'])) { if ($_GET['signin']=="mismatch") { ?>
@@ -50,7 +50,7 @@
      {
         setTimeout(function (){
             $('#myAlert').hide('fade');
-        }, 5000); 
+        }, 4000); 
 
      });
         

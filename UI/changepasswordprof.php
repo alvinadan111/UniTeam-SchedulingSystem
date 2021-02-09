@@ -1,7 +1,7 @@
 <?php
 session_start();
 
- if(empty($_SESSION['accountID'])):
+ if(empty($_SESSION['accountIDprof'])):
 header('Location:../index.php');
 endif;
 
@@ -15,7 +15,7 @@ $isFailed = false;
 $pdo=Database::connect();
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $sql = $pdo->prepare("SELECT pw from account where accountID = :accID");
-$sql->bindValue(':accID',$_SESSION['accountID']);
+$sql->bindValue(':accID',$_SESSION['accountIDprof']);
 $sql->execute();
 $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 $accPW = $result[0]['pw'];
@@ -32,10 +32,10 @@ if(isset($_POST['change'])){
     if($old == $accPW && $new == $con){
         $pwUpdate = $pdo->prepare("UPDATE account set pw = :acPW where accountID = :acID");
         $pwUpdate->bindValue(':acPW',$con);
-        $pwUpdate->bindValue(':acID',$_SESSION['accountID']);
+        $pwUpdate->bindValue(':acID',$_SESSION['accountIDprof']);
         $pwUpdate->execute(); 
         $isChanged = true;
-        header("refresh:2; url = menu.php");
+        header("refresh:2; url = profmenu.php");
 
     }
 
@@ -61,8 +61,8 @@ if(isset($_POST['change'])){
 <body>
     <h1> Change Password </h1>
     <div class="btncontainer">
-        <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
-        <a class="navtop" href="changepassword.php"> Change Password </a>
+        <a class="navtop" href="profmenu.php"> Home <i class="fas fa-chevron-right"></i> </a>
+        <a class="navtop" href="changepasswordprof.php"> Change Password </a>
     </div>
     <form class="container" method = "POST">
         <table>
@@ -114,7 +114,7 @@ if(isset($_POST['change'])){
     <?php if($isFailed == true){ ?>
         <script>
             swal({
-            title: "Password Not Match",
+            title: "Password Not Match or Old Password is Incorrect",
             text: "Failed to Change",
             icon: "error",
             });
