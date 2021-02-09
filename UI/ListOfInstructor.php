@@ -1,3 +1,11 @@
+<?php  session_start();
+
+  if(empty($_SESSION['accountID'])):
+header('Location:../index.php');
+endif;
+ ?>
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,8 +15,8 @@
     <body>
             <h1 class="textcolor" colspan="3"> View Instructor </h1>
             <div class="btncontainer">
-                <a class="navtop" href="menu.html"> Home <i class="fas fa-chevron-right"></i> </a>
-                <a class="navtop" href="listofinstructor.html"> View Instructor </a>
+                <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
+                <a class="navtop" href="ListOfInstructor.php"> View Instructor </a>
             </div>
             <table>
                 <tr>
@@ -25,7 +33,7 @@
                 require '../database.php';
                 $pdo=Database::connect();
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $sql = $pdo->prepare('SELECT account.idNum, account.FName, account.MName, account.LName, department.deptName, specialization.specName, rnk.rankName FROM account, department, specialization, rnk where accessLevel = "prof" and department.deptID = account.dept and specialization.specializationID = account.specializationID and rnk.rankID = account.rankID');
+                $sql = $pdo->prepare('SELECT account.idNum, account.FName, account.MName, account.LName, department.deptName, specialization.specName, rnk.rankName FROM account, department, specialization, rnk where accessLevel = "prof" and department.deptID = account.dept and specialization.specializationID = account.specializationID and rnk.rankID = account.rankID orcer by account.FName');
                 $sql->execute();
                 $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 

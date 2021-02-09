@@ -1,3 +1,12 @@
+<?php session_start();
+
+  if(empty($_SESSION['accountID'])):
+header('Location:../index.php');
+endif;
+
+
+ ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -5,10 +14,10 @@
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     </head>
     <body>
-            <h1 class="textcolor" colspan="3"> View Instructor </h1>
+            <h1 class="textcolor" colspan="3"> View Department Head  </h1>
             <div class="btncontainer">
-                <a class="navtop" href="menu.html"> Home <i class="fas fa-chevron-right"></i> </a>
-                <a class="navtop" href="listofinstructor.html"> View Instructor </a>
+                <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
+                <a class="navtop" href="ListOfDeptHead.php"> View Department Head </a>
             </div>
             <table>
                 <tr>
@@ -25,7 +34,7 @@
                 require '../database.php';
                 $pdo=Database::connect();
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $sql = $pdo->prepare('SELECT account.idNum, account.FName, account.MName, account.LName, department.deptName, specialization.specName, rnk.rankName FROM account, department, specialization, rnk where accessLevel = "admin" and department.deptID = account.dept and specialization.specializationID = account.specializationID and rnk.rankID = account.rankID');
+                $sql = $pdo->prepare('SELECT account.idNum, account.FName, account.MName, account.LName, department.deptName, specialization.specName, rnk.rankName FROM account, department, specialization, rnk where accessLevel = "admin" and department.deptID = account.dept and specialization.specializationID = account.specializationID and rnk.rankID = account.rankID order by account.FName asc');
                 $sql->execute();
                 $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 

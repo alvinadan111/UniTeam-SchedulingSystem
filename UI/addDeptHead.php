@@ -2,6 +2,12 @@
 session_start();
 
 
+  if(empty($_SESSION['accountID'])):
+header('Location:../index.php');
+endif;
+
+
+
 require '../database.php';
 $isRegistered = false;
 $isDuplicated = false;
@@ -36,7 +42,7 @@ if(isset($_POST['add'])){
         }else{
 
             $stmt = $pdo->prepare("INSERT INTO account (FName, MName, LName, idNum, dept, rankID, specializationID, pw, accessLevel)
-            VALUES (?,?,?,?,?,?,?,?,'Admin')");
+            VALUES (?,?,?,?,?,?,?,?,'admin')");
             $stmt->execute(array($FN,$MN,$LN,$ID,$dept,$r,$SP,$pw));
             $isRegistered = true;
             header("refresh:2; url = menu.php");
@@ -52,22 +58,23 @@ if(isset($_POST['add'])){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="bootstrap/js/sweetalert.min.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="addAccount.css">
-    <title>Add Department Head</title>
+    <title>Add Department Head Account</title>
   </head>
   <body>
   <h1 class="h1"> Add Account </h1> 
     <div class="btncontainer">
-        <a class="navtop"> Home <i class="fas fa-chevron-right"></i> </a>
-        <a class="navtop" > Add Account </a>
+        <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
+        <a class="navtop" href="addDeptHead.php"> Add Account </a>
     </div>
     <div class="container">
         <form class="container2" method = "POST">
 
             <table>
-                <h1> Add Department Head </h1>
 
                 <tr>
                     <td><input type="text" placeholder="First Name" name="First_Name" required></td>
@@ -75,7 +82,7 @@ if(isset($_POST['add'])){
                     <td><input type="text" placeholder="Last Name" name="Last Name" required></td>
                 </tr>
                 <tr>
-                    <td colspan="3"><input type="text" placeholder="ID Number" name="ID_Number" required></td>
+                    <td colspan="3"><input type="text" placeholder="Username" name="ID_Number" required></td>
                 </tr>
                 <tr>
                     <td colspan="3"><input type="password" placeholder="Password" name="pas" required></td>
@@ -139,6 +146,7 @@ if(isset($_POST['add'])){
         </form>
     </div>
 
+    <script src="bootstrap/js/sweetalert.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
