@@ -1,47 +1,95 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-        <link rel="stylesheet" href="addcourse.css">
-    </head>
-    <body>
-        <h1 class="textcolor"> Course </h1>
-        <div class="btncontainer">
-            <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
-            <a class="navtop" href="coursescheduling.php"> Course </a>
-        </div>
-        <div class="container">
-            <div class="container2">
-                <table>
-                    <tr>
-                        <th class="head" colspan="7"> Add Course </th>
-                    </tr>
-                    <tr>
-                        <th> Course ID </th>
-                        <th> Course Code </th>
-                        <th> Course Name </th>
-                        <th> Lec </th>
-                        <th> Lab </th>
-                        <th> Units </th>
-                        <th> Total Units </th>
-                    </tr>
-                    <tr>
-                        <td> <input type="text" placeholder="Course ID " id="courseID" > </td>
-                        <td> <input type="text" placeholder="Course Code " id="courseCode" >  </td>
-                        <td> <input type="text" placeholder="Course Name " id="courseName" >  </td>
-                        <td> <input type="text" placeholder="Lecture " id="lec" >  </td>
-                        <td> <input type="text" placeholder="Laboratory " id="lab" >  </td>
-                        <td> <input type="text" placeholder="Units " id="units" >  </td>
-                        <td>  </td>
-                    </tr>
-                    <tr>
-                        <td class="border" colspan="7">
-                            <input type="submit" value="Save">
-                        </td>
-                    </tr>
-                   
-                </table>
+
+<head>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="addcourse.css">
+</head>
+
+<body>
+    <h1 class="textcolor"> Course </h1>
+    <div class="btncontainer">
+        <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
+        <a class="navtop" href="coursescheduling.php"> Course </a>
+    </div>
+    <div id="add" class="tabcontent">
+        <table>
+            <caption>
+                <div id="active" class="navbar">
+                    <a class="nav active" onclick="openPage('add', this)" id="defaultOpen"><i
+                            class="fas fa-plus-square"></i> Add</a>
+                    <a class="nav" onclick="openPage('view', this)"><i class="fas fa-eye"></i> View
+                    </a>
+                </div>
+            </caption>
+            <tr>
+                <th> Course ID </th>
+                <th> Course Code </th>
+                <th> Course Name </th>
+                <th> Lec </th>
+                <th> Lab </th>
+                <th> Units </th>
+                <th> Total Units </th>
+            </tr>
+            <tr>
+                <td> <input type="text" placeholder="Course ID " id="courseID"> </td>
+                <td> <input type="text" placeholder="Course Code " id="courseCode"> </td>
+                <td> <input type="text" placeholder="Course Name " id="courseName"> </td>
+                <td> <input type="text" placeholder="Lecture " id="lec"> </td>
+                <td> <input type="text" placeholder="Laboratory " id="lab"> </td>
+                <td> <input type="text" placeholder="Units " id="units"> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td class="border" colspan="7">
+                    <button> Add Course </button>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+    <div id="view" class="tabcontent">
+        <table>
+        <caption>
+            <div id="active" class="navbar">
+                <a class="nav " onclick="openPage('add', this)" id="defaultOpen"><i
+                        class="fas fa-plus-square"></i> Add</a>
+                <a class="nav active" onclick="openPage('view', this)"><i class="fas fa-eye"></i> View
+                </a>
             </div>
-        </div>
-    </body>
+        </caption>
+        <tr>
+            <th> Course ID </th>
+            <th> Course Code </th>
+            <th> Course Name </th>
+            <th> Lec </th>
+            <th> Lab </th>
+            <th> Units </th>
+            <th> Total Units </th>
+        </tr>
+        <tr>
+            <td>  </td>
+            <td>  </td>
+            <td>  </td>
+            <td>  </td>
+            <td> </td>
+            <td>  </td>
+            <td> </td>
+        </table>
+    </div>
+
+</body>
+<script>
+    function openPage(pageName, elmnt,) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        document.getElementById(pageName).style.display = "block";
+        elmnt.style.backgroundColor = color;
+    }
+    document.getElementById("defaultOpen").click();
+</script>
 </html>
