@@ -1,3 +1,6 @@
+* {
+    box-sizing: border-box;
+}
 
 body {
     font-family: Arial, Helvetica, sans-serif;
@@ -5,67 +8,69 @@ body {
     background-color:  #fbf0f0;
 }
 
-.container {
+table {
+    border: 1px solid black;
+    padding-block: 5px;
     background-color: #fefefe;
     border: 1px solid #888;
-    width: 50%;
     box-shadow: 0 10px 10px #222;
     position: absolute;
+    width: 50%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-.container2 {
-    padding: 16px;
-}
-.border {
-    border: none;
-}
-input[type=text]{
-    width: 100%;
-    height: 30px;
-    border: none;
-    background: #f1f1f1;
-}
-input[type=submit]{
-    float: right;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 15%;
-    opacity: 0.9;
-}
-input[type=submit]:hover {
-    opacity: 1;
-}
-table,td,tr, th {
-    border-collapse: collapse;
-    padding: 10px;
-    border: 1px solid black;
-   
-}
-table {
-    width: 100%;
+
+.navbar {
+    width: auto;
+    height: 37px;
+    padding-block: 10px;
+    text-align: left;
+    background-color: lightgrey;
 }
 
-.h1 {
-    padding: 15px;
-    float: left;
+.nav {
+  
+    padding: 10px;
+    cursor: pointer;
     color: #A94442;
+
 }
-.navtop{
-    text-decoration: none;
-    color:  #A94442;
-   }
-.navtop:hover {
-    text-decoration: none;
+
+.nav:hover {
+    color: white;
+    padding: 10px;
+    background-color: #A94442;
+}
+
+.active {
     color: white;
     background-color: #671D1E;
-    padding: 5px;
+}
+
+.bord {
+    border-right: 1px solid black;
+}
+
+.tabcontent {
+    display: none;
+}
+
+button {
+
+    background-color: #4CAF50;
+    color: white;
+    margin-top: 5px;
+    padding: 14px 20px;
+    border: none;
+    cursor: pointer;
+    width: 25%;
+    opacity: 0.9;
+}
+
+button:hover {
+    opacity: 1;
 }
 
 .btncontainer {
@@ -74,11 +79,36 @@ table {
     padding-top: 30px;
     padding-right: 50px;
     padding-bottom: 30px;
-  }
-  .textcolor {
-      float: left;
-      color: #A94442;
-  }
-.head {
-    text-align: left;
+}
+
+.navtop {
+    text-decoration: none;
+    color: #A94442;
+
+
+}
+
+.navtop:hover {
+    color: white;
+    background-color: #671D1E;
+    padding: 5px;
+}
+
+h1 {
+    color: #A94442;
+    float: left;
+}
+select, input[type=text] {
+    width: 90%;
+}
+
+@media screen and (max-width: 800px) {
+    table {
+        width: 100%;
+        overflow: scroll;
+        position: absolute;
+        top: 50%;
+        left: 0%;
+        transform: translate(-0%, -100%);
+    }
 }
