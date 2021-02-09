@@ -26,6 +26,10 @@ if (!empty($_GET['addCalendarcrsSchedID'])) {
             $timeEndID = $row['timeEndID'];
             $secID = $row['secID'];
             $curID = $row['curID'];
+            $deptID=$row['deptID'];
+            $syID=$row['syID'];
+            $periodID=$row['periodID'];
+            $levelID=$row['levelID'];
 
 
 		$conflictBW=false; $conflictOut=false; 
@@ -60,10 +64,6 @@ if (!empty($_GET['addCalendarcrsSchedID'])) {
                        echo "theres a conflicted room " ;
                        $conflictCount++;
 
-                       /*echo "Facultyloadingconflict is true - ";
-                        $_GET['deptlist']=$_SESSION['deptlist'];
-             			$_GET['levellist']=$_SESSION['levellist'] ;
-             			$_GET['instructorlist']=;*/
                         header("Location: facultyloading.php?addCalendarConflict=true&deptlist=".$_SESSION['deptlist']."&levellist=".$_SESSION['levellist']."&instructorlist=".$_SESSION['instructorID']); 
                    }else{
 
@@ -75,9 +75,9 @@ if (!empty($_GET['addCalendarcrsSchedID'])) {
 
           if ($conflictCount==0 ){
      		echo "inserted  to facultyloading and deleted from coursescheduling";
-     		$stmt = $pdo->prepare("INSERT INTO facultyloading (crsSchedID,classroomID,dayID,timeStartID,timeEndID,secID,curID, accountID)
-            VALUES (?,?,?,?,?,?,?,?)");
-            $stmt->execute(array($_SESSION['addCalendarcrsSchedID'],$classroomID,$dayID,$timeStartID,$timeEndID,$secID,$curID,$accountID));
+     		$stmt = $pdo->prepare("INSERT INTO facultyloading (crsSchedID,classroomID,dayID,timeStartID,timeEndID,secID,curID, accountID, deptID, syID, periodID, levelID)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+            $stmt->execute(array($_SESSION['addCalendarcrsSchedID'],$classroomID,$dayID,$timeStartID,$timeEndID,$secID,$curID,$accountID,$deptID,$syID,$periodID,$levelID));
 
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $sql = "DELETE FROM courseschedulingtemp WHERE crsSchedID = ?";
@@ -104,16 +104,20 @@ if (!empty($_GET['addCalendarcrsSchedID'])) {
             $row = $q->fetch(PDO::FETCH_ASSOC);
 
      	
-     	$classroomID2 = $row['classroomID'];
+     	  $classroomID2 = $row['classroomID'];
         $dayID2 = $row['dayID'];
         $timeStartID2 = $row['timeStartID'];
         $timeEndID2 = $row['timeEndID'];
         $secID2 = $row['secID'];
         $curID2 = $row['curID'];
+        $deptID2=$row['deptID'];
+        $syID2=$row['syID'];
+        $periodID2=$row['periodID'];
+        $levelID2=$row['levelID'];
 
-     	$stmt = $pdo->prepare("INSERT INTO courseschedulingtemp (crsSchedID,classroomID,dayID,timeStartID,timeEndID,secID,curID)
-            VALUES (?,?,?,?,?,?,?)");
-            $stmt->execute(array($crsSchedID2,$classroomID2,$dayID2,$timeStartID2,$timeEndID2,$secID2,$curID2));
+     	$stmt = $pdo->prepare("INSERT INTO courseschedulingtemp (crsSchedID,classroomID,dayID,timeStartID,timeEndID,secID,curID, deptID, syID, periodID,levelID)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+            $stmt->execute(array($crsSchedID2,$classroomID2,$dayID2,$timeStartID2,$timeEndID2,$secID2,$curID2,$deptID2,$syID2,$periodID2,$levelID2));
 
      	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $sql = "DELETE FROM facultyloading WHERE crsSchedID = ?";
@@ -123,12 +127,18 @@ if (!empty($_GET['addCalendarcrsSchedID'])) {
             header("Location:facultyloading.php?facultyLoadingIsUnloaded=true");
      }
 
+     if (!empty($_GET['crsSchedulingActionCurID']))  {
 
-   /*  if ($_GET['generateSched']==true ) {
-     	echo "schedule generated";
+       $_SESSION['crsSchedulingActionCurID'] =$_GET['crsSchedulingActionCurID'];
+       $_SESSION['actionDeptID'] =$_GET['actionDeptID'];
+       $_SESSION['actionSyID'] =$_GET['actionSyID'];
+       $_SESSION['actionPeriodID'] =$_GET['actionPeriodID'];
+       $_SESSION['actionLevelID'] =$_GET['actionLevelID'];
 
-              header("Location:facultyloading.php?scheduleGenerated=true");
-     } */ /*eo if ($_GET['generateSched']==true )*/  
+
+       header("Location:courseschedulingdata.php?crsSchedulingActionCurID=".$crsSchedulingActionCurID."&actionDeptID=".$actionDeptID."&actionSyID=".$actionSyID."&actionPeriodID=".$actionPeriodID);
+
+    }
 
 
 

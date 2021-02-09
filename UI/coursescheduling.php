@@ -110,7 +110,7 @@ $pdo=Database::connect();
     $periodlists = $_POST['periodlist'];
 
      
-        $stmt=$pdo->prepare("select c.curID, c.syID, c.periodID, course.courseCode, course.courseName from curriculum c 
+        $stmt=$pdo->prepare("select c.levelID, c.syID, c.deptID, c.curID, c.syID, c.periodID, course.courseCode, course.courseName from curriculum c 
             left outer join course ON c.courseID=course.courseID 
             left outer join academicprog ON c.acadProgID=academicprog.acadProgID  
             left outer join lvl ON c.levelID=lvl.levelID
@@ -141,9 +141,11 @@ $pdo=Database::connect();
     <?php 
                 while ($row = $stmt->fetch()) 
                       {
-                        $_SESSION['curID']=$curID=$row['curID'];
-                        $_SESSION['syID']=$row['syID'];
-                        $_SESSION['periodID']=$row['periodID'];
+                        /*$_SESSION['deptID']=*/$deptID=$row['deptID'];
+                        /*$_SESSION['curID']=*/$curID=$row['curID'];
+                        /*$_SESSION['syID']=*/$syID=$row['syID'];
+                        $_SESSION['periodID']=$periodID=$row['periodID'];
+                        $levelID=$row['levelID'];
                         $courseCode=$row['courseCode'];
                         $courseName=$row['courseName'];
 
@@ -155,7 +157,7 @@ $pdo=Database::connect();
                             <td></td>
                         
 
-                            <td style="text-align: center;"> <a href=<?php echo "courseschedulingdata.php?crsSchedulingActionCurID=".$curID;?>  class="btn"><i class="fas fa-edit"></i></a> </td> 
+                            <td style="text-align: center;"> <a class="btn"  href=<?php echo "submit.php?crsSchedulingActionCurID=".$curID."&actionDeptID=".$deptID."&actionSyID=".$syID."&actionPeriodID=".$periodID."&actionLevelID=".$levelID;?>  ><i class="fas fa-edit"></i></a> </td> 
                             </tr>
                         </tbody>
                        

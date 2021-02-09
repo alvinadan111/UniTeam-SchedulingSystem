@@ -1,109 +1,141 @@
-<?php session_start();
+<?php 
+session_start();
  if(empty($_SESSION['accountID'])):
 header('Location:../index.php');
 endif;
 
- error_reporting(E_ERROR | E_PARSE);
+error_reporting(E_ERROR | E_PARSE);
+
+
+/*echo MyClass::$str;*/
+ 
 require '../database.php';
 $isSubmitted = false;
 $isCreated = false;
 $isIncomplete = false;
 $isNoAvailRoom = false;
+$wrongTimeInput=false;
 
 $pdo=Database::connect(); 
-
+    
+    //for Testing only
+    echo " laog session crsschedActionCurID: ".$_SESSION['crsSchedulingActionCurID'];
+    echo " laog session deptID: ".$_SESSION['actionDeptID'];
+    echo " laog session actionSyID: ".$_SESSION['actionSyID'];
+    echo " laog session actionPeriodID: ".$_SESSION['actionPeriodID'];
 
 if(isset($_GET['secID'])){
+    
+    //for Testing only
+    $crsSchedulingActionCurID=$_GET['crsSchedulingActionCurID'];
+    $actionDeptID=$_GET['actionDeptID'];
+    $actionSyID=$_GET['actionSyID'];
+    $actionPeriodID=$_GET['actionPeriodID'];
+    //for Testing only
+    echo " laog session crsschedActionCurID2: ".$_SESSION['crsSchedulingActionCurID'];
+    echo " laog session deptID2: ".$_SESSION['actionDeptID'];
+    echo " laog session actionSyID2: ".$_SESSION['actionSyID'];
+    echo " laog session actionPeriodID2: ".$_SESSION['actionPeriodID'];
+    
     if(empty($_GET['dayID']) || empty($_GET['timeStartID']) || empty($_GET['timeEndID']) || empty($_GET['secID'])){ 
         $isIncomplete = true;
             // echo "Some fields are left unfilled. <br>";
     }else{
+            $time=$_GET['timeEndID']-$_GET['timeStartID'];
+           if ($time<0) {
+              $wrongTimeInput=true;
+            } else {
 
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = $pdo->query("SELECT * from classroom order by roomNum");
-    $i=0;
-    while ($row = $sql->fetch()) {
-        
-        $room[] = $row['classroomID'];
-    }
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $sql = $pdo->query("SELECT * from classroom order by roomNum");
+                $i=0;
+                while ($row = $sql->fetch()) {
+                    
+                    $room[] = $row['classroomID'];
+                }
 
 
-        $conflictBW=false; $conflictOut=false; 
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $stmt = $pdo->query("SELECT * from coursescheduling natural join curriculum order by classroomID");
-            $dayID=$_SESSION['dayID']  = $_GET['dayID'];
-            $timeStartID=$_SESSION['timeStartID'] = $_GET['timeStartID'];
-            $timeEndID=$_SESSION['timeEndID'] = $_GET['timeEndID'];
-            $secID=$_SESSION['secID'] = $_GET['secID'];
-            
+                $conflictBW=false; $conflictOut=false; 
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $stmt = $pdo->query("SELECT * from coursescheduling natural join curriculum order by classroomID");
+                    $dayID=$_SESSION['dayID']  = $_GET['dayID'];
+                    $timeStartID=$_SESSION['timeStartID'] = $_GET['timeStartID'];
+                    $timeEndID=$_SESSION['timeEndID'] = $_GET['timeEndID'];
+                    $secID=$_SESSION['secID'] = $_GET['secID'];
+                    $time=$timeEndID-$timeStartID;
 
-            //check room conflicts
-            $count=0; $j=0;
-            while ($row = $stmt->fetch()) { 
-                
+                    /*header("Location:submit.php?secIDisSet=true&sdayID=".$dayID."&stimeStartID=".$timeStartID."&stimeEndID=".$timeEndID."&ssecID=".$secID);*/
+                    
+                    //check room conflicts
+                    $count=0; $j=0;
+                    while ($row = $stmt->fetch()) {   
+                            if ($timeStartID >=  $row['timeStartID'] &&  $timeEndID <= $row['timeEndID'] ){
+                                    $conflictBW=true;
+                           }else{
+                            $conflictBW=false;
+                           }
 
-                    if ($timeStartID >=  $row['timeStartID'] &&  $timeEndID <= $row['timeEndID'] ){
-                            $conflictBW=true;
-                   }else{
-                    $conflictBW=false;
-                   }
+                           if (($timeStartID < $row['timeStartID'] && $timeEndID <=$row['timeStartID']) ||
+                              ($timeStartID >= $row['timeEndID'] && $timeEndID  > $row['timeEndID'])) {
+                               $conflictOut=false;
+                           } else {
+                              $conflictOut=true; 
+                           }
 
-                   if (($timeStartID < $row['timeStartID'] && $timeEndID <=$row['timeStartID']) ||
-                      ($timeStartID >= $row['timeEndID'] && $timeEndID  > $row['timeEndID'])) {
-                       $conflictOut=false;
-                   } else {
-                      $conflictOut=true; 
-                   }
+                           
 
-                   if ($_SESSION['periodID']==$row['periodID'] && $_SESSION['syID']==$row['syID'] && $row['dayID']== $dayID && ($conflictOut==true || $conflictBW==true)) {
-                       $roomConflict[]=$row['classroomID'];
-                        $count++ ;
-                   }else{
-                        $roomAvailable[]=$row['classroomID'];
-                                
+                           if ($_SESSION['actionPeriodID']==$row['periodID'] && $_SESSION['actionSyID']==$row['syID'] && $row['dayID']== $dayID && ($conflictOut==true || $conflictBW==true)) {
+                               $roomConflict[]=$row['classroomID'];
+                                $count++ ;
+                           }else{
+                                $roomAvailable[]=$row['classroomID'];
+                                        
+                            }
                     }
-            }
 
-                //available rooms in an array
-                 $i=0; $j=0; 
-                if ($count>0) {
-                  while ($i < $count) {
-                    $j=0;
-                   while ($j < count($room)) {
-                     if ($roomConflict[$i] == $room[$j]) {
-                       unset($room[$j]); 
-                       $roomTrue=array_values($room);
-                       $room=array_values($roomTrue); break;  
-                     } else {
-                        $j++; 
-                     } 
-                   } /*eo else*/  $i++;
-                  } // outer while
-                }/*else{
-                  $roomTrue=array_values($room);
-                }*/    
-                 if(count($room)==0)
-                 {
-                    $isNoAvailRoom = true;
-                 }
+                        //available rooms in an array
+                         $i=0; $j=0; 
+                        if ($count>0) {
+                          while ($i < $count) {
+                            $j=0;
+                           while ($j < count($room)) {
+                             if ($roomConflict[$i] == $room[$j]) {
+                               unset($room[$j]); 
+                               $roomTrue=array_values($room);
+                               $room=array_values($roomTrue); break;  
+                             } else {
+                                $j++; 
+                             } 
+                           } /*eo else*/  $i++;
+                          } // outer while
+                        }/*else{
+                          $roomTrue=array_values($room);
+                        }*/    
+                         if(count($room)==0)
+                         {
+                            $isNoAvailRoom = true;
+                         }
 
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $stmt = $pdo->query("SELECT * from classroom   order by classroomID");      
-        $i=0;
-        while ($row = $stmt->fetch()) { 
-          if ($room[$i]==$row['classroomID']) {
-            $classroomIDT[$i] = $row['classroomID'];
-            $roomNumT[$i] = $row['roomNum'];
-            $buildingCodeT[$i] = $row['buildingCode'];
-            $i++;
-          }
-        }
-  $isSubmitted = true;
- } //end of else statement
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $stmt = $pdo->query("SELECT * from classroom   order by classroomID");      
+                $i=0;
+                while ($row = $stmt->fetch()) { 
+                  if ($room[$i]==$row['classroomID']) {
+                    $classroomIDT[$i] = $row['classroomID'];
+                    $roomNumT[$i] = $row['roomNum'];
+                    $buildingCodeT[$i] = $row['buildingCode'];
+                    $i++;
+                  }
+                }
+                $isSubmitted = true;
+            } //end of else statement
+    } //end of else statement outer
 } // end of if(isset($_GET['secID']))
 
 
 if(isset($_GET['saveSubmitBtn'])){
+
+
     if(empty($_GET['classroomID'])){
         $isIncomplete = true;
 ?>        <!-- Warning Alert -->
@@ -111,20 +143,32 @@ if(isset($_GET['saveSubmitBtn'])){
         <strong>Warning!</strong> &nbsp Some fields are left unfilled.
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
-<?php    $isIncomplete = false;  }
+<?php    $isIncomplete = false;  } else {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $classroomID = $_GET['classroomID'];
-            $stmt = $pdo->prepare("INSERT INTO coursescheduling (classroomID, dayID, timeStartID, timeEndID, secID, curID)
-            VALUES (?,?,?,?,?,?)");
+            $classroomID = $_GET['classroomID'];
+            $crsSchedulingActionCurID3=$_SESSION['crsSchedulingActionCurID'];
+            $actionDeptID3=$_SESSION['actionDeptID'];
+            $actionSyID3=$_SESSION['actionSyID'];;
+            $actionPeriodID3=$_SESSION['actionPeriodID'];
+            $actionLevelID3=$_SESSION['actionLevelID'];
+
+            echo " laog session crsschedActionCurID3: ".$crsSchedulingActionCurID3;
+            echo " laog session deptID3: ".$actionDeptID3;
+            echo " laog session actionSyID3: ".$actionSyDI3;
+            echo " laog session actionPeriodID3: ".$actionPeriodID3;
+
+            $stmt = $pdo->prepare("INSERT INTO coursescheduling (classroomID, dayID, timeStartID, timeEndID, secID, curID, deptID, syID, periodID, levelID)
+            VALUES (?,?,?,?,?,?,?,?,?,?)");
             $isCreated = true;
-            $stmt->execute(array($classroomID,$_SESSION['dayID'],$_SESSION['timeStartID'],$_SESSION['timeEndID'],$_SESSION['secID'],$_SESSION['curID']));
+            $stmt->execute(array($classroomID,$_SESSION['dayID'],$_SESSION['timeStartID'],$_SESSION['timeEndID'],$_SESSION['secID'],$crsSchedulingActionCurID3, $actionDeptID3,$actionSyID3,$actionPeriodID3,$actionLevelID3));
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $classroomID = $_GET['classroomID'];
-            $stmt = $pdo->prepare("INSERT INTO courseschedulingtemp (classroomID, dayID, timeStartID, timeEndID, secID, curID)
-            VALUES (?,?,?,?,?,?)");
+            $stmt = $pdo->prepare("INSERT INTO courseschedulingtemp (classroomID, dayID, timeStartID, timeEndID, secID, curID,  deptID, syID, periodID, levelID)
+            VALUES (?,?,?,?,?,?,?,?,?,?)");
             $isCreated = true;
-            $stmt->execute(array($classroomID,$_SESSION['dayID'],$_SESSION['timeStartID'],$_SESSION['timeEndID'],$_SESSION['secID'],$_SESSION['curID']));
+            $stmt->execute(array($classroomID,$_SESSION['dayID'],$_SESSION['timeStartID'],$_SESSION['timeEndID'],$_SESSION['secID'],$crsSchedulingActionCurID3, $actionDeptID3,$actionSyID3,$actionPeriodID3,$actionLevelID3));
+    }
 }
 
 ?>
@@ -154,7 +198,7 @@ if(isset($_GET['saveSubmitBtn'])){
         </div>
         <h1 class="textcolor"> Course Scheduling </h1>
 
-<form method="get">
+<form   method="get">
         <table class="table1">
             <tr>
                 <th colspan="7"> Schedule</th>
@@ -185,7 +229,15 @@ if(isset($_GET['saveSubmitBtn'])){
                     <strong>Warning!</strong> &nbsp No available room for your preferences.
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     </div>
-            <?php   } ?>
+            <?php   } 
+                if ($wrongTimeInput ==true) { $wrongTimeInput=false;  ?>
+                    <!-- Error Alert -->
+                      <div id="myAlert" class="alert alert-danger alert-dismissible fade show">
+                        <strong>Error!</strong> &nbsp You have enter an incorrect time!
+                        <button type="button"  class="close" data-dismiss="alert">&times;</button>
+                      </div>
+            <?php   } 
+            ?>
                
             </tr>
             <tr>
