@@ -112,3 +112,6 @@ select, input[type=text] {
         transform: translate(-0%, -100%);
     }
 }
+#myForm{
+    display:none;
+}
