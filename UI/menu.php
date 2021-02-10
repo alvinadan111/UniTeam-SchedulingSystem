@@ -39,12 +39,12 @@ endif;
           <a href="menu.php">Home</a>
           <button class="dropdown-btn"><i class="fa fa-caret-down"></i> Entry </button>
           <div class="dropdown-container">
-            <a href="academic.html"> Academic Program </a>
-            <a href="department.html"> Department </a>
-            <a href="section.html"> Section </a>
-            <a href="room.html"> Rooms </a>
-            <a href="schoolyr.html"> School Year </a>
-            <a href="addcourse.html"> Course </a>
+            <a href="academic.php"> Academic Program </a>
+            <a href="department.php"> Department </a>
+            <a href="section.php"> Section </a>
+            <a href="room.php"> Rooms </a>
+            <a href="schoolyr.php"> School Year </a>
+            <a href="addcourse.php"> Course </a>
           </div>
           <button class="dropdown-btn"><i class="fa fa-caret-down"></i> Curriculum Management </button>
           <div class="dropdown-container">
