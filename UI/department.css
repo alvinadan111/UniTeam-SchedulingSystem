@@ -103,3 +103,6 @@ select, input[type=text] {
         transform: translate(-0%, -50%);
     }
 }
+#myForm{
+    display:none;
+}
