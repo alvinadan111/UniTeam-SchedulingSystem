@@ -349,14 +349,12 @@ $isIncomplete=false;
 
                     
                  if($result==0 && $isIncomplete==false){ ?>
-         
-                    </div>
                     <!-- Warning Alert -->
                     <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
-                    <strong>Warning!</strong> &nbsp No records found if.
+                    <strong>Warning!</strong> &nbsp No records found.
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     </div>
-            <?php } else {
+            <?php } else if ($result>0) {
 
                           while ($row = $q->fetch()){
                                     $deptCode=$row['deptCode'];
@@ -410,8 +408,6 @@ $isIncomplete=false;
                 $result= $q->rowCount();
 
                  if($result==0){ ?>
-         
-                    </div>
                     <!-- Warning Alert -->
                     <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
                     <strong>Warning!</strong> &nbsp No records yet.
