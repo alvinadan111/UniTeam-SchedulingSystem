@@ -11,16 +11,18 @@ body {
 
 }
 .navtop{
-    text-decoration: none;
-       color: white;
-   }
-   .navtop:hover {
-       background-color: #671D1E;
-       padding: 5px;
-   }
+        text-decoration: none;
+           color: #A94442;
+       }
+       .navtop:hover {
+        color: white;
+        text-decoration: none;
+        background-color: #671D1E;
+        padding: 5px;
+    }
    h1 {
     float: left;
-    color: white;
+    color: #A94442;
 }
 table, tr  {
     border-collapse: collapse;
