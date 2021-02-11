@@ -135,6 +135,7 @@ $isIncomplete=false;
                     </select>
             </td>
             <td> <button> Search </button></td>
+            <td> <button> <i class="fas fa-print"></i>  </button> </td>
         </table>
        </form>
         <br>
