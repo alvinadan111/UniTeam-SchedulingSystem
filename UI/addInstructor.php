@@ -1,11 +1,6 @@
 <?php
 session_start();
 
-  if(empty($_SESSION['accountID'])):
-header('Location:../index.php');
-endif;  
-
-
 require '../database.php';
 $added1 = false;
 $duplicate1 = false;
@@ -51,28 +46,28 @@ if(isset($_POST['add'])){
 
 <!doctype html>
 <html lang="en">
-  <head> 
+  <head>
+    <script src="bootstrap/js/sweetalert.min.js"></script>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="bootstrap/js/sweetalert.min.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="addAccount.css">
     <title>Add Instructor</title>
   </head>
   <body>
-  <h1 class="h1"> Add Instructor Account</h1> 
+  <h1 class="h1"> Add Instructor </h1> 
     <div class="btncontainer">
-        <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
-        <a class="navtop" href="addInstructor.php"> Add Account </a>
+        <a class="navtop"> Home <i class="fas fa-chevron-right"></i> </a>
+        <a class="navtop" > Add Account </a>
     </div>
     <div class="container">
         <form class="container2" method = "POST">
 
             <table>
+                <h1> Add Department Head </h1>
 
                 <tr>
                     <td><input type="text" placeholder="First Name" name="First_Name" required></td>

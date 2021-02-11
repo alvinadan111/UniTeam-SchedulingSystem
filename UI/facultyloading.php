@@ -197,8 +197,8 @@ $pdo=Database::connect();
                       /*$i=0;
                       if ($result>0 && $i!=1) {
                               echo "laman mga row[]: crsName:".$crsName3." timeStart ".
-                                            $timeStart3." timeEnd: ".$timeEnd3."  instructorlist " .$_SESSION['instructorID']." crsSchedID".$crsSchedID3;
-                       }*/ //end of if result>0 ?> 
+                                            $timeStart3." timeEnd: ".$timeEnd3."  instructorlist " .$_SESSION['instructorID']." crsSchedID".$crsSchedID3;*/
+                       } //end of if result>0 ?> 
                        <tbody>
                         <tr>
                             <td><?php echo $crsName3;?></td>
