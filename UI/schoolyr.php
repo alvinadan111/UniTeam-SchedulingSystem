@@ -74,7 +74,7 @@ if(isset($_POST['saveBTN'])){
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="bootstrap/js/sweetalert.min.js"></script>
-    <link rel="stylesheet" href="Schoolyr.css">
+    <link rel="stylesheet" href="schoolyr.css">
 </head>
 
 <body>
