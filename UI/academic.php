@@ -165,9 +165,9 @@ if(isset($_POST['saveBTN'])){
               }   
            ?>
            <tr>
-                <td colspan="2">
+                <td colspan="3">
                     <button type="submit" name = "delProg">Delete Academic Program</button>
-                    <button type="submit" name = "updateProg" id = "up">Update Academic Program </button>
+                    <button type="submit" name = "updateProg" id = "up" >Update Academic Program </button>
                   
                 </td>
             </tr>
@@ -192,7 +192,7 @@ if(isset($_POST['saveBTN'])){
                     <td><input type="text" name = "newPN" required></td>
                 </tr>
                 <tr>
-                    <td>
+                    <td colspan="2">
                         <input type = "submit" class="btnchange" name = "saveBTN" value = "Save Change"></input>
                         <input type = "reset" class="btnchange" name = "cancel" value = "Cancel" onclick = "closeForm()"></input>
                     </td>

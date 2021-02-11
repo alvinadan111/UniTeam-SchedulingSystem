@@ -10,7 +10,8 @@ body {
 
 table {
     border: 1px solid black;
-    width: 50%;
+    padding-block: 5px;
+    width: 70%;
     background-color: #fefefe;
     border: 1px solid #888;
     box-shadow: 0 10px 10px #222;
@@ -54,7 +55,7 @@ table {
     display: none;
 }
 
-button {
+.btnchange,button {
 
     background-color: #4CAF50;
     color: white;
@@ -65,7 +66,7 @@ button {
     opacity: 0.9;
 }
 
-button:hover {
+.btnchange:hover, button:hover {
     opacity: 1;
 }
 
