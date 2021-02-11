@@ -140,11 +140,11 @@ if(isset($_POST['saveBTN'])){
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="bootstrap/js/sweetalert.min.js"></script>
-    <link rel="stylesheet" href="addcourse.css">
+    <link rel="stylesheet" href="Addcourse.css">
 </head>
 
 <body>
-    <h1 class="textcolor"> Course </h1>
+    <h1> Course </h1>
     <div class="btncontainer">
         <?php if(!empty($_SESSION['accountID'])){ ?>
             <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
@@ -327,7 +327,7 @@ if(isset($_POST['saveBTN'])){
             tabcontent[i].style.display = "none";
         }
         document.getElementById(pageName).style.display = "block";
-        elmnt.style.backgroundColor = "red";
+        elmnt.style.backgroundColor = color;
     }
     document.getElementById("defaultOpen").click();
 </script>

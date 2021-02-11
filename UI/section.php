@@ -101,7 +101,7 @@ if(isset($_POST['saveBTN'])){
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="bootstrap/js/sweetalert.min.js"></script>
-    <link rel="stylesheet" href="section.css">
+    <link rel="stylesheet" href="Section.css">
 </head>
 
 <body>
@@ -184,7 +184,7 @@ if(isset($_POST['saveBTN'])){
                 }
             ?>
                         <tr>
-                    <td colspan="2">
+                    <td colspan="4">
                         <button type="submit" name = "deleteSec">Delete Section</button>
                         <button type="submit" name = "updateSec">Update Section</button>
                     
@@ -222,7 +222,7 @@ if(isset($_POST['saveBTN'])){
                         <td><input type="text" name = "newSec" required></td>
                     </tr>
                     <tr>
-                        <td>
+                        <td colspan="3">
                             <input type = "submit" class="btnchange" name = "saveBTN" value = "Save Change"></input>
                             <input type = "reset" class="btnchange" name = "cancel" value = "Cancel" onclick = "closeForm()"></input>
                         </td>

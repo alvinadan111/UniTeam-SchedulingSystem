@@ -9,7 +9,7 @@
     <h1> Rooms </h1>
     <div class="btncontainer">
         <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
-        <a class="navtop" href="room.html"> Room </a>
+        <a class="navtop" href="Room.html"> Room </a>
     </div>
     <div class="container">
         <div id="add" class="tabcontent">
@@ -55,51 +55,7 @@
             </table>
         </div>
     </div>
-    <div id="update" class="tabcontent">
-
-        <table>
-            <caption>
-                <div id="active" class="navbar">
-                    <a class="nav " onclick="openPage('add', this)" id="defaultOpen"><i
-                            class="fas fa-plus-square"></i> Add </a>
-                    <a class="nav active" onclick="openPage('update', this)"><i class="fas fa-edit"></i> Update </a>
-                    <a class="nav " onclick="openPage('view', this)"><i class="fas fa-eye"></i> View
-                    </a>
-                </div>
-            </caption>
-            <tr>
-                <th>
-                <label for="department"> Department </label><br>
-                        <select id="department" name="departmentlist" form="departmentform">
-                            <option value=""> </option>
-                            <option value=""> </option>
-                            <option value=""> </option>
-                            <option value=""> </option>
-                        </select>
-                    </th>
-                    <th> 
-                        <label for="roomno"> Room No. Old </label><br>
-                        <select id="roomno" name="roomlist" form="roomform">
-                            <option value=""> </option>
-                            <option value=""> </option>
-                            <option value=""> </option>
-                            <option value=""> </option>
-                        </select>
-                    </th>
-                    <th> 
-                        <label for="roomnew"> Room No. New </label><br>
-                        <input type="text" id="roomnew">
-                    </th>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <button> Delete Room </button>
-                    <button>  Save Changes </button>
-                </td>
-            </tr>
-
-        </table>
-    </div>
+    
     <div id="view" class="tabcontent">
 
         <table>
