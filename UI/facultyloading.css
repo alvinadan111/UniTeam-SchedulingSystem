@@ -35,6 +35,7 @@ td {
 
 .column {
     float: left;
+    
     width: 50%;
     padding: 5px;
 }
@@ -120,6 +121,7 @@ th.head {
     float: left;
     color: #A94442;
 }
+
 .navtop{
     text-decoration: none;
        color: #A94442;
