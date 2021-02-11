@@ -19,10 +19,10 @@ $wrongTimeInput=false;
 $pdo=Database::connect(); 
     
     //for Testing only
-    echo " laog session crsschedActionCurID: ".$_SESSION['crsSchedulingActionCurID'];
+/*    echo " laog session crsschedActionCurID: ".$_SESSION['crsSchedulingActionCurID'];
     echo " laog session deptID: ".$_SESSION['actionDeptID'];
     echo " laog session actionSyID: ".$_SESSION['actionSyID'];
-    echo " laog session actionPeriodID: ".$_SESSION['actionPeriodID'];
+    echo " laog session actionPeriodID: ".$_SESSION['actionPeriodID'];*/
 
 if(isset($_GET['secID'])){
     
@@ -32,10 +32,10 @@ if(isset($_GET['secID'])){
     $actionSyID=$_GET['actionSyID'];
     $actionPeriodID=$_GET['actionPeriodID'];
     //for Testing only
-    echo " laog session crsschedActionCurID2: ".$_SESSION['crsSchedulingActionCurID'];
+ /*   echo " laog session crsschedActionCurID2: ".$_SESSION['crsSchedulingActionCurID'];
     echo " laog session deptID2: ".$_SESSION['actionDeptID'];
     echo " laog session actionSyID2: ".$_SESSION['actionSyID'];
-    echo " laog session actionPeriodID2: ".$_SESSION['actionPeriodID'];
+    echo " laog session actionPeriodID2: ".$_SESSION['actionPeriodID'];*/
     
     if(empty($_GET['dayID']) || empty($_GET['timeStartID']) || empty($_GET['timeEndID']) || empty($_GET['secID'])){ 
         $isIncomplete = true;
@@ -151,11 +151,11 @@ if(isset($_GET['saveSubmitBtn'])){
             $actionSyID3=$_SESSION['actionSyID'];;
             $actionPeriodID3=$_SESSION['actionPeriodID'];
             $actionLevelID3=$_SESSION['actionLevelID'];
-
+/*
             echo " laog session crsschedActionCurID3: ".$crsSchedulingActionCurID3;
             echo " laog session deptID3: ".$actionDeptID3;
             echo " laog session actionSyID3: ".$actionSyDI3;
-            echo " laog session actionPeriodID3: ".$actionPeriodID3;
+            echo " laog session actionPeriodID3: ".$actionPeriodID3;*/
 
             $stmt = $pdo->prepare("INSERT INTO coursescheduling (classroomID, dayID, timeStartID, timeEndID, secID, curID, deptID, syID, periodID, levelID)
             VALUES (?,?,?,?,?,?,?,?,?,?)");
@@ -233,7 +233,7 @@ if(isset($_GET['saveSubmitBtn'])){
                 if ($wrongTimeInput ==true) { $wrongTimeInput=false;  ?>
                     <!-- Error Alert -->
                       <div id="myAlert" class="alert alert-danger alert-dismissible fade show">
-                        <strong>Error!</strong> &nbsp You have enter an incorrect time!
+                        <strong>Error!</strong> &nbsp You have entered an incorrect time!
                         <button type="button"  class="close" data-dismiss="alert">&times;</button>
                       </div>
             <?php   } 
@@ -331,7 +331,7 @@ if(isset($_GET['saveSubmitBtn'])){
      {
         setTimeout(function (){
             $('#myAlert').hide('fade');
-        }, 4000); 
+        }, 3000); 
      });
 
     $(document).ready(function()
@@ -345,7 +345,7 @@ if(isset($_GET['saveSubmitBtn'])){
      {
         setTimeout(function (){
             $('#myAlertC').hide('fade');
-        }, 3500); 
+        }, 3000); 
 
      });       
     </script>

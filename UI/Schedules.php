@@ -8,6 +8,7 @@ require '../database.php';
 $pdo=Database::connect();
 
 $record=false;
+$isIncomplete=false;
  ?>
 
 
@@ -147,9 +148,9 @@ $record=false;
             </tr>
             <?php  if ( !empty($_GET['departmentlist']) ||  !empty($_GET['curlist'])||  !empty($_GET['periodlist'])||  !empty($_GET['levellist']) || !empty($_GET['seclist'])||  !empty($_GET['instructorlist']) ) {
 
-                
+                /*echo "naglaog sa if hanip";*/
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                echo "naglaog sa if";
+                /*echo "naglaog sa if";*/
                 $departmentID =$_GET['departmentlist'];
                 $syID =$_GET['curlist'];
                 $periodID =$_GET['periodlist'];
@@ -159,12 +160,11 @@ $record=false;
 
 
 
-                if(empty($_GET['periodlist']) && empty($_GET['curlist']) && empty($_GET['departmentlist'])){ ?>
- 
-                    </div>
+                if(empty($_GET['periodlist']) || empty($_GET['curlist']) || empty($_GET['departmentlist']) ){/* echo "required fields unfilled"; */  $isIncomplete=true;?>
+
                     <!-- Warning Alert -->
                     <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
-                    <strong>Warning!</strong> &nbsp Please make sure all reuired fields are filled.
+                    <strong>Warning!</strong> &nbsp Please make sure all required fields are filled.
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     </div>
 
@@ -172,7 +172,7 @@ $record=false;
 
 
 
-                else if (!empty($_GET['departmentlist']) && !empty($_GET['curlist'])&& !empty($_GET['periodlist'])&& !empty($_GET['levellist']) && !empty($_GET['seclist'])&& !empty($_GET['instructorlist'])) {
+                if (!empty($_GET['departmentlist']) && !empty($_GET['curlist'])&& !empty($_GET['periodlist'])&& !empty($_GET['levellist']) && !empty($_GET['seclist'])&& !empty($_GET['instructorlist'])) {
                         $stmt=("select *, 
                     (select deptCode from department where f.deptID=department.deptID) as deptCode, 
                     (select dayName from day where f.dayID=day.dayID) as dayName, 
@@ -194,7 +194,7 @@ $record=false;
                 $result= $q->rowCount();
                 }
 
-                else if (!empty($_GET['departmentlist']) && !empty($_GET['curlist'])&& !empty($_GET['periodlist'])&& !empty($_GET['levellist']) && !empty($_GET['seclist'])&& empty($_GET['instructorlist'])) {
+                if (!empty($_GET['departmentlist']) && !empty($_GET['curlist'])&& !empty($_GET['periodlist'])&& !empty($_GET['levellist']) && !empty($_GET['seclist'])&& empty($_GET['instructorlist'])) {
                         $stmt=("select *, 
                     (select deptCode from department where f.deptID=department.deptID) as deptCode, 
                     (select dayName from day where f.dayID=day.dayID) as dayName, 
@@ -216,7 +216,7 @@ $record=false;
                 $result= $q->rowCount();
                 }
                 
-                else if (!empty($_GET['departmentlist']) && !empty($_GET['curlist'])&& !empty($_GET['periodlist'])&& !empty($_GET['levellist']) && empty($_GET['seclist'])&& !empty($_GET['instructorlist'])) {
+                if (!empty($_GET['departmentlist']) && !empty($_GET['curlist'])&& !empty($_GET['periodlist'])&& !empty($_GET['levellist']) && empty($_GET['seclist'])&& !empty($_GET['instructorlist'])) {
                         $stmt=("select *, 
                     (select deptCode from department where f.deptID=department.deptID) as deptCode, 
                     (select dayName from day where f.dayID=day.dayID) as dayName, 
@@ -238,7 +238,7 @@ $record=false;
                 $result= $q->rowCount();
                 }
 
-                else if (!empty($_GET['departmentlist']) && !empty($_GET['curlist'])&& !empty($_GET['periodlist'])&& empty($_GET['levellist']) && !empty($_GET['seclist'])&& !empty($_GET['instructorlist'])) {
+                if (!empty($_GET['departmentlist']) && !empty($_GET['curlist'])&& !empty($_GET['periodlist'])&& empty($_GET['levellist']) && !empty($_GET['seclist'])&& !empty($_GET['instructorlist'])) {
                         $stmt=("select *, 
                     (select deptCode from department where f.deptID=department.deptID) as deptCode, 
                     (select dayName from day where f.dayID=day.dayID) as dayName, 
@@ -260,7 +260,7 @@ $record=false;
                 $result= $q->rowCount();
                 }
 
-                else if (!empty($_GET['departmentlist']) && !empty($_GET['curlist'])&& !empty($_GET['periodlist'])&& empty($_GET['levellist']) && empty($_GET['seclist'])&& !empty($_GET['instructorlist'])) {
+               if (!empty($_GET['departmentlist']) && !empty($_GET['curlist'])&& !empty($_GET['periodlist'])&& empty($_GET['levellist']) && empty($_GET['seclist'])&& !empty($_GET['instructorlist'])) {
                         $stmt=("select *, 
                     (select deptCode from department where f.deptID=department.deptID) as deptCode, 
                     (select dayName from day where f.dayID=day.dayID) as dayName, 
@@ -282,7 +282,7 @@ $record=false;
                 $result= $q->rowCount();
                 }
 
-                else if (!empty($_GET['departmentlist']) && !empty($_GET['curlist'])&& !empty($_GET['periodlist'])&& !empty($_GET['levellist']) && empty($_GET['seclist'])&& empty($_GET['instructorlist'])) {
+               if (!empty($_GET['departmentlist']) && !empty($_GET['curlist'])&& !empty($_GET['periodlist'])&& !empty($_GET['levellist']) && empty($_GET['seclist'])&& empty($_GET['instructorlist'])) {
                         $stmt=("select *, 
                     (select deptCode from department where f.deptID=department.deptID) as deptCode, 
                     (select dayName from day where f.dayID=day.dayID) as dayName, 
@@ -304,7 +304,7 @@ $record=false;
                 $result= $q->rowCount();
                 }
 
-                else if (!empty($_GET['departmentlist']) && !empty($_GET['curlist'])&& !empty($_GET['periodlist'])&& empty($_GET['levellist']) && !empty($_GET['seclist'])&& empty($_GET['instructorlist'])) {
+                if (!empty($_GET['departmentlist']) && !empty($_GET['curlist'])&& !empty($_GET['periodlist'])&& empty($_GET['levellist']) && !empty($_GET['seclist'])&& empty($_GET['instructorlist'])) {
                         $stmt=("select *, 
                     (select deptCode from department where f.deptID=department.deptID) as deptCode, 
                     (select dayName from day where f.dayID=day.dayID) as dayName, 
@@ -325,7 +325,7 @@ $record=false;
                 $q->execute(array($departmentID,$syID,$periodID,$secID));
                 $result= $q->rowCount();
                 }
-                else if (!empty($_GET['departmentlist']) && !empty($_GET['curlist'])&& !empty($_GET['periodlist'])&& empty($_GET['levellist']) && empty($_GET['seclist'])&& empty($_GET['instructorlist'])) {
+               if (!empty($_GET['departmentlist']) && !empty($_GET['curlist'])&& !empty($_GET['periodlist'])&& empty($_GET['levellist']) && empty($_GET['seclist'])&& empty($_GET['instructorlist'])) {
                         $stmt=("select *, 
                     (select deptCode from department where f.deptID=department.deptID) as deptCode, 
                     (select dayName from day where f.dayID=day.dayID) as dayName, 
@@ -348,12 +348,12 @@ $record=false;
                 }
 
                     
-                 if($result==0){ ?>
+                 if($result==0 && $isIncomplete==false){ ?>
          
                     </div>
                     <!-- Warning Alert -->
                     <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
-                    <strong>Warning!</strong> &nbsp No records found.
+                    <strong>Warning!</strong> &nbsp No records found if.
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     </div>
             <?php } else {
@@ -388,7 +388,7 @@ $record=false;
              else {
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 
-                echo "naglaog sa else";
+               /* echo "naglaog sa else";*/
                 $stmt=("select *, 
                     (select deptCode from department where f.deptID=department.deptID) as deptCode, 
                     (select dayName from day where f.dayID=day.dayID) as dayName, 
@@ -414,7 +414,7 @@ $record=false;
                     </div>
                     <!-- Warning Alert -->
                     <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
-                    <strong>Warning!</strong> &nbsp No records found.
+                    <strong>Warning!</strong> &nbsp No records yet.
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     </div>
             <?php } else {
