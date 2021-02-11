@@ -1,5 +1,12 @@
 <?php
 session_start();
+
+ if(empty($_SESSION['accountID'])):
+header('Location:../index.php');
+endif;
+
+error_reporting(E_ERROR | E_PARSE); 
+
 require '../database.php';
 require 'dropdown.php';
 $duplicated = false;
@@ -59,7 +66,7 @@ if(isset($_POST['saveBTN'])){
 
     if($dupRes > 0){
         $duplicated = true;
-        echo "<script> alert('obob Duplicate Entry'); </script>";
+        /*echo "<script> alert('obob Duplicate Entry'); </script>";*/
         header("refresh:2; url = academic.php");
     }else{
 

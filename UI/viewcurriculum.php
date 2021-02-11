@@ -1,6 +1,12 @@
 <?php
     session_start();
     require '../database.php';
+
+     if(empty($_SESSION['accountID'])):
+header('Location:../index.php');
+endif;
+
+error_reporting(E_ERROR | E_PARSE);
   
         if(isset($_POST['test'])){
 
