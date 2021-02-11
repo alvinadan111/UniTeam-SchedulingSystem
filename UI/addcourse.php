@@ -152,7 +152,7 @@ if(isset($_POST['saveBTN'])){
             <a class="navtop" href="regMenu.php"> Home <i class="fas fa-chevron-right"></i> </a>
 <?php  }?>
         
-        <a class="navtop" href="coursescheduling.php"> Course </a>
+        <a class="navtop" href="addcourse.php"> Course </a>
     </div>
     <div id="add" class="tabcontent">
         <table>
