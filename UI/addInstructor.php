@@ -39,7 +39,7 @@ if(isset($_POST['add'])){
         }else{
 
             $stmt = $pdo->prepare("INSERT INTO account (FName, MName, LName, idNum, dept, rankID, specializationID, pw, accessLevel)
-            VALUES (?,?,?,?,?,?,?,?,'Prof')");
+            VALUES (?,?,?,?,?,?,?,?,'prof')");
             $stmt->execute(array($FN,$MN,$LN,$ID,$dept,$r,$SP,$pw));
             $added1 = true;
             header("refresh:2; url = menu.php");
@@ -153,8 +153,8 @@ if(isset($_POST['add'])){
     <?php if($duplicate1 == true){ ?>
         <script>
             swal({
-            title: "Duplicate ID Number",
-            text: "ID Number already registered",
+            title: "Duplicate Username",
+            text: "Username already registered",
             icon: "error",
             });
     </script>

@@ -155,8 +155,8 @@ if(isset($_POST['add'])){
     <?php if($isDuplicated == true){ ?>
         <script>
             swal({
-            title: "Duplicate ID Number",
-            text: "ID Number already registered",
+            title: "Duplicate Username",
+            text: "Username already registered",
             icon: "error",
             });
     </script>

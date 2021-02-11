@@ -13,17 +13,13 @@ require '../database.php';
 $isSubmitted = false;
 $isCreated = false;
 $isIncomplete = false;
-$noAvailRoom = false;
+$isNoAvailRoom = false;
 $wrongTimeInput=false;
 
 $pdo=Database::connect(); 
     
-
     //for Testing only
 /*    echo " laog session crsschedActionCurID: ".$_SESSION['crsSchedulingActionCurID'];
-
-  /*  //for Testing only
-    echo " laog session crsschedActionCurID: ".$_SESSION['crsSchedulingActionCurID'];
     echo " laog session deptID: ".$_SESSION['actionDeptID'];
     echo " laog session actionSyID: ".$_SESSION['actionSyID'];
     echo " laog session actionPeriodID: ".$_SESSION['actionPeriodID'];*/
@@ -35,10 +31,13 @@ if(isset($_GET['secID'])){
     $actionDeptID=$_GET['actionDeptID'];
     $actionSyID=$_GET['actionSyID'];
     $actionPeriodID=$_GET['actionPeriodID'];
-
+    //for Testing only
+ /*   echo " laog session crsschedActionCurID2: ".$_SESSION['crsSchedulingActionCurID'];
+    echo " laog session deptID2: ".$_SESSION['actionDeptID'];
+    echo " laog session actionSyID2: ".$_SESSION['actionSyID'];
+    echo " laog session actionPeriodID2: ".$_SESSION['actionPeriodID'];*/
     
     if(empty($_GET['dayID']) || empty($_GET['timeStartID']) || empty($_GET['timeEndID']) || empty($_GET['secID'])){ 
-        
         $isIncomplete = true;
             // echo "Some fields are left unfilled. <br>";
     }else{
@@ -114,7 +113,7 @@ if(isset($_GET['secID'])){
                         }*/    
                          if(count($room)==0)
                          {
-                            $noAvailRoom = true;
+                            $isNoAvailRoom = true;
                          }
 
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -139,8 +138,12 @@ if(isset($_GET['saveSubmitBtn'])){
 
     if(empty($_GET['classroomID'])){
         $isIncomplete = true;
-
-    } else {
+?>        <!-- Warning Alert -->
+        <div id="myAlertUF" class="alert alert-warning alert-dismissible fade show">
+        <strong>Warning!</strong> &nbsp Some fields are left unfilled.
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+<?php    $isIncomplete = false;  } else {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $classroomID = $_GET['classroomID'];
             $crsSchedulingActionCurID3=$_SESSION['crsSchedulingActionCurID'];
@@ -148,36 +151,41 @@ if(isset($_GET['saveSubmitBtn'])){
             $actionSyID3=$_SESSION['actionSyID'];;
             $actionPeriodID3=$_SESSION['actionPeriodID'];
             $actionLevelID3=$_SESSION['actionLevelID'];
-
+/*
+            echo " laog session crsschedActionCurID3: ".$crsSchedulingActionCurID3;
+            echo " laog session deptID3: ".$actionDeptID3;
+            echo " laog session actionSyID3: ".$actionSyDI3;
+            echo " laog session actionPeriodID3: ".$actionPeriodID3;*/
 
             $stmt = $pdo->prepare("INSERT INTO coursescheduling (classroomID, dayID, timeStartID, timeEndID, secID, curID, deptID, syID, periodID, levelID)
             VALUES (?,?,?,?,?,?,?,?,?,?)");
+            $isCreated = true;
             $stmt->execute(array($classroomID,$_SESSION['dayID'],$_SESSION['timeStartID'],$_SESSION['timeEndID'],$_SESSION['secID'],$crsSchedulingActionCurID3, $actionDeptID3,$actionSyID3,$actionPeriodID3,$actionLevelID3));
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $classroomID = $_GET['classroomID'];
             $stmt = $pdo->prepare("INSERT INTO courseschedulingtemp (classroomID, dayID, timeStartID, timeEndID, secID, curID,  deptID, syID, periodID, levelID)
             VALUES (?,?,?,?,?,?,?,?,?,?)");
-  
+            $isCreated = true;
             $stmt->execute(array($classroomID,$_SESSION['dayID'],$_SESSION['timeStartID'],$_SESSION['timeEndID'],$_SESSION['secID'],$crsSchedulingActionCurID3, $actionDeptID3,$actionSyID3,$actionPeriodID3,$actionLevelID3));
-                $isCreated = true;
     }
 }
 
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-      <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="bootstrap/js/sweetalert.min.js"></script>
+     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
     <link rel="stylesheet" href="CourseSchedulingdata.css">
 </head>
 
@@ -194,7 +202,6 @@ if(isset($_GET['saveSubmitBtn'])){
         <table class="table1">
             <tr>
                 <th colspan="7"> Schedule</th>
-
                 <?php if ($isSubmitted==true) { $isSubmitted=false; ?>
                     <!-- Success Alert -->
                     <div id="myAlert" class="alert alert-success alert-dismissible fade show">
@@ -232,7 +239,6 @@ if(isset($_GET['saveSubmitBtn'])){
             <?php   } 
             ?>
                
-
             </tr>
             <tr>
                 <td class="noborder">
@@ -318,7 +324,6 @@ if(isset($_GET['saveSubmitBtn'])){
      </form>
 
     <?php  Database::disconnect(); ?>   
-
     <!-- bootstrap JS-->
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript">
@@ -343,61 +348,7 @@ if(isset($_GET['saveSubmitBtn'])){
         }, 3000); 
 
      });       
-
-
-     <script src="bootstrap/js/sweetalert.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="bootstrap/js/sweetalert.min.js"></script>
-      
-    <?php if($wrongTimeInput == true){ ?>
-        <script>
-            swal({
-            title: "Incorrect Time Input",
-            text: "Please try again",
-            icon: "error",
-            });
     </script>
-    <?php  $wrongTimeInput=false;}  ?>
-    <?php if($isSubmitted  == true){ ?>
-        <script>
-            swal({
-            title: "Preferences Successfully Submitted",
-            text: "Proceed to adding a room.",
-            icon: "success",
-            });
-    </script>
-     <?php $isSubmitted = false;}  ?>
-    <?php if($isCreated  == true){ ?>
-        <script>
-            swal({
-            title: "Successfully Created",
-            text: "Your schedule has been created. ",
-            icon: "success",
-            });
-
-    </script>
-    <?php $isCreated = false;}  ?>
-    <?php if($isIncomplete == true){ ?>
-        <script>
-            swal({
-            title: "Incomplete Input",
-            text: "Please fill up all required fields",
-            icon: "warning",
-            });
-    </script>
-    <?php $isIncomplete = false;}  ?>
-    <?php if($noAvailRoom  == true){ ?>
-        <script>
-            swal({
-            title: "No Available Room",
-            text: "Please try a different day and time",
-            icon: "warning",
-            });
-    </script>
-    <?php $noAvailRoom = false;}  ?>
-
 </body>
 
 </html>

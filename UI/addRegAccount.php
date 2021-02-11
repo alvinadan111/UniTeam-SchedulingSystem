@@ -2,7 +2,13 @@
 session_start();
 
 
-require 'database.php';
+  if(empty($_SESSION['accountID'])):
+header('Location:../index.php');
+endif;
+
+
+
+require '../database.php';
 $isRegistered = false;
 $isDuplicated = false;
 $isIncomplete = false;
@@ -18,7 +24,7 @@ if(isset($_POST['add'])){
     $ID = $_POST['ID_Number'];
     $pw = $_POST['pas'];
     
-    if( empty($_POST['departmentlist'])){
+    if(empty($_POST['departmentlist'])){
  
         $isIncomplete = true;
  
@@ -35,10 +41,10 @@ if(isset($_POST['add'])){
         }else{
 
             $stmt = $pdo->prepare("INSERT INTO account (FName, MName, LName, idNum, dept,  pw, accessLevel)
-            VALUES (?,?,?,?,?,?,?)");
-            $stmt->execute(array($FN,$MN,$LN,$ID,$dept,$pw,"student"));
+            VALUES (?,?,?,?,?,?,'reg')");
+            $stmt->execute(array($FN,$MN,$LN,$ID,$dept,$pw));
             $isRegistered = true;
-            header("refresh:3; url = index.php");
+            header("refresh:2; url = menu.php");
         }
     }
 }
@@ -47,20 +53,21 @@ if(isset($_POST['add'])){
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
+     <title>Add Registrar's Account</title>
+      <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="UI/addAccount.css">
-    <title>Registration</title>
+    <link rel="stylesheet" href="addAccount.css">
+   
   </head>
   <body>
-  <h1 class="h1"> Add Student Account </h1> 
+  <h1 class="h1"> Add Registrar's Account </h1> 
     <div class="btncontainer">
-        <a class="navtop" href="index.php" > Login <i class="fas fa-chevron-right"></i> </a>
-        <a class="navtop" href="addAccount.php" > Add Student Account </a>
+        <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
+        <a class="navtop" href="addRegAccount.php"> Add Registrar's Account </a>
     </div>
     <div class="container">
         <form class="container2" method = "POST">
@@ -78,7 +85,6 @@ if(isset($_POST['add'])){
                 <tr>
                     <td colspan="3"><input type="password" placeholder="Password" name="pas" required></td>
                 </tr>
-
                 <tr>
                     <td colspan="3"> 
                         <label for="department"> Department </label>
@@ -107,10 +113,10 @@ if(isset($_POST['add'])){
         </form>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="bootstrap/js/sweetalert.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+            <script src="bootstrap/js/sweetalert.min.js"></script>
       
     <?php if($isDuplicated == true){ ?>
         <script>
@@ -124,8 +130,8 @@ if(isset($_POST['add'])){
     <?php if($isRegistered == true){ ?>
         <script>
             swal({
-            title: "Successfully Registered",
-            text: "Proceed to Login",
+            title: "Successfully Added",
+            text: "Registrar Added",
             icon: "success",
             });
     </script>

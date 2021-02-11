@@ -62,6 +62,11 @@ endif;
             <a href="addInstructor.php"> Add Instructor </a>
             <a href="ListOfInstructor.php"> View Instructor </a>
           </div>
+          <button class="dropdown-btn"><i class="fa fa-caret-down"></i> Registrar</button>
+          <div class="dropdown-container">
+            <a href="addRegAccount.php"> Add Registrar </a>
+            <a href="ListOfRegistrar.php"> View Registrar </a>
+          </div>
           <a href="Schedules.php"> Schedules </a>
           <a href="roomoccupied.php"> Rooms </a>
           <a href="changepassword.php"> Change Password </a>

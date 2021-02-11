@@ -3,6 +3,16 @@ session_start();
 // session_destroy();
 // exit;
 require '../database.php';
+
+
+ if(!empty($_SESSION['accountIDreg']) || !empty($_SESSION['accountID'])){
+
+ }else{
+    header('Location:../index.php');
+ }
+
+ 
+
 $added = false;
 $duplicated = false;
 $deleted = false;
@@ -136,7 +146,12 @@ if(isset($_POST['saveBTN'])){
 <body>
     <h1 class="textcolor"> Course </h1>
     <div class="btncontainer">
-        <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
+        <?php if(!empty($_SESSION['accountID'])){ ?>
+            <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
+ <?php       } else if (!empty($_SESSION['accountIDreg'])){ ?>
+            <a class="navtop" href="regMenu.php"> Home <i class="fas fa-chevron-right"></i> </a>
+<?php  }?>
+        
         <a class="navtop" href="coursescheduling.php"> Course </a>
     </div>
     <div id="add" class="tabcontent">

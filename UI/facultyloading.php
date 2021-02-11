@@ -6,55 +6,9 @@ endif;
 error_reporting(E_ERROR | E_PARSE);
 require '../database.php';
 $pdo=Database::connect();
-$noResult=false;
-$isIncomplete=false;
-
- if(isset($_GET['searchBtn']) ||  $_GET['facultyLoadingIsUnloaded']==true  || $_GET['facultyLoadingIsLoaded']==true || $_GET['addCalendarConflict']==true) 
-{         
-         if ( $_GET['facultyLoadingIsUnloaded']==true  || $_GET['facultyLoadingIsLoaded']==true || $_GET['addCalendarConflict']==true) {
-             $_GET['deptlist']=$_SESSION['deptlist'];
-             $_GET['levellist']=$_SESSION['levellist'] ;
-             $_GET['instructorlist']=$_SESSION['instructorID'];
-         }
-        if(empty($_GET['deptlist'])  || empty($_GET['instructorlist'])){ 
-                         $isIncomplete=true;
-  
-        } 
 
 
-                if (!empty($_GET['deptlist']) && !empty($_GET['levellist']) && !empty($_GET['instructorlist'])) { 
-                    // $pdo=Database::connect();
-                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    $_SESSION['deptlist'] = $deptlist = $_GET['deptlist'];
-                    $_SESSION['levellist'] = $levellist = $_GET['levellist'];
-                    $_SESSION['instructorID'] = $_GET['instructorlist'];
-
-                   /* echo "deptlist: ".$deptlist." - "."levellist: ".$levellist." - "."session_instructorID: ".$_SESSION['instructorID'] ." - ";
-*/
-                    $stmt=$pdo->prepare("select * from curriculum c natural join courseschedulingtemp natural join timestart natural join timeend  natural join day natural join classroom where (c.deptID = ?) and (c.levelID = ?)  order by curID ");
-                    $stmt->execute(array($deptlist, $levellist));
-                    $result= $stmt->rowCount();
-                        if($result==0){ 
-                        $noResult=true;
-                       } //end of if result 
-                } /*<!-- if (!empty($_GET['deptlist']) && !empty($_GET['levellist']) ... -->*/             
-
-                else if (!empty($_GET['deptlist']) && empty($_GET['levellist']) && !empty($_GET['instructorlist'])) { 
-                    // $pdo=Database::connect();
-                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    $_SESSION['deptlist'] = $deptlist = $_GET['deptlist'];
-                    $_SESSION['instructorID'] = $_GET['instructorlist'];
-
-                    /*echo "deptlist: ".$deptlist." - "."session_instructorID: ".$_SESSION['instructorID'] ." - ";*/
-
-                    $stmt=$pdo->prepare("select * from curriculum c natural join courseschedulingtemp natural join timestart natural join timeend  natural join day natural join classroom where (c.deptID = ?)  order by curID ");
-                    $stmt->execute(array($deptlist));
-                    $result= $stmt->rowCount();
-                        if($result==0){ 
-                        $noResult=true;
-                     } //end of if result 
-                } /*<!-- else if (!empty($_GET['deptlist']) && empty($_GET['levellist']) ... -->*/             
-
+ 
 
 ?>
 
@@ -97,22 +51,8 @@ $isIncomplete=false;
                 <button type="button"  class="close" data-dismiss="alert">&times;</button>
               </div>  
        <?php  } ?>
-       <?php if ($isIncomplete==true) { ?>
-          <!-- Warning Alert -->
-            <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
-            <strong>Warning!</strong> &nbsp Please make sure all required fields are filled.
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            </div>
-        <?php } ?>
-       <?php if ($noResult==true) { ?>
-          <!-- Warning Alert -->
-            <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
-            <strong>Warning!</strong> &nbsp No result found.
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            </div>
-       <?php } ?>
 
-
+    
   <form method="get"  >
     <table class="top">
         <tr>
@@ -178,7 +118,66 @@ $isIncomplete=false;
                           <div class="column">
                             <table>
 
+<?php if(isset($_GET['searchBtn']) ||  $_GET['facultyLoadingIsUnloaded']==true  || $_GET['facultyLoadingIsLoaded']==true || $_GET['addCalendarConflict']==true) 
+{         
+         if ( $_GET['facultyLoadingIsUnloaded']==true  || $_GET['facultyLoadingIsLoaded']==true || $_GET['addCalendarConflict']==true) {
+             $_GET['deptlist']=$_SESSION['deptlist'];
+             $_GET['levellist']=$_SESSION['levellist'] ;
+             $_GET['instructorlist']=$_SESSION['instructorID'];
+         }
+        if(empty($_GET['deptlist'])  || empty($_GET['instructorlist'])){ ?>
+                         
+  
+            <!-- Warning Alert -->
+            <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
+            <strong>Warning!</strong> &nbsp Please make sure all required fields are filled.
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
 
+<?php  } 
+
+
+                if (!empty($_GET['deptlist']) && !empty($_GET['levellist']) && !empty($_GET['instructorlist'])) { 
+                    // $pdo=Database::connect();
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    $_SESSION['deptlist'] = $deptlist = $_GET['deptlist'];
+                    $_SESSION['levellist'] = $levellist = $_GET['levellist'];
+                    $_SESSION['instructorID'] = $_GET['instructorlist'];
+
+                   /* echo "deptlist: ".$deptlist." - "."levellist: ".$levellist." - "."session_instructorID: ".$_SESSION['instructorID'] ." - ";
+*/
+                    $stmt=$pdo->prepare("select * from curriculum c natural join courseschedulingtemp natural join timestart natural join timeend  natural join day natural join classroom where (c.deptID = ?) and (c.levelID = ?)  order by curID ");
+                    $stmt->execute(array($deptlist, $levellist));
+                    $result= $stmt->rowCount();
+                        if($result==0){ ?>
+                        <!-- Warning Alert -->
+                        <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
+                        <strong>Warning!</strong> &nbsp No result found.
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        </div>
+<?php                } //end of if result 
+                } /*<!-- if (!empty($_GET['deptlist']) && !empty($_GET['levellist']) ... -->*/             
+
+                else if (!empty($_GET['deptlist']) && empty($_GET['levellist']) && !empty($_GET['instructorlist'])) { 
+                    // $pdo=Database::connect();
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    $_SESSION['deptlist'] = $deptlist = $_GET['deptlist'];
+                    $_SESSION['instructorID'] = $_GET['instructorlist'];
+
+                    /*echo "deptlist: ".$deptlist." - "."session_instructorID: ".$_SESSION['instructorID'] ." - ";*/
+
+                    $stmt=$pdo->prepare("select * from curriculum c natural join courseschedulingtemp natural join timestart natural join timeend  natural join day natural join classroom where (c.deptID = ?)  order by curID ");
+                    $stmt->execute(array($deptlist));
+                    $result= $stmt->rowCount();
+                        if($result==0){ ?>
+                        <!-- Warning Alert -->
+                        <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
+                        <strong>Warning!</strong> &nbsp No result found.
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        </div>
+<?php                } //end of if result 
+                } /*<!-- else if (!empty($_GET['deptlist']) && empty($_GET['levellist']) ... -->*/             
+?>
                      <thead>
                         <tr class="border">
                             <th class="border" colspan="3"> Courses to Load </th>
@@ -202,9 +201,7 @@ $isIncomplete=false;
                       if ($result>0 && $i!=1) {
                               echo "laman mga row[]: crsName:".$crsName3." timeStart ".
                                             $timeStart3." timeEnd: ".$timeEnd3."  instructorlist " .$_SESSION['instructorID']." crsSchedID".$crsSchedID3;
-
                        } *///end of if result>0 ?> 
-
                        <tbody>
                         <tr>
                             <td><?php echo $crsName3;?></td>

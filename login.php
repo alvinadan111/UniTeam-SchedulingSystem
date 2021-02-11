@@ -34,6 +34,9 @@ require 'database.php';
           }else if ($_SESSION['accessLevel']=="prof") {
             @$_SESSION['accountIDprof']=$account['accountID']; 
             header("Location: UI/profmenu.php");
+          }else if ($_SESSION['accessLevel']=="reg") {
+            @$_SESSION['accountIDreg']=$account['accountID']; 
+            header("Location: UI/regMenu.php");
           }
            
         } else
