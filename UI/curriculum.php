@@ -15,7 +15,7 @@ if(isset($_POST['saveBTN'])){
     if(empty($_POST['yearlist']) || empty($_POST['periodlist']) || empty($_POST['levellist']) || empty($_POST['progcodelist']) || empty($_POST['codelist']) || empty($_POST['deptcodelist']) || empty($_POST['complalist']) || empty($_POST['courseN']) || empty($_POST['lecture']) || empty($_POST['labo']) || empty($_POST['uni']) ){
        
         $isIncomplete = true;
-        echo "<script> alert('Pumasok sa incomplete'); </script>";
+       /* echo "<script> alert('Pumasok sa incomplete'); </script>";*/
 
         }else{
             
@@ -50,7 +50,7 @@ if(isset($_POST['saveBTN'])){
             if($dupRes > 0){
                 
                 $isDuplicated = true;
-                echo "<script> alert('Pumasok sa duplicate'); </script>";
+                /*echo "<script> alert('Pumasok sa duplicate'); </script>";*/
             }else{
                 $stmt = $pdo->prepare("INSERT INTO curriculum (syID, periodID, levelID, acadProgID, courseID, crsName, deptID, lec, lab, units, compLabID, totalUnits)
                 VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -58,7 +58,7 @@ if(isset($_POST['saveBTN'])){
                 $stmt->execute(array($YR, $PER, $lev, $prog, $crs, $CN, $dep, $lecc, $labb, $un, $com, $un));
                 
                 $isRegistered = true;
-                echo "<script> alert('Pumasok sa create'); </script>";
+               /* echo "<script> alert('Pumasok sa create'); </script>";*/
                 header("refresh:2; url = curriculum.php");
 
             }

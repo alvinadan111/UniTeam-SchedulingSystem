@@ -136,7 +136,7 @@ if (!empty($_GET['addCalendarcrsSchedID'])) {
        $_SESSION['actionLevelID'] =$_GET['actionLevelID'];
 
 
-       header("Location:courseschedulingdata.php?crsSchedulingActionCurID=".$crsSchedulingActionCurID."&actionDeptID=".$actionDeptID."&actionSyID=".$actionSyID."&actionPeriodID=".$actionPeriodID);
+       header("Location:courseschedulingdata.php?crsSchedulingActionCurID=".$crsSchedulingActionCurID."&actionDeptID=". $_SESSION['actionDeptID']."&actionSyID=".$actionSyID."&actionPeriodID=".$actionPeriodID);
 
     }
 

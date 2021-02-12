@@ -139,11 +139,11 @@ if(isset($_GET['saveSubmitBtn'])){
     if(empty($_GET['classroomID'])){
         $isIncomplete = true;
 ?>        <!-- Warning Alert -->
-        <div id="myAlertUF" class="alert alert-warning alert-dismissible fade show">
+        <!-- <div id="myAlertI" class="alert alert-warning alert-dismissible fade show">
         <strong>Warning!</strong> &nbsp Some fields are left unfilled.
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <button type="button" class="close" data-dismiss="alert">&times;</button> -->
         </div>
-<?php    $isIncomplete = false;  } else {
+<?php     } else {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $classroomID = $_GET['classroomID'];
             $crsSchedulingActionCurID3=$_SESSION['crsSchedulingActionCurID'];
@@ -331,13 +331,13 @@ if(isset($_GET['saveSubmitBtn'])){
      {
         setTimeout(function (){
             $('#myAlert').hide('fade');
-        }, 3000); 
+        }, 5000); 
      });
 
     $(document).ready(function()
      {
         setTimeout(function (){
-            $('#myAlertUF').hide('fade');
+            $('#myAlertI').hide('fade');
         }, 3500); 
 
      });
@@ -345,7 +345,7 @@ if(isset($_GET['saveSubmitBtn'])){
      {
         setTimeout(function (){
             $('#myAlertC').hide('fade');
-        }, 3000); 
+        }, 3500); 
 
      });       
     </script>

@@ -113,7 +113,7 @@ $isIncomplete = false;*/
     $periodlists = $_POST['periodlist'];
 
      
-        $stmt=$pdo->prepare("select c.curID, c.syID, c.periodID, course.courseCode, course.courseName from curriculum c 
+        $stmt=$pdo->prepare("select c.levelID, c.deptID, c.curID, c.syID, c.periodID, course.courseCode, course.courseName from curriculum c 
             left outer join course ON c.courseID=course.courseID 
             left outer join academicprog ON c.acadProgID=academicprog.acadProgID  
             left outer join lvl ON c.levelID=lvl.levelID
@@ -148,11 +148,13 @@ $isIncomplete = false;*/
             $_SESSION['syID']=$row['syID'];
             $_SESSION['periodID']=$row['periodID'];
             $courseCode=$row['courseCode'];
+            $deptID=$row['deptID'];
             $courseName=$row['courseName'];
+            $_SESSION['levelID'] =$row['levelID'];
 
             if ($result>0) {
-    echo "laman session: syId:".$_SESSION['syID']." periodid ".
-            $_SESSION['periodID']." curid: ".$_SESSION['curID'];
+    /*echo "laman session: syId:".$_SESSION['syID']." periodid ".
+            $_SESSION['periodID']." curid: ".$_SESSION['curID'];*/
 }
 
     ?>       <tbody>
@@ -162,7 +164,7 @@ $isIncomplete = false;*/
                 <td></td>
             
 
-                <td style="text-align: center;"> <a  class="btn" href=<?php echo "courseschedulingdata.php?crsSchedulingActionCurID=".$curID;?>  ><i class="fas fa-edit"></i></a> </td> 
+                <td style="text-align: center;"> <a  class="btn" href=<?php echo "submit.php?crsSchedulingActionCurID=".$curID."&actionDeptID=".$deptID."&actionSyID=".$_SESSION['syID']."&actionPeriodID=". $_SESSION['periodID']."&actionLevelID=". $_SESSION['levelID'];?>  ><i class="fas fa-edit"></i></a> </td> 
 
                             
                <!--  <td style="text-align: center;"> <a href="<?php //echo 'courseschedulingdata.php?curID='.$_SESSION['curID']; ?>"  class="btn"><i
