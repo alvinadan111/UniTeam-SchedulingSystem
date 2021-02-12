@@ -22,13 +22,15 @@ if(isset($_POST['add'])){
     $ID = $_POST['ID_Number'];
     $pw = $_POST['pas'];
     
-    if(empty($_POST['specializationlist']) || empty($_POST['ranklist']) || empty($_POST['departmentlist'])){
+    if(empty($_POST['specializationlist']) || empty($_POST['ranklist']) || empty($_POST['departmentlist']) || empty($_POST['questions'])){
         $incomplete1 = true;
  
     }else{
         $SP = $_POST['specializationlist'];
         $r = $_POST['ranklist'];
         $dept = $_POST['departmentlist'];
+        $secretQ = $_POST['questions'];
+        $ans = $_POST['Answer'];
 
         $q = $pdo->prepare("SELECT * FROM account where idNum = ? ");
         $q->execute(array($ID));
@@ -38,9 +40,9 @@ if(isset($_POST['add'])){
             $duplicate1 = true;
         }else{
 
-            $stmt = $pdo->prepare("INSERT INTO account (FName, MName, LName, idNum, dept, rankID, specializationID, pw, accessLevel)
-            VALUES (?,?,?,?,?,?,?,?,'prof')");
-            $stmt->execute(array($FN,$MN,$LN,$ID,$dept,$r,$SP,$pw));
+            $stmt = $pdo->prepare("INSERT INTO account (FName, MName, LName, idNum, dept, rankID, specializationID, pw, accessLevel, secretQuestion, answer)
+            VALUES (?,?,?,?,?,?,?,?,'prof',?,?)");
+            $stmt->execute(array($FN,$MN,$LN,$ID,$dept,$r,$SP,$pw,$secretQ,$ans));
             $added1 = true;
             header("refresh:2; url = menu.php");
        
@@ -135,6 +137,18 @@ if(isset($_POST['add'])){
                     </td>
 
                 </tr>
+                <tr>
+                    <td>
+                        <label for="question" title = "If you forget your password, We'll ask for your secret answer to verify your identity">Secret Question:</label>
+                        <select name="questions">
+                            <option value=" " selected disabled></option>
+                            <option value="What is your childhood nickname?">What is your childhood nickname?</option>
+                            <option value="What is the name of the first school you attended?">What is the name of the first school you attended?</option>
+                            <option value="What is your first pet's name?">What is your first pet's name?</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr><td><input type="text" placeholder="Answer" name="Answer" required></td></tr>
                 <tr>
                     <td colspan="3">
                         <button type="submit" name = "add" class="addbtn">Add Account</button>

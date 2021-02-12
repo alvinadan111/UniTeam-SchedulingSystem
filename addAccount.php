@@ -18,13 +18,15 @@ if(isset($_POST['add'])){
     $ID = $_POST['ID_Number'];
     $pw = $_POST['pas'];
     
-    if( empty($_POST['departmentlist'])){
+    if( empty($_POST['departmentlist']) || empty($_POST['questions'])){
  
         $isIncomplete = true;
  
     }else{
-
         $dept = $_POST['departmentlist'];
+        $question = $_POST['questions'];
+        $ans = $_POST['Answer'];
+
 
         $q = $pdo->prepare("SELECT * FROM account where idNum = ? ");
         $q->execute(array($ID));
@@ -34,9 +36,9 @@ if(isset($_POST['add'])){
            $isDuplicated = true;
         }else{
 
-            $stmt = $pdo->prepare("INSERT INTO account (FName, MName, LName, idNum, dept,  pw, accessLevel)
-            VALUES (?,?,?,?,?,?,?)");
-            $stmt->execute(array($FN,$MN,$LN,$ID,$dept,$pw,"student"));
+            $stmt = $pdo->prepare("INSERT INTO account (FName, MName, LName, idNum, dept,  pw, accessLevel, secretQuestion, answer)
+            VALUES (?,?,?,?,?,?,?,?,?)");
+            $stmt->execute(array($FN,$MN,$LN,$ID,$dept,$pw,"student",$question,$ans));
             $isRegistered = true;
             header("refresh:3; url = index.php");
         }
@@ -96,8 +98,19 @@ if(isset($_POST['add'])){
                             <?php }?>
                         </select>
                     </td>
-
                 </tr>
+                <tr>
+                    <td>
+                        <label for="question" title = "If you forget your password, We'll ask for your secret answer to verify your identity">Secret Question:</label>
+                        <select name="questions">
+                            <option value=" " selected disabled></option>
+                            <option value="What is your childhood nickname?">What is your childhood nickname?</option>
+                            <option value="What is the name of the first school you attended?">What is the name of the first school you attended?</option>
+                            <option value="What is your first pet's name?">What is your first pet's name?</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr><td><input type="text" placeholder="Answer" name="Answer" required></td></tr>
                 <tr>
                     <td colspan="3">
                         <button type="submit" name = "add" class="addbtn">Add Account</button>
