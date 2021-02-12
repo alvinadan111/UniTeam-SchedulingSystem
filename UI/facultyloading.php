@@ -28,7 +28,7 @@ $noResult=false;
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
-    <link rel="stylesheet" href="facultyloading.css">
+    <link rel="stylesheet" href="Facultyloading.css">
     <title>Faculty Loading</title>
 </head>
 
@@ -115,8 +115,7 @@ $noResult=false;
 
 
 
-                    <div class="row">
-                          <div class="column">
+                  <br>
                             <table>
 
 <?php if(isset($_GET['searchBtn']) ||  $_GET['facultyLoadingIsUnloaded']==true  || $_GET['facultyLoadingIsLoaded']==true || $_GET['addCalendarConflict']==true) 
@@ -183,7 +182,7 @@ $noResult=false;
 ?>
                      <thead>
                         <tr class="border">
-                            <th class="border" colspan="3"> Courses to Load </th>
+                            <th colspan="3" style="text-align: left"> Courses to Load </th>
                         </tr>
                         <tr>
                             <th class="head">Course</th>
@@ -216,7 +215,7 @@ $noResult=false;
                 </div>
 
         
-         <div class="column">
+     
            <!-- <div id="Cal" class="tabcontent"> -->
                
 
@@ -284,9 +283,11 @@ if(isset($_GET['instructorlist']) || $_GET['facultyLoadingIsUnloaded']==true  ||
 
 <?php            /*   echo "Printing sched to the calendar "; */
 
-?>                  <table class="table2">
+?>                  
+                <br>
+                <table class="table2">
                     <tr>
-                    <td colspan="7" class="border">
+                    <td colspan="7" style="text-align: left">
                         <h4 style="float:right"> Calendar View </h4>
                         <h3> Faculty Loading </h3>
 
@@ -349,7 +350,7 @@ if(isset($_GET['instructorlist']) || $_GET['facultyLoadingIsUnloaded']==true || 
 
 ?>
                     <tr>
-                        <td colspan="6" class="border">
+                        <td colspan="6" style="text-align: left">
                             <h4 style="float:right"> Tabular View </h4>
                             <h3> Faculty Loading </h3>
                             <h5> Total No. of Units Loaded: <?php echo $_SESSION['totalUnits']; ?></h5>
