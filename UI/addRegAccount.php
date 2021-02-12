@@ -19,7 +19,6 @@ $isIncomplete = false;
 <!doctype html>
 <html lang="en">
   <head>
-     <title>Add Registrar's Account</title>
      <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap CSS -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
@@ -30,7 +29,7 @@ $isIncomplete = false;
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
     <link rel="stylesheet" href="addAccount.css">
-   
+    <title>Add Registrar's Account</title>
   </head>
   <body>
   <h1 class="h1"> Add Registrar's Account </h1> 
@@ -49,13 +48,7 @@ $isIncomplete = false;
     if(empty($_POST['departmentlist'])){
  
         $isIncomplete = true;
-        if($isIncomplete == true){ ?>
-           <!-- Warning Alert -->
-            <div id="myAlertUF" class="alert alert-warning alert-dismissible fade show">
-            <strong>Warning!</strong> &nbsp Some fields are left unfilled.
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            </div>
-    <?php }  
+         
  
     }else{
 
@@ -67,26 +60,14 @@ $isIncomplete = false;
 
         if($result > 0){
            $isDuplicated = true;
-          if($isDuplicated == true){ ?>
-        <!-- Error Alert -->
-              <div id="myAlert" class="alert alert-danger alert-dismissible fade show">
-                <strong>Error!</strong> &nbsp Duplicate Username.
-                <button type="button"  class="close" data-dismiss="alert">&times;</button>
-              </div>
-    <?php }  
+          
         }else{
 
             $stmt = $pdo->prepare("INSERT INTO account (FName, MName, LName, idNum, dept,  pw, accessLevel)
             VALUES (?,?,?,?,?,?,'reg')");
             $stmt->execute(array($FN,$MN,$LN,$ID,$dept,$pw));
             $isRegistered = true;
-            if($isRegistered == true){ ?>
-         <!-- Success Alert -->
-                <div id="myAlert" class="alert alert-success alert-dismissible fade show">
-                    <strong>Success!</strong> Ssuccessfully added.
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                </div>
-    <?php }  
+            
             header("refresh:2; url = menu.php");
         }
     }
@@ -98,11 +79,34 @@ $isIncomplete = false;
         <a class="navtop" href="addRegAccount.php"> Add Registrar's Account </a>
     </div>
     <div class="container">
-   
+        
         <form class="container2" method = "POST">
 
             <table>
+                <tr>
+                    <?php   if($isIncomplete == true){ ?>
+               <!-- Warning Alert -->
+                <div id="myAlertUF" class="alert alert-warning alert-dismissible fade show">
+                <strong>Warning!</strong> &nbsp Some fields are left unfilled.
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+        <?php } ?>
+        <?php if($isDuplicated == true){ ?>
+            <!-- Error Alert -->
+              <div id="myAlertC" class="alert alert-danger alert-dismissible fade show">
+                <strong>Error!</strong> &nbsp Duplicate Username.
+                <button type="button"  class="close" data-dismiss="alert">&times;</button>
+              </div>
+    <?php }   ?>
+    <?php if($isRegistered == true){ ?>
+                <!-- Success Alert -->
+                <div id="myAlert" class="alert alert-success alert-dismissible fade show">
+                    <strong>Success!</strong> Successfully added.
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+    <?php }   ?>
 
+                </tr>
                 <tr>
                     <td><input type="text" placeholder="First Name" name="First_Name" required></td>
                     <td><input type="text" placeholder="Middle Name" name="Middle_Name"></td>
@@ -159,7 +163,7 @@ $isIncomplete = false;
      {
         setTimeout(function (){
             $('#myAlertUF').hide('fade');
-        }, 3500); 
+        }, 3000); 
 
      });
     $(document).ready(function()
@@ -170,7 +174,7 @@ $isIncomplete = false;
 
      });       
 
-
+    </script>
 
 
 

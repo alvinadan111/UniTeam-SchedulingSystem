@@ -11,7 +11,6 @@ $noResult=false;
 <!DOCTYPE html>
 <html>
     <head>
-         <title>List of  Instructor </title>
          <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,6 +18,7 @@ $noResult=false;
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link rel="stylesheet" href="Listofinstructor.css">
+        <title>List of  Instructor </title>
     </head>
     <body>
             <h1 class="textcolor" colspan="3"> View Instructor </h1>

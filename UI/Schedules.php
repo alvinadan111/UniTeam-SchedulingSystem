@@ -24,6 +24,19 @@ $isIncomplete=false;
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  
         <link rel="stylesheet" href="Schedules.css">
+        <title>View Schedules</title>
+        <script type="text/javascript">
+        function PrintDiv() {
+            var divContents = document.getElementById("dvContents").innerHTML;
+            var printWindow = window.open('', '', 'height=800,width=800');
+            printWindow.document.write('<html><head><title>Schedules</title>');
+            printWindow.document.write('</head><body ><h1>Schedules</h1>');
+            printWindow.document.write(divContents);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        }
+    </script>
     </head>
     <body>
         <h1> View Schedules </h1>
@@ -135,11 +148,12 @@ $isIncomplete=false;
                     </select>
             </td>
             <td> <button> Search </button></td>
-            <td> <button> <i class="fas fa-print"></i>  </button> </td>
+            <td> Print <button onclick="PrintDiv();" value="Print"> <i class="fas fa-print"></i>  </button> </td>
         </table>
        </form>
         <br>
-        <table>
+        <div id="dvContents">  <!-- div to print -->
+        <table border="1px solid #ddd" border-collapse="collapse" padding="8px">
             <tr>
                 <td> Department Code </td>
                 <td> Subject Title </td>
@@ -443,6 +457,7 @@ $isIncomplete=false;
  Database::disconnect(); 
 ?>
         </table>
+        </div>
 
 
         <!-- bootstrap JS-->
