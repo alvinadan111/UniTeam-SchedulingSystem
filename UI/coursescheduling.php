@@ -45,7 +45,7 @@ $isIncomplete = false;*/
             </tr>
             <tr>
                 <td>
-                    <label for="acadprog"> Academic Program </label>
+                    <label for="acadprog"> *Academic Program </label>
                     <select id="acadprog" name="acadlist"  required>
                    <option value=" " selected disabled></option>
                             <?php
@@ -60,7 +60,7 @@ $isIncomplete = false;*/
                      
                 </td>
                 <td>
-                    <label for="level"> Level </label>
+                    <label for="level"> *Level </label>
                     <select id="level" name="levellist"  required>
                      <option value=" " selected disabled></option>
                             <?php
@@ -74,7 +74,7 @@ $isIncomplete = false;*/
                     </select>
                 </td>
                 <td class="line">
-                    <label for="period"> Period </label>
+                    <label for="period"> *Period </label>
                     <select id="period" name="periodlist"  required>
                         <option value=" " selected disabled></option>
                             <?php
@@ -120,7 +120,7 @@ $isIncomplete = false;*/
             left outer join period ON c.periodID=period.periodID
             where (c.periodID = ?) and (c.levelID = ?) and (c.acadProgID = ?)
             order by curID ");
-        $stmt->execute(array($acadlists, $levellists,  $periodlists));
+        $stmt->execute(array($periodlists, $levellists,  $acadlists));
         $result= $stmt->rowCount();
          if($result==0){ ?>
  
@@ -130,51 +130,52 @@ $isIncomplete = false;*/
             <strong>Warning!</strong> &nbsp No result found.
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             </div>
-    <?php } ?>
-                <table class="table">
-              <thead>
-                <tr>
-                <th>Course Code</th>
-                <th>Description</th>
-                <th>Schedule</th>
-                <th>Action </th>                      
-                </tr>
-              </thead>
+    <?php }
+    else { ?>
+                        <table class="table">
+                      <thead>
+                        <tr>
+                        <th>Course Code</th>
+                        <th>Description</th>
+                        <th>Schedule</th>
+                        <th>Action </th>                      
+                        </tr>
+                      </thead>
 
-    <?php 
-    while ($row = $stmt->fetch()) 
-          {
-            $curID=$row['curID'];
-            $_SESSION['syID']=$row['syID'];
-            $_SESSION['periodID']=$row['periodID'];
-            $courseCode=$row['courseCode'];
-            $deptID=$row['deptID'];
-            $courseName=$row['courseName'];
-            $_SESSION['levelID'] =$row['levelID'];
+            <?php 
+            while ($row = $stmt->fetch()) 
+                  {
+                    $curID=$row['curID'];
+                    $_SESSION['syID']=$row['syID'];
+                    $_SESSION['periodID']=$row['periodID'];
+                    $courseCode=$row['courseCode'];
+                    $deptID=$row['deptID'];
+                    $courseName=$row['courseName'];
+                    $_SESSION['levelID'] =$row['levelID'];
 
-            if ($result>0) {
-    /*echo "laman session: syId:".$_SESSION['syID']." periodid ".
-            $_SESSION['periodID']." curid: ".$_SESSION['curID'];*/
-}
+                    if ($result>0) {
+                     /*echo "laman session: syId:".$_SESSION['syID']." periodid ".
+                    $_SESSION['periodID']." curid: ".$_SESSION['curID'];*/
+                    }
 
-    ?>       <tbody>
-                <tr>
-                <td><?php echo $courseCode;?></td>
-                <td><?php echo $courseName;?></td>
-                <td></td>
-            
+            ?>       <tbody>
+                        <tr>
+                        <td><?php echo $courseCode;?></td>
+                        <td><?php echo $courseName;?></td>
+                        <td></td>
+                    
 
-                <td style="text-align: center;"> <a  class="btn" href=<?php echo "submit.php?crsSchedulingActionCurID=".$curID."&actionDeptID=".$deptID."&actionSyID=".$_SESSION['syID']."&actionPeriodID=". $_SESSION['periodID']."&actionLevelID=". $_SESSION['levelID'];?>  ><i class="fas fa-edit"></i></a> </td> 
+                        <td style="text-align: center;"> <a  class="btn" href=<?php echo "submit.php?crsSchedulingActionCurID=".$curID."&actionDeptID=".$deptID."&actionSyID=".$_SESSION['syID']."&actionPeriodID=". $_SESSION['periodID']."&actionLevelID=". $_SESSION['levelID'];?>  ><i class="fas fa-edit"></i></a> </td> 
 
-                            
-               <!--  <td style="text-align: center;"> <a href="<?php //echo 'courseschedulingdata.php?curID='.$_SESSION['curID']; ?>"  class="btn"><i
-                            class="fas fa-edit"></i></a> </td> --> 
-                </tr>
-            </tbody>
-           
+                                    
+                       <!--  <td style="text-align: center;"> <a href="<?php //echo 'courseschedulingdata.php?curID='.$_SESSION['curID']; ?>"  class="btn"><i
+                                    class="fas fa-edit"></i></a> </td> --> 
+                        </tr>
+                    </tbody>
+                   
 
        
- <?php } } } Database::disconnect(); ?>                       
+ <?php     } } } } Database::disconnect(); ?>                       
 </table> 
 
 

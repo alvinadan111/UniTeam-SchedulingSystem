@@ -81,6 +81,12 @@ select {
     background-color: #BFBFBF;
 }
 
+.btn2 {
+    width: 200px;
+    background-color: #BFBFBF;
+    text-decoration-color: white;
+}
+
 .gen , .btncenter{
     text-align: center;
 }

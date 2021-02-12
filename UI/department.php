@@ -60,7 +60,7 @@ if(isset($_POST['saveBTN'])){
 
     if($dupRes > 0){
         $duplicated = true;
-        echo "<script> alert('obob Duplicate Entry'); </script>";
+        /*echo "<script> alert('obob Duplicate Entry'); </script>";*/
         header("refresh:2; url = department.php");
     }else{
         $updateQuery = $pdo->prepare("UPDATE department SET deptCode = :nDC, deptName = :nDN WHERE deptCode = :papalitan");
