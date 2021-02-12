@@ -139,6 +139,7 @@ th.head {
     table tr,
     .table td {
         width: 1000px;
+        overflow: scroll;
       
     }
 
@@ -154,14 +155,15 @@ th.head {
     }
 
     .top {
-        min-width: 640px;
-        width: 640px;
+        overflow: scroll;
+        width: 100%;
     }
 
     select {
         width: inherit;
     }
 body {
+    overflow: scroll;
     position: absolute;
     z-index: 1;
     left: 50%;
