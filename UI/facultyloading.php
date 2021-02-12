@@ -27,7 +27,7 @@ $pdo=Database::connect();
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
-    <link rel="stylesheet" href="Facultyloading.css">
+    <link rel="stylesheet" href="facultyloading.css">
     <title>Faculty Loading</title>
 </head>
 
@@ -218,7 +218,7 @@ $pdo=Database::connect();
                 </div>
 
         
-        <!-- <div class="column"> -->
+         <div class="column">
            <!-- <div id="Cal" class="tabcontent"> -->
                
 
@@ -289,9 +289,7 @@ if(isset($_GET['instructorlist']) || $_GET['facultyLoadingIsUnloaded']==true  ||
 ?>                  <table class="table2">
                     <tr>
                     <td colspan="7" class="border">
-                        <button class="tablink" onclick="openPage('Tab', this,)">Tabular View</button>
-                        <button class="tablink01" onclick="openPage('Cal', this,)" id="defaultOpen">Calendar
-                            View</button>
+                        <h4 style="float:right"> Calendar View </h4>
                         <h3> Faculty Loading </h3>
 
                         Total No. of Units Loaded: <?php echo $_SESSION['totalUnits']; ?>
@@ -348,14 +346,13 @@ if(isset($_GET['instructorlist']) || $_GET['facultyLoadingIsUnloaded']==true || 
 
       <!--  <div id="Tab" class="tabcontent"> -->
                 <table>
+                    <br>
 <?php              /* echo "Printing sched to the tabular view "; */
 
 ?>
                     <tr>
                         <td colspan="6" class="border">
-                            <button class="tablink01" name="tabularView" onclick="openPage('Tab', this,)" id="defaultOpen">Tabular
-                                View</button>
-                            <button class="tablink" name="calendarView" onclick="openPage('Cal', this,)">Calendar View</button>
+                            <h4 style="float:right"> Tabular View </h4>
                             <h3> Faculty Loading </h3>
                             <h5> Total No. of Units Loaded: <?php echo $_SESSION['totalUnits']; ?></h5>
                             *Clicking edit icon will unload the schedule from this instructor.
