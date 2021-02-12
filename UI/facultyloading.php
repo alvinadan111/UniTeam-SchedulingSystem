@@ -8,7 +8,8 @@ require '../database.php';
 $pdo=Database::connect();
 
 
- 
+$incomplete=false;
+$noResult=false;
 
 ?>
 
@@ -37,28 +38,28 @@ $pdo=Database::connect();
         <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
         <a class="navtop" href="facultyloading.php"> Faculty Loading </a>
     </div>
-     <?php if ( isset($_GET['genSchedBtn'])) { ?>
-                 <!-- Success Alert -->
-                    <div id="myAlert" class="alert alert-success alert-dismissible fade show">
-                        <strong>Success!</strong> Schedule has been generated.
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    </div>
-       <?php  } 
-        else if ($_GET['addCalendarConflict']==true) { ?>
-                 <!-- Error Alert -->
-              <div id="myAlert" class="alert alert-danger alert-dismissible fade show">
-                <strong>Error!</strong> &nbsp Cannot add to calendar, doing so will result to a conflicting schedule for this professor!
-                <button type="button"  class="close" data-dismiss="alert">&times;</button>
-              </div>  
-       <?php  } ?>
+     
 
     
   <form method="get"  >
     <table class="top">
         <tr>
             <th colspan="4" class="border"> Load Instructor</th>
-          
-       
+            <?php if ( isset($_GET['genSchedBtn'])) { ?>
+                 <!-- Success Alert -->
+                    <div id="myAlertS" class="alert alert-success alert-dismissible fade show">
+                        <strong>Success!</strong> Schedule has been generated.
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
+       <?php  } 
+              if ($_GET['addCalendarConflict']==true) { ?>
+                 <!-- Error Alert -->
+              <div id="myAlertC" class="alert alert-danger alert-dismissible fade show">
+                <strong>Error!</strong> &nbsp Cannot add to calendar, doing so will result to a conflicting schedule for this professor!
+                <button type="button"  class="close" data-dismiss="alert">&times;</button>
+              </div>  
+       <?php  } ?>
+             
         </tr>
         <tr>
             <td class="border">
@@ -125,16 +126,15 @@ $pdo=Database::connect();
              $_GET['levellist']=$_SESSION['levellist'] ;
              $_GET['instructorlist']=$_SESSION['instructorID'];
          }
-        if(empty($_GET['deptlist'])  || empty($_GET['instructorlist'])){ ?>
-                         
-  
-            <!-- Warning Alert -->
-            <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
+        if(empty($_GET['deptlist'])  || empty($_GET['instructorlist'])){ 
+          $incomplete=true; ?>
+           <!-- Warning Alert -->
+            <div id="myAlertI" class="alert alert-warning alert-dismissible fade show">
             <strong>Warning!</strong> &nbsp Please make sure all required fields are filled.
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             </div>
-
-<?php  } 
+<?php 
+         } 
 
 
                 if (!empty($_GET['deptlist']) && !empty($_GET['levellist']) && !empty($_GET['instructorlist'])) { 
@@ -149,12 +149,13 @@ $pdo=Database::connect();
                     $stmt=$pdo->prepare("select * from curriculum c natural join courseschedulingtemp natural join timestart natural join timeend  natural join day natural join classroom where (c.deptID = ?) and (c.levelID = ?)  order by curID ");
                     $stmt->execute(array($deptlist, $levellist));
                     $result= $stmt->rowCount();
-                        if($result==0){ ?>
+                        if($result==0){ 
+                        $noResult=true; ?>
                         <!-- Warning Alert -->
-                        <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
-                        <strong>Warning!</strong> &nbsp No result found.
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        </div>
+                      <div id="myAlertN" class="alert alert-warning alert-dismissible fade show">
+                      <strong>Warning!</strong> &nbsp No result found.
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                      </div>
 <?php                } //end of if result 
                 } /*<!-- if (!empty($_GET['deptlist']) && !empty($_GET['levellist']) ... -->*/             
 
@@ -169,12 +170,14 @@ $pdo=Database::connect();
                     $stmt=$pdo->prepare("select * from curriculum c natural join courseschedulingtemp natural join timestart natural join timeend  natural join day natural join classroom where (c.deptID = ?)  order by curID ");
                     $stmt->execute(array($deptlist));
                     $result= $stmt->rowCount();
-                        if($result==0){ ?>
+                        if($result==0){ 
+                        $noResult=true; ?>
                         <!-- Warning Alert -->
-                        <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
-                        <strong>Warning!</strong> &nbsp No result found.
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        </div>
+                      <div id="myAlertN" class="alert alert-warning alert-dismissible fade show">
+                      <strong>Warning!</strong> &nbsp No result found.
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                      </div>
+
 <?php                } //end of if result 
                 } /*<!-- else if (!empty($_GET['deptlist']) && empty($_GET['levellist']) ... -->*/             
 ?>
@@ -196,12 +199,7 @@ $pdo=Database::connect();
                       $timeEnd3=$row['timeEnd'];
                       $dayName3=$row['dayName'];
                       $roomNum3=$row['roomNum'];
-
-                      /*$i=0;
-                      if ($result>0 && $i!=1) {
-                              echo "laman mga row[]: crsName:".$crsName3." timeStart ".
-                                            $timeStart3." timeEnd: ".$timeEnd3."  instructorlist " .$_SESSION['instructorID']." crsSchedID".$crsSchedID3;
-                       } *///end of if result>0 ?> 
+?> 
                        <tbody>
                         <tr>
                             <td><?php echo $crsName3;?></td>
@@ -309,7 +307,7 @@ if(isset($_GET['instructorlist']) || $_GET['facultyLoadingIsUnloaded']==true  ||
         
                     //including calendar view rows result
                     include('../includes/calViewRows.php'); 
-                    echo " code sunod sa includes/calViewRows "; 
+                    /*echo " code sunod sa includes/calViewRows "; */
 
 }//if(isset($_GET['instructorlist']))
 ?> 
@@ -470,10 +468,32 @@ if(isset($_GET['instructorlist']) || $_GET['facultyLoadingIsUnloaded']==true || 
      $(document).ready(function()
      {
         setTimeout(function (){
-            $('#myAlert').hide('fade');
-        }, 3500); 
+            $('#myAlertN').hide('fade');
+        }, 3000); 
      });
 
+     $(document).ready(function()
+     {
+        setTimeout(function (){
+            $('#myAlertI').hide('fade');
+        }, 3000); 
+
+     });
+    $(document).ready(function()
+     {
+        setTimeout(function (){
+            $('#myAlertS').hide('fade');
+        }, 3000); 
+
+     });
+    $(document).ready(function()
+     {
+        setTimeout(function (){
+            $('#myAlertC').hide('fade');
+        }, 4000); 
+
+     });
+     </script>
 
 
 </body>

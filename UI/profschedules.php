@@ -25,6 +25,18 @@ $pdo=Database::connect();
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
         <link rel="stylesheet" href="Schedules.css">
+        <script type="text/javascript">
+        function PrintDiv() {
+            var divContents = document.getElementById("dvContents").innerHTML;
+            var printWindow = window.open('', '', 'height=800,width=800');
+            printWindow.document.write('<html><head><title>Schedules</title>');
+            printWindow.document.write('</head><body ><h1>Schedules</h1>');
+            printWindow.document.write(divContents);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        }
+    </script>
     </head>
     <body>
         <h1> View Schedules </h1>
@@ -102,11 +114,12 @@ $pdo=Database::connect();
                     </select>
             </td>
             <td> <button> Search </button></td>
-            <td> <button> <i class="fas fa-print"></i> </button></td>
+            <td> Print <button onclick="PrintDiv();" value="Print"> <i class="fas fa-print"></i> </button></td>
         </table>
        </form>
         <br>
-        <table>
+        <div id="dvContents">  <!-- div to print -->
+        <table border="1px solid #ddd" border-collapse="collapse" padding="8px">
             <tr>
                 <td> Department Code </td>
                 <td> Subject Title </td>
@@ -117,7 +130,7 @@ $pdo=Database::connect();
             <?php if ( empty($_GET['curlist'])|| empty($_GET['periodlist'])|| empty($_GET['levellist']) ||empty($_GET['seclist'])) {
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 
-                echo "naglaog sa if";
+                /*echo "naglaog sa if";*/
                 $stmt=("select *, 
                     (select deptCode from department where f.deptID=department.deptID) as deptCode, 
                     (select dayName from day where f.dayID=day.dayID) as dayName, 
@@ -138,7 +151,7 @@ $pdo=Database::connect();
                 $q->execute(array($_SESSION['signupDeptID'], $_SESSION['accountIDprof']));
                  $result= $q->rowCount();
 
-                 echo "SESSION['signupDeptID'] = ".$_SESSION['signupDeptID'];
+                /* echo "SESSION['signupDeptID'] = ".$_SESSION['signupDeptID'];*/
 
                 if($result==0){ ?>
          
@@ -187,7 +200,7 @@ $pdo=Database::connect();
         <?php  }
 
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                echo "naglaog sa else";
+                /*echo "naglaog sa else";*/
                 $syID =$_GET['curlist'];
                 $periodID =$_GET['periodlist'];
                 $levelID =$_GET['levellist'];
@@ -247,6 +260,7 @@ $pdo=Database::connect();
               Database::disconnect(); 
 ?>
         </table>
+        </div>
 
 
         <!-- bootstrap JS-->

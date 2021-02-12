@@ -5,7 +5,7 @@
   body {
     font-family: Arial;
     padding: 10px;
-    background: #f1f1f1;
+    background: #fbf0f0;
   }
 
   /* Header/Blog Title */
@@ -71,7 +71,7 @@
   .rightcolumn {
     float: left;
     width: 75%;
-    background-color: #f1f1f1;
+    background-color: #fbf0f0;
     padding-left: 20px;
   }
   .card {

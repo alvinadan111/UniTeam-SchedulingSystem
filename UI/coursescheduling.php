@@ -3,7 +3,7 @@
 header('Location:../index.php');
 endif;
 
-//error_reporting(E_ERROR | E_PARSE);
+error_reporting(E_ERROR | E_PARSE);
 require '../database.php';
 $pdo=Database::connect();
 /*$isSubmitted = false;
