@@ -28,7 +28,7 @@ $noResult=false;
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
-    <link rel="stylesheet" href="Facultyloading.css">
+    <link rel="stylesheet" href="facultyloading.css">
     <title>Faculty Loading</title>
 </head>
 
@@ -113,9 +113,9 @@ $noResult=false;
   </form>
   
 
+<br>
 
-
-                  <br>
+                  
                             <table>
 
 <?php if(isset($_GET['searchBtn']) ||  $_GET['facultyLoadingIsUnloaded']==true  || $_GET['facultyLoadingIsLoaded']==true || $_GET['addCalendarConflict']==true) 
@@ -220,101 +220,6 @@ $noResult=false;
                
 
 
-<?php  
-
-if(isset($_GET['instructorlist']) || $_GET['facultyLoadingIsUnloaded']==true  || $_GET['facultyLoadingIsLoaded']==true || ($_GET['addCalendarConflict']) ==true)
-{
-  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $instructorID = $_SESSION['instructorID'];
-
-   /* echo "faculty loading is true MEANS ISSET GET_INSTRUCTOR LIST";*/
-
-    $stmt=("select *, (select roomNUm from classroom where f.classroomID=classroom.classroomID) as roomNum, (select dayName from day where f.dayID=day.dayID) as dayName, (select timeStart from timestart where f.timeStartID=timestart.timeStartID) as timeStart, (select timeEnd from timeend where f.timeEndID=timeend.timeEndID) as timeEnd, (select section from section where f.secID=section.secID) as section, (select crsName from curriculum where f.curID=curriculum.curID) as crsName,  (select totalUnits from curriculum where f.curID=curriculum.curID)   as totalUnits from facultyloading f where accountID=?");
-
-            //$stmt->execute(array( $addCalendarcrsSchedIDFromSubmit));
-    $q = $pdo->prepare($stmt);
-    $q->execute(array($instructorID));
-
-
-
-     $count=0;   $_SESSION['totalUnits']=0; 
-    while ($row = $q->fetch()){
-
-       /* echo "naglaog sa while para sa calendar view <br>";*/
-                
-        $sched[]=$row['crsName']."<br>Rm ".$row['roomNum']."<br> ".$row['timeStart']." - ".$row['timeEnd'];
-        $crsName[]=$row['crsName'];
-        $dayName[]=$row['dayName'];
-        $roomNum[]=$row['roomNum'];
-        $timeStart[]=$row['timeStart'];
-        $timeEnd[]=$row['timeEnd'];
-        $rspan[]=$row['timeEndID'] - $row['timeStartID'];
-
-        $_SESSION['totalUnits']=$_SESSION['totalUnits']+$row['totalUnits'];
-        
-
-/*
-        echo "sched[$count ]  ".$sched[$count].PHP_EOL."<br>";
-        echo "crsName[$count]  ".$crsName[$count];
-        echo "dayName[$count ]  ".$dayName[$count];
-        echo "roomNum[ $count]  ".$roomNum[$count];
-        echo "timeStart[$count ]  ".$timeStart[$count];
-        echo "timeEnd[$count ]  ".$timeEnd[$count];
-        echo "rspan[ $count  ]".$rspan[$count];
-        echo "totalUnits".$_SESSION['totalUnits']."<br> ";*/
-
-        $count++;
-    }
-     //including variables instantiation
-     include('../includes/varInstantiation.php'); 
-
-     $i=0; 
-     while ($i < $count) {
-        /*echo "naglaog sa whhile kang includes/xyIntercepts ";*/
-       //including x&y intercept tester
-       include('../includes/xyIntercepts.php');
-       $i++; 
-    }//eo while ($i < $count)
-
-
-
- ?>
-
-
-<?php            /*   echo "Printing sched to the calendar "; */
-
-?>                  
-                <br>
-                <table class="table2">
-                    <tr>
-                    <td colspan="7" style="text-align: left">
-                        <h4 style="float:right"> Calendar View </h4>
-                        <h3> Faculty Loading </h3>
-
-                        Total No. of Units Loaded: <?php echo $_SESSION['totalUnits']; ?>
-                    </td>
-                    </tr>
-
-                    <tr>
-                        <th> Time </th>
-                        <th> Monday </th>
-                        <th> Tuesday </th>
-                        <th> Wednesday </th>
-                        <th> Thursday </th>
-                        <th> Friday </th>
-                        <th> Saturday </th>
-                    </tr>
-<?php
-        
-                    //including calendar view rows result
-                    include('../includes/calViewRows.php'); 
-                    /*echo " code sunod sa includes/calViewRows "; */
-
-}//if(isset($_GET['instructorlist']))
-?> 
-                </table>
-           <!--  </div> -->
-
 
 
 <?php
@@ -344,8 +249,11 @@ if(isset($_GET['instructorlist']) || $_GET['facultyLoadingIsUnloaded']==true || 
        
 
       <!--  <div id="Tab" class="tabcontent"> -->
+          <br>
+      <div class="row">
+          <div class="column">
                 <table>
-                    <br>
+                   
 <?php              /* echo "Printing sched to the tabular view "; */
 
 ?>
@@ -414,9 +322,107 @@ if(isset($_GET['instructorlist']) || $_GET['facultyLoadingIsUnloaded']==true || 
 <?php
 /*}*///if(isset($_GET['instructorlist']))
 ?>               </table>     
-          <!--   </div> -->
-       <!--  </div>
-    </div>   -->
+           </div>
+         
+         <?php  
+
+if(isset($_GET['instructorlist']) || $_GET['facultyLoadingIsUnloaded']==true  || $_GET['facultyLoadingIsLoaded']==true || ($_GET['addCalendarConflict']) ==true)
+{
+  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $instructorID = $_SESSION['instructorID'];
+
+   /* echo "faculty loading is true MEANS ISSET GET_INSTRUCTOR LIST";*/
+
+    $stmt=("select *, (select roomNUm from classroom where f.classroomID=classroom.classroomID) as roomNum, (select dayName from day where f.dayID=day.dayID) as dayName, (select timeStart from timestart where f.timeStartID=timestart.timeStartID) as timeStart, (select timeEnd from timeend where f.timeEndID=timeend.timeEndID) as timeEnd, (select section from section where f.secID=section.secID) as section, (select crsName from curriculum where f.curID=curriculum.curID) as crsName,  (select totalUnits from curriculum where f.curID=curriculum.curID)   as totalUnits from facultyloading f where accountID=?");
+
+            //$stmt->execute(array( $addCalendarcrsSchedIDFromSubmit));
+    $q = $pdo->prepare($stmt);
+    $q->execute(array($instructorID));
+
+
+
+     $count=0;   $_SESSION['totalUnits']=0; 
+    while ($row = $q->fetch()){
+
+       /* echo "naglaog sa while para sa calendar view <br>";*/
+                
+        $sched[]=$row['crsName']."<br>Rm ".$row['roomNum']."<br> ".$row['timeStart']." - ".$row['timeEnd'];
+        $crsName[]=$row['crsName'];
+        $dayName[]=$row['dayName'];
+        $roomNum[]=$row['roomNum'];
+        $timeStart[]=$row['timeStart'];
+        $timeEnd[]=$row['timeEnd'];
+        $rspan[]=$row['timeEndID'] - $row['timeStartID'];
+
+        $_SESSION['totalUnits']=$_SESSION['totalUnits']+$row['totalUnits'];
+        
+
+/*
+        echo "sched[$count ]  ".$sched[$count].PHP_EOL."<br>";
+        echo "crsName[$count]  ".$crsName[$count];
+        echo "dayName[$count ]  ".$dayName[$count];
+        echo "roomNum[ $count]  ".$roomNum[$count];
+        echo "timeStart[$count ]  ".$timeStart[$count];
+        echo "timeEnd[$count ]  ".$timeEnd[$count];
+        echo "rspan[ $count  ]".$rspan[$count];
+        echo "totalUnits".$_SESSION['totalUnits']."<br> ";*/
+
+        $count++;
+    }
+     //including variables instantiation
+     include('../includes/varInstantiation.php'); 
+
+     $i=0; 
+     while ($i < $count) {
+        /*echo "naglaog sa whhile kang includes/xyIntercepts ";*/
+       //including x&y intercept tester
+       include('../includes/xyIntercepts.php');
+       $i++; 
+    }//eo while ($i < $count)
+
+
+
+ ?>
+
+
+<?php            /*   echo "Printing sched to the calendar "; */
+
+?>                  
+               
+               
+                    <div class="column">
+                <table class="table2">
+                    <tr>
+                    <td colspan="7" style="text-align: left">
+                        <h4 style="float:right"> Calendar View </h4>
+                        <h3> Faculty Loading </h3>
+
+                        Total No. of Units Loaded: <?php echo $_SESSION['totalUnits']; ?>
+                    </td>
+                    </tr>
+
+                    <tr>
+                        <th> Time </th>
+                        <th> Monday </th>
+                        <th> Tuesday </th>
+                        <th> Wednesday </th>
+                        <th> Thursday </th>
+                        <th> Friday </th>
+                        <th> Saturday </th>
+                    </tr>
+<?php
+        
+                    //including calendar view rows result
+                    include('../includes/calViewRows.php'); 
+                    /*echo " code sunod sa includes/calViewRows "; */
+
+}//if(isset($_GET['instructorlist']))
+?> 
+                </table>
+           </div> 
+           </div>
+
+    
 
 
  
