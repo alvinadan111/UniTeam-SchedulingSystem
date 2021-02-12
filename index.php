@@ -34,7 +34,8 @@
                 <button type="button"  class="close" data-dismiss="alert">&times;</button>
               </div>       
             <?php } } ?>
-
+            <a href="UI/forgot.html" style="color:dodgerblue"> Forgot password </a>
+            <hr>
             <button type="submit" value="loginSubmit"  class="loginbtn" name="login" default>Login</button>
 
            <p> <hr>

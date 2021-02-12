@@ -1,0 +1,70 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    background-color: #fbf0f0;
+}
+.container {
+    background-color: #fefefe;
+    border: 1px solid #888;
+    width: 40%;
+    box-shadow: 0 10px 10px #222;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 16px;
+}
+
+.loginbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.8; 
+    text-decoration: none;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+td {
+    padding: 10px;
+}
+input[type=text] {
+    width: 50%;
+}
+
+button[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    border: none;
+    cursor: pointer;
+    width: 15%;
+    opacity: 0.8; 
+    text-decoration: none;
+}
+
+button:hover {
+    opacity:1;
+}
+.btncontainer {
+    float: right;
+    padding-top: 30px;
+    padding-right: 50px;
+    padding-bottom: 30px;
+
+}
+.navtop{
+    text-decoration: none;
+       color: #A94442;
+   }
+   .navtop:hover {
+    text-decoration: none;
+    color: white;
+    background-color: #671D1E;
+    padding: 5px;
+}
