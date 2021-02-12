@@ -15,7 +15,7 @@ $isIncomplete=false;
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
          <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
