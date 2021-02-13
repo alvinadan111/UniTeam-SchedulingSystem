@@ -68,7 +68,7 @@ if(isset($_POST['add'])){
     <title>Add Department Head Account</title>
   </head>
   <body>
-  <h1 class="h1"> Add Account </h1> 
+  <h1 class="h1"> Add Department Head's Account </h1> 
     <div class="btncontainer">
         <a class="navtop" href="menu.php"> Home <i class="fas fa-chevron-right"></i> </a>
         <a class="navtop" href="addDeptHead.php"> Add Account </a>
