@@ -77,7 +77,7 @@ $noResult=false;
                     </select>
             </td>
             <td class="border">
-                <label for="level"> Level </label>
+                <label for="level"> *Level </label>
                 <select id="level" name="levellist"  required>
                      <option value=" " selected disabled></option>
                             <?php
@@ -96,7 +96,7 @@ $noResult=false;
                 <option value=" " selected disabled></option>
                     <?php
                                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                                $stmt = $pdo->query("SELECT * FROM account where accessLevel='prof'");
+                                $stmt = $pdo->query("SELECT * FROM account where accessLevel='prof'  order by FName asc");
                                 //$q->execute(array($accessLevel ));
                                 while ($row = $stmt->fetch()) { ?>
 
@@ -125,7 +125,7 @@ $noResult=false;
              $_GET['levellist']=$_SESSION['levellist'] ;
              $_GET['instructorlist']=$_SESSION['instructorID'];
          }
-        if(empty($_GET['deptlist'])  || empty($_GET['instructorlist'])){ 
+        if(empty($_GET['deptlist'])  || empty($_GET['instructorlist']) || empty($_GET['levellist']) ){ 
           $incomplete=true; ?>
            <!-- Warning Alert -->
             <div id="myAlertI" class="alert alert-warning alert-dismissible fade show">
@@ -152,7 +152,7 @@ $noResult=false;
                         $noResult=true; ?>
                         <!-- Warning Alert -->
                       <div id="myAlertN" class="alert alert-warning alert-dismissible fade show">
-                      <strong>Warning!</strong> &nbsp No result found.
+                      <strong>Warning!</strong> &nbsp No courses to load.
                       <button type="button" class="close" data-dismiss="alert">&times;</button>
                       </div>
 <?php                } //end of if result 
@@ -173,7 +173,7 @@ $noResult=false;
                         $noResult=true; ?>
                         <!-- Warning Alert -->
                       <div id="myAlertN" class="alert alert-warning alert-dismissible fade show">
-                      <strong>Warning!</strong> &nbsp No result found.
+                      <strong>Warning!</strong> &nbsp No courses to load.
                       <button type="button" class="close" data-dismiss="alert">&times;</button>
                       </div>
 
@@ -203,7 +203,7 @@ $noResult=false;
                         <tr>
                             <td><?php echo $crsName3;?></td>
                             <td><?php echo "Room ".$roomNum3." - ".$dayName3."<br>".$timeStart3." - ".$timeEnd3;?></td>
-                            <td class="btncenter"> <a href=<?php echo "submit.php?addCalendarcrsSchedID=".$crsSchedID3;?>><button> Add to Calendar </button></a> </td>
+                            <td class="btncenter"> <a href=<?php echo "submit.php?addCalendarcrsSchedID=".$crsSchedID3;?>><button class="btn2"> Add to Calendar </button></a> </td>
                         </tr>
                         </tbody>
  <?php /*$i++; */  } //end of while
@@ -213,14 +213,6 @@ $noResult=false;
  ?> 
                     </table>
                 </div>
-
-        
-     
-           <!-- <div id="Cal" class="tabcontent"> -->
-               
-
-
-
 
 <?php
 
@@ -261,7 +253,7 @@ if(isset($_GET['instructorlist']) || $_GET['facultyLoadingIsUnloaded']==true || 
                         <td colspan="6" style="text-align: left">
                             <h4 style="float:right"> Tabular View </h4>
                             <h3> Faculty Loading </h3>
-                            <h5> Total No. of Units Loaded: <?php echo $_SESSION['totalUnits']; ?></h5>
+                            <!-- <h5> Total No. of Units Loaded: <?php echo $_SESSION['totalUnits']; ?></h5> -->
                             *Clicking edit icon will unload the schedule from this instructor.
                             
                         </td>
@@ -355,17 +347,7 @@ if(isset($_GET['instructorlist']) || $_GET['facultyLoadingIsUnloaded']==true  ||
         $rspan[]=$row['timeEndID'] - $row['timeStartID'];
 
         $_SESSION['totalUnits']=$_SESSION['totalUnits']+$row['totalUnits'];
-        
-
-/*
-        echo "sched[$count ]  ".$sched[$count].PHP_EOL."<br>";
-        echo "crsName[$count]  ".$crsName[$count];
-        echo "dayName[$count ]  ".$dayName[$count];
-        echo "roomNum[ $count]  ".$roomNum[$count];
-        echo "timeStart[$count ]  ".$timeStart[$count];
-        echo "timeEnd[$count ]  ".$timeEnd[$count];
-        echo "rspan[ $count  ]".$rspan[$count];
-        echo "totalUnits".$_SESSION['totalUnits']."<br> ";*/
+      
 
         $count++;
     }
@@ -422,50 +404,11 @@ if(isset($_GET['instructorlist']) || $_GET['facultyLoadingIsUnloaded']==true  ||
            </div> 
            </div>
 
-    
-
-
- 
-    <!-- <div class="unloadform-popup" id="myForm">
-        <div class="unloadcontainer">
-            <p style="color: white;"> By clicking OK button will unload the subject from the instructor. Do you wish to
-                continue? </p>
-            <a href=<?php echo "submit.php?fUnloadCrsSchedID=".$fUnloadCrsSchedID2;?>><button class="btnunload"> OK </button></a>
-
-            <button class="btnunload" onclick="closeForm()"> Cancel </button>
-        </div>
-    </div>   -->
-
 <?php
 }//if(isset($_GET['instructorlist']))
 ?>  
 
 <?php Database::disconnect(); ?>
-
- <script>
-        function openPage(pageName, elmnt,) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablink");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].style.backgroundColor = "";
-            }
-            document.getElementById(pageName).style.display = "block";
-            elmnt.style.backgroundColor = color;
-        }
-        document.getElementById("defaultOpen").click();
-    </script>
-    <script>
-        function openForm() {
-            document.getElementById("myForm").style.display = "block";
-        }
-        function closeForm() {
-            document.getElementById("myForm").style.display = "none";
-        }
-    </script> 
 
     
     <!-- bootstrap JS-->
