@@ -114,7 +114,7 @@ if(isset($_POST['change'])){
     <?php if($isFailed == true){ ?>
         <script>
             swal({
-            title: "Password Not Match",
+            title: "Password Not Match or Old Password is Incorrect",
             text: "Failed to Change",
             icon: "error",
             });
