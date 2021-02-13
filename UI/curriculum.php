@@ -1,7 +1,13 @@
 <?php
 session_start();
+
+ if(empty($_SESSION['accountID'])):
+header('Location:../index.php');
+endif;
+
 require '../database.php';
 require 'dropdown.php';
+
 
 $isDuplicated = false;
 $isIncomplete = false;
