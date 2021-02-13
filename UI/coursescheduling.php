@@ -45,7 +45,7 @@ $isIncomplete = false;*/
             </tr>
             <tr>
                 <td>
-                    <label for="acadprog"> Academic Program </label>
+                    <label for="acadprog"> *Academic Program </label>
                     <select id="acadprog" name="acadlist"  required>
                    <option value=" " selected disabled></option>
                             <?php
@@ -60,7 +60,7 @@ $isIncomplete = false;*/
                      
                 </td>
                 <td>
-                    <label for="level"> Level </label>
+                    <label for="level"> *Level </label>
                     <select id="level" name="levellist"  required>
                      <option value=" " selected disabled></option>
                             <?php
@@ -74,7 +74,7 @@ $isIncomplete = false;*/
                     </select>
                 </td>
                 <td class="line">
-                    <label for="period"> Period </label>
+                    <label for="period"> *Period </label>
                     <select id="period" name="periodlist"  required>
                         <option value=" " selected disabled></option>
                             <?php
@@ -120,17 +120,16 @@ $isIncomplete = false;*/
             left outer join period ON c.periodID=period.periodID
             where (c.periodID = ?) and (c.levelID = ?) and (c.acadProgID = ?)
             order by curID ");
-        $stmt->execute(array($acadlists, $levellists,  $periodlists));
+        $stmt->execute(array($periodlists, $levellists,  $acadlists));
         $result= $stmt->rowCount();
          if($result==0){ ?>
- 
-            </div>
+
             <!-- Warning Alert -->
             <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
             <strong>Warning!</strong> &nbsp No result found.
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             </div>
-    <?php } ?>
+    <?php } else{ ?>
                 <table class="table">
               <thead>
                 <tr>
@@ -174,7 +173,7 @@ $isIncomplete = false;*/
            
 
        
- <?php } } } Database::disconnect(); ?>                       
+ <?php } } } } Database::disconnect(); ?>                       
 </table> 
 
 
