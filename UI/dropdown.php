@@ -1,5 +1,9 @@
 <?php
 
+ if(empty($_SESSION['accountID'])):
+header('Location:../index.php');
+endif;
+
 $var = 0;
 
 class dropdownlist{

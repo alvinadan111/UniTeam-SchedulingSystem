@@ -1,5 +1,9 @@
 <?php
     session_start();
+     if(empty($_SESSION['accountID'])):
+header('Location:../index.php');
+endif;
+
     require '../database.php';
     $tlec1 = 0; $tunit1 = 0; $tlab1 = 0;
 
