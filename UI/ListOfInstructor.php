@@ -31,7 +31,7 @@ $noResult=false;
                     <th colspan="5"> List of Instructors </th>
                 </tr>
                 <tr>
-                    <th> ID  Number</th>
+                    <th> Username </th>
                     <th> Name </th>
                     <th> Department </th>
                     <th> Specialization </th>
