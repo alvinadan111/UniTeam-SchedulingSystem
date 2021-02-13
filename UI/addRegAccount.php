@@ -28,7 +28,7 @@ $isIncomplete = false;
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
-    <link rel="stylesheet" href="addAccount.css">
+    <link rel="stylesheet" href="AddAccount.css">
     <title>Add Registrar's Account</title>
   </head>
   <body>
@@ -121,7 +121,7 @@ $isIncomplete = false;
                     <td colspan="3"><input type="password" placeholder="Password" name="pas" required></td>
                 </tr>
                 <tr>
-                    <td colspan="3"> 
+                    <td colspan="3" style="text-align:left"> 
                         <label for="department"> Department </label>
                         <select id="department" name="departmentlist">
 
@@ -140,7 +140,7 @@ $isIncomplete = false;
 
                 </tr>
                 <tr>
-                    <td colspan="3">
+                    <td colspan="3" style="text-align:left">
                         <label for="question" title = "If you forget your password, We'll ask for your secret answer to verify your identity">Secret Question:</label>
                         <select name="questions">
                             <option value=" " selected disabled></option>
