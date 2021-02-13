@@ -62,7 +62,7 @@ if(isset($_POST['add'])){
   <h1 class="h1"> Add Student Account </h1> 
     <div class="btncontainer">
         <a class="navtop" href="index.php" > Login <i class="fas fa-chevron-right"></i> </a>
-        <a class="navtop" href="addAccount.php" > Add Student Account </a>
+        <a class="navtop" href="addAccount.php" > Add Student's Account </a>
     </div>
     <div class="container">
         <form class="container2" method = "POST">
