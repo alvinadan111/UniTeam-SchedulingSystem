@@ -59,7 +59,10 @@ caption {
     float: left;
 }
 select {
-    width: 35%;
+    width: 100%;
+}
+#specialization, #rank{
+    width:39%;
 }
 .h1 {
     padding: 15px;

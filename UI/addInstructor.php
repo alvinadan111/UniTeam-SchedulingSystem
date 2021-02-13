@@ -62,7 +62,7 @@ if(isset($_POST['add'])){
     <script src="bootstrap/js/sweetalert.min.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="addAccount.css">
+    <link rel="stylesheet" href="AddAccount.css">
     <title>Add Instructor</title>
   </head>
   <body>
@@ -103,7 +103,7 @@ if(isset($_POST['add'])){
                                     
                             <?php }?>
                         </select>
-                        <label for="Rank"> Rank </label>
+                        <label for="rank"> Rank </label>
                         <select id="rank" name="ranklist">
                             <option value=" " selected disabled></option>
                             <?php
@@ -119,7 +119,7 @@ if(isset($_POST['add'])){
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3"> 
+                    <td colspan="3" style="text-align:left"> 
                         <label for="department"> Department </label>
                         <select id="department" name="departmentlist">
 
@@ -138,7 +138,7 @@ if(isset($_POST['add'])){
 
                 </tr>
                 <tr>
-                    <td colspan="3">
+                    <td colspan="3" style="text-align:left">
                         <label for="question" title = "If you forget your password, We'll ask for your secret answer to verify your identity">Secret Question:</label>
                         <select name="questions">
                             <option value=" " selected disabled></option>
