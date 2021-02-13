@@ -32,10 +32,10 @@ $noResult=false;
             </div>
             <table>
                 <tr>
-                    <th colspan="5"> List of Instructors </th>
+                    <th colspan="5"> List of Registrar </th>
                 </tr>
                 <tr>
-                    <th> ID  Number</th>
+                    <th> Username </th>
                     <th> Name </th>
                     <th> Department </th>
                 </tr>
