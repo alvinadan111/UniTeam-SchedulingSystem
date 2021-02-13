@@ -138,7 +138,7 @@ if(isset($_POST['add'])){
 
                 </tr>
                 <tr>
-                    <td>
+                    <td colspan="3">
                         <label for="question" title = "If you forget your password, We'll ask for your secret answer to verify your identity">Secret Question:</label>
                         <select name="questions">
                             <option value=" " selected disabled></option>
@@ -148,7 +148,7 @@ if(isset($_POST['add'])){
                         </select>
                     </td>
                 </tr>
-                <tr><td><input type="text" placeholder="Answer" name="Answer" required></td></tr>
+                <tr><td colspan="3"><input type="text" placeholder="Answer" name="Answer" required></td></tr>
                 <tr>
                     <td colspan="3">
                         <button type="submit" name = "add" class="addbtn">Add Account</button>
