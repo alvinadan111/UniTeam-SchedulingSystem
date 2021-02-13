@@ -149,15 +149,12 @@ $pdo=Database::connect();
                
                 $q->execute(); /*array($_SESSION['signupDeptID'])*/
                  $result= $q->rowCount();
-
-                 /*echo "SESSION['signupDeptID'] = ".$_SESSION['signupDeptID'];*/
-
                 if($result==0){ ?>
          
                     </div>
                     <!-- Warning Alert -->
                     <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
-                    <strong>Warning!</strong> &nbsp No records found.
+                    <strong>Warning!</strong> &nbsp No records yet.
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     </div>
             <?php } else {
@@ -223,8 +220,6 @@ $pdo=Database::connect();
                 $q->execute(array($_SESSION['signupDeptID'],$syID,$periodID,$levelID,$secID));
                  $result= $q->rowCount();
                   if($result==0){ ?>
-         
-                    </div>
                     <!-- Warning Alert -->
                     <div id="myAlert" class="alert alert-warning alert-dismissible fade show">
                     <strong>Warning!</strong> &nbsp No records found.

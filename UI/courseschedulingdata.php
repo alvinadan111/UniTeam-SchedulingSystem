@@ -331,7 +331,7 @@ if(isset($_GET['saveSubmitBtn'])){
      {
         setTimeout(function (){
             $('#myAlert').hide('fade');
-        }, 8000); 
+        }, 4000); 
      });
 
     $(document).ready(function()
