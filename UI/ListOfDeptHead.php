@@ -30,7 +30,7 @@ $noResult=false;
                     <th colspan="5"> List of Department Heads </th>
                 </tr>
                 <tr>
-                    <th> ID  Number</th>
+                    <th> Username </th>
                     <th> Name </th>
                     <th> Department </th>
                     <th> Specialization </th>
