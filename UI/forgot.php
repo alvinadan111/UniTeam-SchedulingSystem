@@ -35,7 +35,7 @@ if(isset($_POST['Search'])){
 
 <head>
 <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-    <link rel="stylesheet" href="Forgot.css">
+    <link rel="stylesheet" href="forgot.css">
 </head>
 
 <body>
