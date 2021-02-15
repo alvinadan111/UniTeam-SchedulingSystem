@@ -11,7 +11,7 @@ class dropdownlist{
        
         $pdo=Database::connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $stmt = $pdo->query("SELECT syID, schoolYR FROM schoolyear");
+        $stmt = $pdo->query("SELECT syID, schoolYR FROM schoolyear where status='active'");
         while ($row = $stmt->fetch()) {
             echo '<option value = "'.$row['syID'].'">'.$row['schoolYR'].'</option>';
         }
