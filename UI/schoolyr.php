@@ -104,6 +104,11 @@ if(isset($_POST['saveBTN'])){
                     <label for="schlyr"> School Year </label><br>
                     <input type="text" id="schlyr" name = "SY" required>
                 </th>
+
+                <th>
+                    <label for="schlyr"> Set Active School Year </label><br>
+                    <input type="text" id="schlyrActive" name = "schlyrActive" required>
+                </th>
             </tr>
             <tr>
                 <td>
