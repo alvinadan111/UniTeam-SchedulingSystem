@@ -116,7 +116,26 @@ $noResult=false;
 
 <br>
 
-                  
+<?php 
+  if(isset($_GET['searchBtn'])){
+        $accID=$_GET['instructorlist'];
+
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql = "SELECT * FROM account WHERE accountID = ?";
+        $q = $pdo->prepare($sql);
+        $q->execute(array($accID));
+        $account = $q->fetch(PDO::FETCH_ASSOC);
+ 
+        if($account['accountID']!="")
+        {
+          
+          @$_SESSION['FacFName']=$account['FName'];
+          @$_SESSION['FacLName']=$account['LName'];
+        }
+  }
+ ?>  
+
+
                             <table>
 
 <?php if(isset($_GET['searchBtn']) ||  $_GET['facultyLoadingIsUnloaded']==true  || $_GET['facultyLoadingIsLoaded']==true || $_GET['addCalendarConflict']==true) 
@@ -380,7 +399,7 @@ if(isset($_GET['instructorlist']) || $_GET['facultyLoadingIsUnloaded']==true  ||
                     <td colspan="7" style="text-align: left">
                         <h4 style="float:right"> Calendar View </h4>
                         <h3> Faculty Loading </h3>
-
+                        Instructor Being Loaded: <?php echo $_SESSION['FacFName']." ".$_SESSION['FacLName']."<br>"; ?>
                         Total No. of Units Loaded: <?php echo $_SESSION['totalUnits']; ?>
                     </td>
                     </tr>
