@@ -42,7 +42,7 @@ if(isset($_GET['secID'])){
             // echo "Some fields are left unfilled. <br>";
     }else{
             $time=$_GET['timeEndID']-$_GET['timeStartID'];
-           if ($time<0) {
+           if ($time<0 || $time==0) {
               $wrongTimeInput=true;
             } else {
 
