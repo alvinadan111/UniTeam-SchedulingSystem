@@ -100,13 +100,20 @@ if(isset($_POST['saveBTN'])){
             </caption>
             <form method = "POST">
             <tr>
-                <th>
-                    <label for="schlyr"> School Year </label><br>
-                    <input type="text" id="schlyr" name = "SY" required>
-                </th>
+               
+                    <td> 
+                        <label for="schlyr"> School Year </label><br>
+                        <input type="text" id="schlyr" name = "SY" required> 
+                    </td>
+                    <td>
+                        <label for="act"> Set Active School Year </label><br>
+                        <select id="act" name="activeschlyr">
+                        <option value=" " selected disabled></option>
+                    </td>
+               
             </tr>
             <tr>
-                <td>
+                <td colspan="2">
                     <button type="submit" name = "addSY">Add School Year</button>
                 </td>
             </tr>
