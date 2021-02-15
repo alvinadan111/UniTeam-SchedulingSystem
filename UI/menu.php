@@ -3,8 +3,8 @@
   if(empty($_SESSION['accountID'])):
 header('Location:../index.php');
 endif;
-echo "session sctive year".$_SESSION['activeSchoolYear'];
-?>
+// echo "session sctive year".$_SESSION['activeSchoolYear'];
+// ?>
 
 <!DOCTYPE html>
 <html>

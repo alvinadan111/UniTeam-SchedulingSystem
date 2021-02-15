@@ -3,7 +3,7 @@
   if(empty($_SESSION['accountIDstudent'])):
 header('Location:../index.php');
 endif;
-echo "session sctive year".$_SESSION['activeSchoolYear'];
+// echo "session sctive year".$_SESSION['activeSchoolYear'];
 ?>
 
 
