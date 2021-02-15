@@ -38,6 +38,16 @@ require 'database.php';
             @$_SESSION['accountIDreg']=$account['accountID']; 
             header("Location: UI/regMenu.php");
           }
+
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql = "SELECT syID FROM account WHERE status ='active'  ";
+        $q = $pdo->prepare($sql);
+        $q->execute();
+        $sy = $q->fetch(PDO::FETCH_ASSOC);
+        if($sy['syID']!=""){
+          @$_SESSION['activeSchoolYear']=$sy['syID'];
+        }
+
            
         } else
         {
