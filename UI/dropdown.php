@@ -100,7 +100,7 @@ class dropdownlist{
 
                 function show(e) {
                     let count = parseInt(codelist.value) - 1;
-                    alert(count);
+                  
                   
                     let arr = "<?php echo implode(", ", $arr) ?>".split(", ");
 
