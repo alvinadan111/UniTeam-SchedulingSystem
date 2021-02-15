@@ -63,6 +63,7 @@
    }
    .navtop:hover {
        color: white;
+       text-decoration: none;
     background-color: #671D1E;
     padding: 5px;
 }
