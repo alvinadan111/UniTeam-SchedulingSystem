@@ -111,6 +111,7 @@ $isIncomplete = false;*/
     $acadlists = $_POST['acadlist'];
     $levellists = $_POST['levellist'];
     $periodlists = $_POST['periodlist'];
+    $activesy=$_SESSION['activeSchoolYear'];
 
      
         $stmt=$pdo->prepare("select c.levelID, c.deptID, c.curID, c.syID, c.periodID, course.courseCode, course.courseName from curriculum c 
@@ -118,9 +119,9 @@ $isIncomplete = false;*/
             left outer join academicprog ON c.acadProgID=academicprog.acadProgID  
             left outer join lvl ON c.levelID=lvl.levelID
             left outer join period ON c.periodID=period.periodID
-            where (c.periodID = ?) and (c.levelID = ?) and (c.acadProgID = ?)
+            where (c.periodID = ?) and (c.levelID = ?) and (c.acadProgID = ?) and (c.syID=?)
             order by curID ");
-        $stmt->execute(array($periodlists, $levellists,  $acadlists));
+        $stmt->execute(array($periodlists, $levellists,  $acadlists, $activesy));
         $result= $stmt->rowCount();
          if($result==0){ ?>
 

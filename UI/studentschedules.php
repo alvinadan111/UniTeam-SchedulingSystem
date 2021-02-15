@@ -143,11 +143,11 @@ $pdo=Database::connect();
                     (select roomNUm from classroom where f.classroomID=classroom.classroomID) as roomNum, 
                     (select FName from account where f.accountID=account.accountID) as FName, 
                     (select LName from account where f.accountID=account.accountID) as LName
-                     from facultyloading f order by deptID asc, dayID asc, timeStartID asc");
+                     from facultyloading f where syID = ? order by deptID asc, dayID asc, timeStartID asc");
 
                 $q = $pdo->prepare($stmt);
                
-                $q->execute(); /*array($_SESSION['signupDeptID'])*/
+                $q->execute(array($_SESSION['activeSchoolYear'])); /*array($_SESSION['signupDeptID'])*/
                  $result= $q->rowCount();
                 if($result==0){ ?>
          
@@ -214,10 +214,10 @@ $pdo=Database::connect();
                     (select roomNUm from classroom where f.classroomID=classroom.classroomID) as roomNum, 
                     (select FName from account where f.accountID=account.accountID) as FName, 
                     (select LName from account where f.accountID=account.accountID) as LName
-                     from facultyloading f where f.deptID=? and f.syID=? and f.periodID=? and f.levelID=? and f.secID=? order by deptID asc, dayID asc, timeStartID asc");
+                     from facultyloading f where f.deptID=? and f.syID=? and f.periodID=? and f.levelID=? and f.secID=? and syID = ? order by deptID asc, dayID asc, timeStartID asc");
 
                 $q = $pdo->prepare($stmt);
-                $q->execute(array($_SESSION['signupDeptID'],$syID,$periodID,$levelID,$secID));
+                $q->execute(array($_SESSION['signupDeptID'],$syID,$periodID,$levelID,$secID,$_SESSION['activeSchoolYear']));
                  $result= $q->rowCount();
                   if($result==0){ ?>
                     <!-- Warning Alert -->

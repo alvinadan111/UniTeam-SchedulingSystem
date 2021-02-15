@@ -146,8 +146,9 @@ $noResult=false;
 
                    /* echo "deptlist: ".$deptlist." - "."levellist: ".$levellist." - "."session_instructorID: ".$_SESSION['instructorID'] ." - ";
 */
-                    $stmt=$pdo->prepare("select * from curriculum c natural join courseschedulingtemp natural join timestart natural join timeend  natural join day natural join classroom where (c.deptID = ?) and (c.levelID = ?)  order by curID ");
-                    $stmt->execute(array($deptlist, $levellist));
+                    $stmt=$pdo->prepare("select * from curriculum c natural join courseschedulingtemp natural join timestart natural join timeend  natural join day natural join classroom where (c.deptID = ?) and (c.levelID = ?) and (c.syID=?) order by curID ");
+                    $stmt->execute(array($deptlist, $levellist, $_SESSION['activeSchoolYear']
+                  ));
                     $result= $stmt->rowCount();
                         if($result==0){ 
                         $noResult=true; ?>
@@ -167,8 +168,8 @@ $noResult=false;
 
                     /*echo "deptlist: ".$deptlist." - "."session_instructorID: ".$_SESSION['instructorID'] ." - ";*/
 
-                    $stmt=$pdo->prepare("select * from curriculum c natural join courseschedulingtemp natural join timestart natural join timeend  natural join day natural join classroom where (c.deptID = ?)  order by curID ");
-                    $stmt->execute(array($deptlist));
+                    $stmt=$pdo->prepare("select * from curriculum c natural join courseschedulingtemp natural join timestart natural join timeend  natural join day natural join classroom where (c.deptID = ?) and (c.syID=?)  order by curID ");
+                    $stmt->execute(array($deptlist, $_SESSION['activeSchoolYear']));
                     $result= $stmt->rowCount();
                         if($result==0){ 
                         $noResult=true; ?>

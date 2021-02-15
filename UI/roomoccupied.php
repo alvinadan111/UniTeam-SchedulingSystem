@@ -80,10 +80,10 @@ $pdo=Database::connect();
                     (select timeEnd from timeend where f.timeEndID=timeend.timeEndID) as timeEnd, 
                     (select section from section where f.secID=section.secID) as section, 
                     (select crsName from curriculum where f.curID=curriculum.curID) as crsName,
-                    (select buildingCode from classroom where f.classroomID=classroom.classroomID) as buildingCode from facultyloading f where classroomID=? order by classroomID, dayID asc, timeStartID asc");
+                    (select buildingCode from classroom where f.classroomID=classroom.classroomID) as buildingCode from facultyloading f where classroomID=? and (c.syID=?) order by classroomID, dayID asc, timeStartID asc");
 
                 $q = $pdo->prepare($stmt);
-                $q->execute(array($classroomID));
+                $q->execute(array($classroomID,$_SESSION['activeSchoolYear']));
                                  $result= $q->rowCount();
 
 
@@ -122,10 +122,10 @@ $pdo=Database::connect();
                     (select timeEnd from timeend where f.timeEndID=timeend.timeEndID) as timeEnd, 
                     (select section from section where f.secID=section.secID) as section, 
                     (select crsName from curriculum where f.curID=curriculum.curID) as crsName,
-                    (select buildingCode from classroom where f.classroomID=classroom.classroomID) as buildingCode from facultyloading f  order by classroomID, dayID asc, timeStartID asc");
+                    (select buildingCode from classroom where f.classroomID=classroom.classroomID) as buildingCode from facultyloading f  where syID = ? order by classroomID, dayID asc, timeStartID asc");
 
                 $q = $pdo->prepare($stmt);
-                $q->execute(array($classroomID));
+                $q->execute(array($_SESSION['activeSchoolYear']));
                 $result= $q->rowCount();
 
 

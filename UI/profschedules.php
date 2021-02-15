@@ -144,11 +144,11 @@ $pdo=Database::connect();
                     (select roomNUm from classroom where f.classroomID=classroom.classroomID) as roomNum, 
                     (select FName from account where f.accountID=account.accountID) as FName, 
                     (select LName from account where f.accountID=account.accountID) as LName
-                     from facultyloading f where f.deptID=? and f.accountID=? order by deptID asc, dayID asc, timeStartID asc");
+                     from facultyloading f where f.deptID=? and f.accountID=? and f.syID=? order by deptID asc, dayID asc, timeStartID asc");
 
                 $q = $pdo->prepare($stmt);
                
-                $q->execute(array($_SESSION['signupDeptID'], $_SESSION['accountIDprof']));
+                $q->execute(array($_SESSION['signupDeptID'], $_SESSION['accountIDprof'],$_SESSION['activeSchoolYear']));
                  $result= $q->rowCount();
 
                 if($result==0){ ?>

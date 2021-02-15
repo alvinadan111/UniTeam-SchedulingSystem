@@ -10,8 +10,42 @@ $duplicated = false;
 $added = false;
 $isDeleted = false;
 $isUpdated = false;
+$isSet = false;
+
 $pdo=Database::connect();
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+if(isset($_POST['activeSchoolYr'])){
+    $activeSyID=$_POST['activeSchoolYr'];
+
+/*
+    echo "activeSyID = $activeSyID";
+    echo "POST['activeSchoolYr ".$_POST['activeSchoolYr'];*/
+
+
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql ='UPDATE schoolyear SET status = "active" WHERE syID = ?';
+    $q = $pdo->prepare($sql);
+    $q->execute(array($activeSyID));
+
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql ='UPDATE schoolyear SET status = "inactive" WHERE not syID = ?';
+    $q = $pdo->prepare($sql);
+    $q->execute(array($activeSyID));
+
+    $_SESSION['activeSchoolYear']=$activeSyID;
+
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql = "SELECT * FROM schoolyear WHERE status ='active'  ";
+        $q = $pdo->prepare($sql);
+        $q->execute();
+        $sy = $q->fetch(PDO::FETCH_ASSOC);
+    $_SESSION['activeSchoolYearDate']=$sy['schoolYR'];
+
+    $isSet = true;
+           
+    }         
+
 
 if(isset($_POST['addSY'])){
    
@@ -104,13 +138,21 @@ if(isset($_POST['saveBTN'])){
                     <td> 
                         <label for="schlyr"> School Year </label><br>
                         <input type="text" id="schlyr" name = "SY" required> 
-                    </td>
-                    <td>
-                        <label for="act"> Set Active School Year </label><br>
-                        <select id="act" name="activeschlyr">
-                        <option value=" " selected disabled></option>
-                    </td>
-               
+                    </td> 
+
+                    <td> <label for="schlyr"> Set Active School Year </label><br>
+                        <select  name="activeSchoolYr"  onchange='this.form.submit()' >
+                   <option value=" " ><?php echo $_SESSION['activeSchoolYearDate']."(active)"; ?></option>
+                            <?php
+                                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                $stmt = $pdo->query("SELECT syID, schoolYR FROM schoolyear ");
+                                while ($row = $stmt->fetch()) { ?>
+
+                                <option value="<?php echo $row['syID']; ?>"> <?php echo $row['schoolYR'];  ?> </option>
+                                    
+                            <?php }?>     
+                    </select>
+                    </td>    
             </tr>
             <tr>
               
@@ -220,6 +262,17 @@ if(isset($_POST['saveBTN'])){
             });
     </script>
     <?php }  ?>
+
+    <?php if($isSet == true){ ?>
+        <script>
+            swal({
+            title: "Successfully Set ",
+            text: "Active School Year Updated",
+            icon: "success",
+            });
+    </script>
+    <?php }  ?>
+
 
     
     <script>
